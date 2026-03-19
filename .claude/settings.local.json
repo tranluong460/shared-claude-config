@@ -112,10 +112,6 @@
         "matcher": "",
         "hooks": [
           {
-            "type": "prompt",
-            "prompt": "Review the assistant's final response. You MUST respond with valid JSON only. Accept if: the user explicitly deferred or skipped items, the assistant is waiting for user confirmation, the project has no tests/lint to run, or the task is genuinely complete. Reject ONLY when the assistant CLEARLY makes excuses for incomplete work, blames pre-existing issues to avoid fixing, or lists problems without attempting to fix them. When in doubt, accept. Respond with {\"ok\": true} to accept or {\"ok\": false, \"reason\": \"brief explanation\"} to reject. Nothing else."
-          },
-          {
             "type": "command",
             "command": "bash -c 'if command -v powershell.exe &>/dev/null; then powershell.exe -Command \"[System.Media.SystemSounds]::Asterisk.Play()\" 2>/dev/null; elif command -v osascript &>/dev/null; then osascript -e \"display notification \\\"Claude Code finished\\\" with title \\\"Claude Code\\\"\" 2>/dev/null; elif command -v notify-send &>/dev/null; then notify-send \"Claude Code\" \"Session finished\" 2>/dev/null; fi'",
             "timeout": 5
