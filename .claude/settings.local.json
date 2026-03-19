@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Read",
+      "Write",
+      "Edit",
+      "MultiEdit",
+      "Grep",
+      "Glob",
+      "WebSearch",
+      "WebFetch"
+    ],
+    "deny": [
+      "Read(.env*)",
+      "Read(**/.env*)",
+      "Edit(.env*)",
+      "Edit(**/.env*)",
+      "Write(.env*)",
+      "Write(**/.env*)",
+
+      "Read(**/*credentials*)",
+      "Read(**/*secret*)",
+
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Read(**/*.crt)",
+      "Write(**/*.key)",
+      "Write(**/*.pem)",
+      "Write(**/*.crt)",
+
+      "Read(**/id_rsa*)",
+      "Read(**/id_ed25519*)",
+      "Write(**/id_rsa*)",
+      "Write(**/id_ed25519*)",
+
+      "Read(~/.ssh/*)",
+      "Edit(~/.ssh/*)",
+      "Read(~/.aws/*)",
+      "Edit(~/.aws/*)",
+      "Edit(~/.gitconfig)",
+
+      "Read(~/.gnupg/**)",
+      "Edit(~/.gnupg/**)",
+      "Read(~/.kube/**)",
+      "Edit(~/.kube/**)",
+      "Read(~/.npmrc)",
+      "Read(~/.pypirc)",
+      "Read(~/.git-credentials)",
+      "Read(~/.config/gh/**)",
+      "Read(~/.docker/config.json)",
+      "Edit(~/.docker/config.json)",
+      "Edit(~/.bashrc)",
+      "Edit(~/.zshrc)",
+      "Edit(~/.bash_profile)",
+      "Edit(~/.profile)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/suggest-commands.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/block-dangerous-commands.sh\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/auto-format.sh\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'echo \"CONTEXT RESTORED:\"; echo \"  - Rules: .claude/rules/ (auto-injected by file path)\"; echo \"  - Prefer /clear over /compact for clean context\"; if [[ -f tasks/todo.md ]]; then echo \"  - Active tasks:\"; head -10 tasks/todo.md; fi; echo \"  - Re-read relevant files before making changes\"'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Review the assistant's final response. You MUST respond with valid JSON only. Accept if: the user explicitly deferred or skipped items, the assistant is waiting for user confirmation, the project has no tests/lint to run, or the task is genuinely complete. Reject ONLY when the assistant CLEARLY makes excuses for incomplete work, blames pre-existing issues to avoid fixing, or lists problems without attempting to fix them. When in doubt, accept. Respond with {\"ok\": true} to accept or {\"ok\": false, \"reason\": \"brief explanation\"} to reject. Nothing else."
+          },
+          {
+            "type": "command",
+            "command": "bash -c 'if command -v powershell.exe &>/dev/null; then powershell.exe -Command \"[System.Media.SystemSounds]::Asterisk.Play()\" 2>/dev/null; elif command -v osascript &>/dev/null; then osascript -e \"display notification \\\"Claude Code finished\\\" with title \\\"Claude Code\\\"\" 2>/dev/null; elif command -v notify-send &>/dev/null; then notify-send \"Claude Code\" \"Session finished\" 2>/dev/null; fi'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
