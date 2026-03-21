@@ -46,6 +46,21 @@ if echo "$PROMPT" | grep -qiE '\b(naming|rename|convention|prefix)\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /audit-naming <scope> — scan naming violations"
 fi
 
+# Documentation audit keywords
+if echo "$PROMPT" | grep -qiE '\b(dead doc|unused doc|orphan|audit.?doc|doc.?consistency|doc.?audit|documentation.?(audit|check|unused|dead))\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /audit-docs — audit .claude/ documentation consistency"
+fi
+
+# Logic and flow analysis
+if echo "$PROMPT" | grep -qiE '\b(logic|flow|data.?flow|state.?manag|edge.?case|race.?condition)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /diagnose \"<description>\" — investigate logic/flow issue"
+fi
+
+# Confusion or unexpected behavior
+if echo "$PROMPT" | grep -qiE '\b(không hiểu|unexpected|weird|why.*(not|does|is)|tại sao|confus)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /diagnose \"<description>\" — investigate unexpected behavior"
+fi
+
 # Implement keywords
 if echo "$PROMPT" | grep -qiE '\b(implement|build|create|add feature|new feature)\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /implement \"<task>\" — recipe-based implementation"

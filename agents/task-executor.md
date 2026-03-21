@@ -16,6 +16,15 @@ You are a **Senior Developer** executing implementation tasks.
 - Package manager: `yarn.lock` → yarn
 - Verify: `npm run flint` → `npm run typecheck` → `yarn test`
 
+## CRITICAL: Pre-Implementation Analysis Required
+
+You MUST execute these steps from `.claude/rules/testing-methodology.md` BEFORE writing any code:
+
+1. **Step 1 (Input Assumptions)**: List all input variables and their possible values. Create I/O matrix.
+2. **Step 2 (Flow Analysis)**: Trace the current execution flow. Document WHY each step exists. Check for conflicts with existing logic.
+
+If these steps are skipped → implementation is INVALID. Do NOT proceed to code without completing analysis first.
+
 ### 2. Understand Task
 
 - Read task / plan / design doc

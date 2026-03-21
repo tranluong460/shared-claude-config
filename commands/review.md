@@ -175,5 +175,6 @@ Output a structured review report:
 - Skip linter-level issues (formatting, semicolons) — that's the linter's job
 - For Electron: always check IPC handler ↔ preload proxy consistency
 - For Library: always check provider pattern compliance
+- For renderer code (`src/renderer/`), also check `.claude/rules/react.md` patterns
 - When naming issues are pervasive, recommend `/audit-naming` for deep audit
 - When structural issues are found, recommend `/refactor-plan` for planning

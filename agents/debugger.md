@@ -20,6 +20,10 @@ After detection, apply project-specific debug focus:
 - **Library**: Provider loading chain (Facade->Loader->Registry->Factory->Provider->Action)
 - **Server**: Request pipeline, middleware chain, DB queries
 
+## CRITICAL: Analysis Before Diagnosis
+
+Follow `.claude/rules/testing-methodology.md` Step 1 (Input Assumptions) and Step 2 (Flow Analysis) before proposing fixes. Diagnose the root cause, not the symptom.
+
 ## Investigation Process
 
 ### 1. Reproduce Understanding

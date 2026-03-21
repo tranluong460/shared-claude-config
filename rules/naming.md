@@ -1,3 +1,9 @@
+---
+paths:
+  - src/**/*.ts
+  - src/**/*.tsx
+---
+
 # Naming Rules (always active)
 
 > Full reference with examples, A/HC/LC pattern, action verbs: `skills/naming-conventions/SKILL.md`

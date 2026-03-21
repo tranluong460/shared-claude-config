@@ -26,7 +26,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 (actions)           (AI roles)        (knowledge)
 ```
 
-### Commands (10) — User-Facing Actions
+### Commands (11) — User-Facing Actions
 
 | Command            | Description                 | Agent             | Skills Used                                                                   |
 | ------------------ | --------------------------- | ----------------- | ----------------------------------------------------------------------------- |
@@ -39,19 +39,22 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | `/diagnose`        | Bug investigation           | debugger          | coding-standards, architecture-patterns                                       |
 | `/implement`       | Execute implementation      | task-executor     | coding-standards, naming-conventions, testing-strategy, architecture-patterns |
 | `/parallel-review` | Independent worktree review | parallel-reviewer | coding-standards, naming-conventions, architecture-patterns, testing-strategy |
-| `/reflect`         | Session analysis & improve  | —                 | reflection, coding-standards                                                  |
+| `/reflect`         | Session analysis & improve  | reflection-analyzer | reflection, coding-standards                                                  |
+| `/audit-docs`      | Audit `.claude/` documentation consistency — detect dead, duplicate, or weakly integrated docs | doc-auditor       | architecture-patterns, documentation-standards                                |
 
-### Agents (7) — AI Roles
+### Agents (9) — AI Roles
 
-| Agent                 | Role                                                 | Primary Skills                                                                    |
-| --------------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------- |
-| **architect**         | Analyzes architecture, plans refactoring             | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions |
-| **code-reviewer**     | Reviews code quality with Electron/Library awareness | coding-standards, naming-conventions, architecture-patterns                       |
-| **parallel-reviewer** | Independent review in isolated worktree (no bias)    | coding-standards, naming-conventions, architecture-patterns, testing-strategy     |
-| **debugger**          | Cross-process debugging, root cause analysis         | coding-standards, architecture-patterns                                           |
-| **doc-writer**        | Creates and reviews documentation                    | documentation-standards                                                           |
-| **task-executor**     | Implements changes with project-aware recipes        | coding-standards, naming-conventions, testing-strategy, architecture-patterns     |
-| **test-architect**    | Test strategy with Electron/Library mock patterns    | testing-strategy, coding-standards, naming-conventions                            |
+| Agent                    | Role                                                 | Primary Skills                                                                    |
+| ------------------------ | ---------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **architect**            | Analyzes architecture, plans refactoring             | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions |
+| **code-reviewer**        | Reviews code quality with Electron/Library awareness | coding-standards, naming-conventions, architecture-patterns                       |
+| **parallel-reviewer**    | Independent review in isolated worktree (no bias)    | coding-standards, naming-conventions, architecture-patterns, testing-strategy     |
+| **debugger**             | Cross-process debugging, root cause analysis         | coding-standards, architecture-patterns                                           |
+| **doc-auditor**          | Enforces .claude/ documentation consistency          | architecture-patterns, documentation-standards                                    |
+| **doc-writer**           | Creates and reviews documentation                    | documentation-standards                                                           |
+| **reflection-analyzer**  | Analyzes sessions, detects patterns, suggests fixes  | reflection, coding-standards                                                      |
+| **task-executor**        | Implements changes with project-aware recipes        | coding-standards, naming-conventions, testing-strategy, architecture-patterns     |
+| **test-architect**       | Test strategy with Electron/Library mock patterns    | testing-strategy, coding-standards, naming-conventions                            |
 
 ### Skills (7) — Knowledge Modules
 
@@ -65,23 +68,25 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **refactoring-strategy**    | Techniques, risk assessment, Electron/Library recipes, incremental migration                          |
 | **reflection**              | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions  |
 
-### Rules (11) — Context-Aware Enforcement
+### Rules (13) — Context-Aware Enforcement
 
 Rules auto-inject when Claude works on matching files. Unlike skills (full knowledge), rules are short enforcement directives.
 
 | Rule                 | Paths                                   | Enforces                                                |
 | -------------------- | --------------------------------------- | ------------------------------------------------------- |
 | **typescript**       | `src/**/*.ts,tsx`                       | No `any`, return types, max 50 lines, error handling    |
-| **naming**           | (always)                                | E/I prefix, IPC naming, kebab-case, boolean prefix      |
+| **naming**           | `src/**/*.ts,tsx`                       | E/I prefix, IPC naming, kebab-case, boolean prefix      |
 | **electron**         | `src/main,preload,renderer/**`          | Process isolation, IPC via preload, no Node in renderer |
 | **ipc**              | `src/main/ipc/**`, `src/preload/ipc/**` | 5-layer sync, channel naming, handler pattern           |
 | **database**         | `src/main/database/**`                  | Entity pattern, Model pattern, IMainResponse            |
 | **react**            | `src/renderer/src/**`                   | React Query, hooks, Props naming, i18n                  |
 | **testing**          | `**/*.test.ts`, `test/**`               | AAA, vitest, mock patterns                              |
 | **implementation**   | `src/**`                                | Read before write, verify commands, multi-file IPC      |
-| **error-patterns**   | (always)                                | Common errors quick reference table                     |
+| **error-patterns**   | `src/**`                                | Common errors quick reference table                     |
 | **provider-pattern** | `src/providers/**`, `src/core/**`       | Provider structure, action rules, barrel exports        |
+| **testing-methodology** | `src/**`                             | 4-step analysis process: Input → Flow → Report → Implement |
 | **documentation**    | `docs/**`                               | Folder structure, file naming, when to create docs      |
+| **no-unused-docs**   | `.claude/**`                            | Every .claude/ doc must be referenced; run /audit-docs  |
 
 ---
 
@@ -163,7 +168,6 @@ description: <what knowledge this provides>
 | Block dangerous commands | `PreToolUse`       | `hooks/block-dangerous-commands.sh`  | Blocks `rm -rf`, `git push --force`, `chmod 777`, `curl\|sh`, etc.     |
 | Auto-format after edit   | `PostToolUse`      | `hooks/auto-format.sh`              | Runs `prettier --write` on `.ts`/`.tsx` files                           |
 | Context persistence      | `PostCompact`      | inline                               | Re-injects rules reminder, active tasks, `/clear` vs `/compact` tip    |
-| Verify completion        | `Stop`             | prompt                               | Anti-rationalization — context-aware, avoids false rejection loops      |
 | Notification on finish   | `Stop`             | inline                               | System sound (Windows) / native notification (macOS/Linux)              |
 
 ### Hooks Directory

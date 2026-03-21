@@ -17,6 +17,10 @@ Read and apply:
 - `.claude/skills/reflection/SKILL.md`
 - `.claude/skills/coding-standards/SKILL.md`
 
+### Step 1b: Agent
+
+Delegate to the `reflection-analyzer` agent for execution.
+
 ### Step 2: Gather Evidence
 
 1. **Git history** within scope:

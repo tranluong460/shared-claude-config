@@ -30,7 +30,8 @@ Target: $ARGUMENTS (task description, plan file, or specific change)
 1. Read task description / plan
 2. **Read existing similar code** — match patterns exactly
 3. Identify all affected files
-4. Choose recipe below
+4. Before implementing, follow `.claude/rules/testing-methodology.md` — Step 1 (Input Assumptions) and Step 2 (Flow Analysis) are required before Step 4 (Implementation)
+5. Choose recipe below
 
 ### Step 4: Implementation Recipes
 

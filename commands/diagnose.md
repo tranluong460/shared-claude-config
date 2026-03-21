@@ -16,6 +16,7 @@ Read and apply:
 
 - `.claude/skills/coding-standards/SKILL.md`
 - `.claude/skills/architecture-patterns/SKILL.md`
+- `.claude/rules/testing-methodology.md` — follow the 4-step analysis process (Input Assumptions → Flow Analysis → Report → then diagnose)
 
 ### Step 2: Detect Project Type
 
