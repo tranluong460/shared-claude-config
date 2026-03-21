@@ -1,8 +1,3 @@
----
-paths:
-  - src/**
----
-
 # Common Error Quick Reference (always active)
 
 > This is the canonical error table. Agents and commands reference here — do not duplicate.

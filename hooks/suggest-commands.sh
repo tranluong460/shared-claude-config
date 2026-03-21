@@ -9,6 +9,10 @@ if [[ -z "$PROMPT" ]]; then
   exit 0
 fi
 
+# Skip short prompts and slash commands
+if [ ${#PROMPT} -lt 10 ]; then exit 0; fi
+if [[ "$PROMPT" == /* ]]; then exit 0; fi
+
 SUGGESTIONS=""
 
 # Bug/error/debug keywords

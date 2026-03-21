@@ -155,7 +155,7 @@ Detect cases where a document SHOULD be loaded but is not:
 
 | Rule | Frontmatter | Commands | Agents | Skills | Classification |
 | ---- | ----------- | -------- | ------ | ------ | -------------- |
-| `naming.md` | `src/**` | - | - | naming-conventions | Passive |
+| `code-quality.md` | `src/**` | - | - | coding-standards, naming-conventions | Passive |
 | `error-patterns.md` | - | diagnose | debugger | - | Active |
 | ... | ... | ... | ... | ... | ... |
 

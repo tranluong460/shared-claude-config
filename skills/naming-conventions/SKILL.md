@@ -1,11 +1,11 @@
 ---
 name: naming-conventions
-description: Naming reference with examples for Node.js / TypeScript / Electron projects. Core rules enforced via .claude/rules/naming.md — this skill provides detailed examples and patterns.
+description: Naming reference with examples for Node.js / TypeScript / Electron projects. Core rules enforced via .claude/rules/code-quality.md — this skill provides detailed examples and patterns.
 ---
 
 # Naming Conventions — Reference & Examples
 
-> Core enforcement rules are in `.claude/rules/naming.md`. This skill provides detailed examples and the A/HC/LC pattern reference.
+> Core enforcement rules are in `.claude/rules/code-quality.md`. This skill provides detailed examples and the A/HC/LC pattern reference.
 
 ## Core Principles
 

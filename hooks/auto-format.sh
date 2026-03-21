@@ -9,9 +9,9 @@ FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // .tool_input.filePath
 if [[ -n "$FILE_PATH" ]] && [[ "$FILE_PATH" == *.ts || "$FILE_PATH" == *.tsx ]]; then
   # Prefer local prettier, fallback to global
   if [[ -f ./node_modules/.bin/prettier ]]; then
-    ./node_modules/.bin/prettier --write "$FILE_PATH" 2>&1
+    ./node_modules/.bin/prettier --write "$FILE_PATH" > /dev/null 2>&1
   elif command -v prettier &>/dev/null; then
-    prettier --write "$FILE_PATH" 2>&1
+    prettier --write "$FILE_PATH" > /dev/null 2>&1
   fi
   # Silent if prettier not found — not all projects use it
 fi

@@ -32,7 +32,7 @@ description: Clean code principles, TypeScript best practices, anti-patterns, er
 
 ## TypeScript Type Safety
 
-> Enforcement rules: `.claude/rules/typescript.md`
+> Enforcement rules: `.claude/rules/code-quality.md`
 
 ### Data Flow Model
 
@@ -201,7 +201,7 @@ logger.error('[ExcuseAction] Failed:', error as Error)
 
 ## Clean Code Checklist
 
-> TypeScript and error handling items are enforced by `.claude/rules/typescript.md` and the sections above. This checklist covers remaining concerns.
+> TypeScript and error handling items are enforced by `.claude/rules/code-quality.md` and the sections above. This checklist covers remaining concerns.
 
 - [ ] No commented-out code
 - [ ] No unused imports or variables

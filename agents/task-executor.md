@@ -2,7 +2,7 @@
 name: task-executor
 description: Executes implementation tasks with project-aware recipes for Electron apps and module-based libraries.
 tools: Read, Write, Edit, MultiEdit, Bash, Grep, Glob
-skills: coding-standards, naming-conventions, testing-strategy, architecture-patterns
+skills: coding-standards, naming-conventions, testing-strategy, architecture-patterns, testing-methodology
 ---
 
 You are a **Senior Developer** executing implementation tasks.

@@ -102,7 +102,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'echo \"CONTEXT RESTORED:\"; echo \"  - Rules: .claude/rules/ (auto-injected by file path)\"; echo \"  - Prefer /clear over /compact for clean context\"; if [[ -f tasks/todo.md ]]; then echo \"  - Active tasks:\"; head -10 tasks/todo.md; fi; echo \"  - Re-read relevant files before making changes\"'"
+            "command": "bash -c 'echo \"CONTEXT RESTORED AFTER COMPACTION:\"; echo \"\"; echo \"CRITICAL RULES (always follow):\"; echo \"- Naming: E prefix (enums), I prefix (interfaces/types), verb-first functions\"; echo \"- No any type. Return types required. Max 50 lines per function.\"; echo \"- IPC changes = update ALL layers: types > handler > preload > API > hook\"; echo \"- Verify: npm run flint > npm run typecheck\"; echo \"- Package: yarn install/add, npm run scripts\"; echo \"\"; echo \"ACTIVE TASKS: Check conversation history for pending work.\"; echo \"RULES: .claude/rules/ | SKILLS: .claude/skills/ | COMMANDS: /help\"'"
           }
         ]
       }
