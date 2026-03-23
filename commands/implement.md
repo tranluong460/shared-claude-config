@@ -12,7 +12,11 @@ Target: $ARGUMENTS (task description, plan file, or specific change)
 
 ## Workflow
 
-### Step 1: Load Skills
+### Step 1: Delegate to Agent
+
+Delegate to the **task-executor** agent with full context from the input and environment detection.
+
+### Step 1b: Load Skills
 
 - `.claude/skills/coding-standards/SKILL.md`
 - `.claude/skills/naming-conventions/SKILL.md`

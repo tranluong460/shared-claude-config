@@ -56,7 +56,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **task-executor**        | Implements changes with project-aware recipes        | coding-standards, naming-conventions, testing-strategy, architecture-patterns     |
 | **test-architect**       | Test strategy with Electron/Library mock patterns    | testing-strategy, coding-standards, naming-conventions                            |
 
-### Skills (7) — Knowledge Modules
+### Skills (8) — Knowledge Modules
 
 | Skill                       | Content                                                                                               |
 | --------------------------- | ----------------------------------------------------------------------------------------------------- |
@@ -67,6 +67,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **architecture-patterns**   | Electron (IPC, process isolation), provider/factory pattern, dependency rules, audit checklists       |
 | **refactoring-strategy**    | Techniques, risk assessment, Electron/Library recipes, incremental migration                          |
 | **reflection**              | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions  |
+| **testing-methodology**     | 4-step analysis process: Input Assumptions, Flow Analysis, Report, Implement                          |
 
 ### Rules (13) — Context-Aware Enforcement
 
