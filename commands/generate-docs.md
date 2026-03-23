@@ -4,7 +4,7 @@ category: execute
 mutates: true
 consumes: [source-code]
 produces: [documentation]
-next: [audit-docs]
+next_on_success: [audit-docs]
 ---
 
 You are executing the `/generate-docs` command.
@@ -20,6 +20,7 @@ Target: $ARGUMENTS (doc type + optional scope)
 Read and apply:
 
 - `.claude/skills/documentation-standards/SKILL.md`
+- `.claude/skills/project-context/SKILL.md` (if filled in)
 
 ### Step 2: Determine Doc Type
 

@@ -4,7 +4,7 @@ category: execute
 mutates: true
 consumes: [source-code]
 produces: [test-files]
-next: [audit-code]
+next_on_success: [implement]
 ---
 
 You are executing the `/generate-tests` command.
@@ -22,6 +22,7 @@ Target: $ARGUMENTS (file path, module, or "setup" to bootstrap only)
 - `.claude/skills/testing-strategy/SKILL.md`
 - `.claude/skills/coding-standards/SKILL.md`
 - `.claude/skills/naming-conventions/SKILL.md`
+- `.claude/skills/project-context/SKILL.md` (if filled in)
 
 ### Step 2: Detect Test Infrastructure
 

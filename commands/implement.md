@@ -4,7 +4,8 @@ category: execute
 mutates: true
 consumes: [plan, source-code]
 produces: [code-changes]
-next: [parallel-review, audit-code, generate-tests]
+next_on_success: [parallel-review]
+next_on_fail: [diagnose]
 ---
 
 You are executing the `/implement` command.
@@ -27,6 +28,7 @@ Delegate to the **task-executor** agent with full context from the input and env
 - `.claude/skills/naming-conventions/SKILL.md`
 - `.claude/skills/architecture-patterns/SKILL.md`
 - `.claude/skills/testing-strategy/SKILL.md`
+- `.claude/skills/project-context/SKILL.md` (if filled in)
 
 ### Step 2: Detect Environment
 

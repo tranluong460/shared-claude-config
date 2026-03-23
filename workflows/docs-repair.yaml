@@ -1,0 +1,20 @@
+# Documentation Repair Workflow
+# Audit, fix, and verify .claude/ documentation
+
+name: docs-repair
+description: Find and fix documentation inconsistencies
+trigger: Periodic maintenance or after structural changes
+
+steps:
+  - command: /audit-docs
+    purpose: Detect dead, duplicate, or weakly integrated docs
+    on_success: done
+    on_fail:
+      - command: /repair-docs
+        purpose: Fix documentation issues
+
+  - command: /audit-docs
+    purpose: Verify repairs resolved all issues
+    on_success: done
+    on_fail:
+      - note: Manual review needed for remaining issues

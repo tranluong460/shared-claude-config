@@ -4,7 +4,7 @@ category: audit
 mutates: false
 consumes: [source-code]
 produces: [review-report]
-next: [refactor-plan, audit-naming, implement]
+next_on_success: [refactor-plan, implement]
 ---
 
 You are executing the `/audit-code` command.

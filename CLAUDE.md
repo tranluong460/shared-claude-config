@@ -45,3 +45,13 @@ Commands (commands/*.md)  ──call──▶  Agents (agents/*.md)  ──use�
 - Naming conventions: `skills/naming-conventions/SKILL.md`
 - Testing methodology: `skills/testing-methodology/SKILL.md`
 - Project-specific context: `skills/project-context/SKILL.md` (fill in for your project)
+
+## Infrastructure
+
+- **Workflows**: `workflows/*.yaml` — formalized command pipelines (feature-delivery, bug-fix, docs-repair)
+- **Memory**: `memory/lessons.md` — accumulated `/reflect` insights; `memory/workflow-runs/` — per-run artifacts
+- **Configs**: `configs/command-contracts.schema.json` — JSON Schema for command frontmatter validation
+
+## Command Metadata
+
+Every command has `next_on_success` and `next_on_fail` metadata in its frontmatter, enabling workflow chaining. The `suggest-commands.sh` hook also detects post-action language to suggest next steps.

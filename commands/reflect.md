@@ -4,7 +4,7 @@ category: improve
 mutates: false
 consumes: [git-history]
 produces: [reflection-report, config-suggestions]
-next: []
+next_on_success: []
 ---
 
 You are executing the `/reflect` command.

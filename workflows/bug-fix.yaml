@@ -1,0 +1,34 @@
+# Bug Fix Workflow
+# Systematic diagnosis, fix, and verification
+
+name: bug-fix
+description: Root cause analysis to verified fix
+trigger: Bug report or unexpected behavior
+
+steps:
+  - command: /diagnose
+    purpose: Find root cause with evidence
+    on_success: proceed
+
+  - command: /generate-tests
+    purpose: Write regression test for the bug
+    on_success: proceed
+
+  - command: /implement
+    purpose: Apply the fix
+    on_success: proceed
+    on_fail:
+      - command: /diagnose
+        purpose: Re-investigate if fix fails
+
+  - command: /audit-code
+    purpose: Verify fix quality
+    on_success: proceed
+
+  - command: /parallel-review
+    purpose: Independent verification
+    optional: true
+    on_success: done
+    on_fail:
+      - command: /implement
+        purpose: Address review findings

@@ -4,7 +4,7 @@ category: audit
 mutates: false
 consumes: [source-code, package-json]
 produces: [architecture-report]
-next: [audit-code, audit-naming, refactor-plan]
+next_on_success: [audit-code, audit-naming, refactor-plan]
 ---
 
 You are executing the `/audit-project` command.
@@ -22,6 +22,7 @@ Read and apply:
 - `.claude/skills/architecture-patterns/SKILL.md`
 - `.claude/skills/coding-standards/SKILL.md`
 - `.claude/skills/naming-conventions/SKILL.md`
+- `.claude/skills/project-context/SKILL.md` (if filled in)
 
 ### Step 2: Detect Project Type
 

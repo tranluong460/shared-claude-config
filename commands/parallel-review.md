@@ -4,7 +4,8 @@ category: verify
 mutates: false
 consumes: [git-diff]
 produces: [review-report]
-next: [implement]
+next_on_success: [generate-docs, reflect]
+next_on_fail: [implement]
 ---
 
 You are executing the `/parallel-review` command.

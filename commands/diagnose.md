@@ -1,10 +1,10 @@
 ---
 description: Investigate bugs, errors, and unexpected behavior — find root cause and suggest fixes with project-aware debugging
-category: verify
+category: analyze
 mutates: false
 consumes: [error-description, source-code]
 produces: [diagnosis-report]
-next: [generate-tests, implement]
+next_on_success: [generate-tests, implement]
 ---
 
 You are executing the `/diagnose` command.
@@ -22,6 +22,7 @@ Read and apply:
 - `.claude/skills/coding-standards/SKILL.md`
 - `.claude/skills/architecture-patterns/SKILL.md`
 - `.claude/rules/testing-methodology.md` — follow the 4-step analysis process (Input Assumptions -> Flow Analysis -> Report -> then diagnose)
+- `.claude/skills/project-context/SKILL.md` (if filled in)
 
 ### Step 2: Detect Project Type
 

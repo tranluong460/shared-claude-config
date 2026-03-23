@@ -85,6 +85,45 @@ if echo "$PROMPT" | grep -qiE '\b(reflect|improve config|session review|lesson|p
   SUGGESTIONS="$SUGGESTIONS\n  → /reflect 1 week — analyze patterns and suggest config improvements"
 fi
 
+# --- Post-action suggestions (detect "I just finished X" language) ---
+
+# After implementing
+if echo "$PROMPT" | grep -qiE '\b(done implement|implementation (done|complete|finished)|just implemented|finished (coding|building|implementing))\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /parallel-review latest — independent review of your changes"
+fi
+
+# After review passed
+if echo "$PROMPT" | grep -qiE '\b(review (passed|clean|looks good|approved)|lgtm|no issues found|all checks passed)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /generate-docs <type> — document what changed"
+  SUGGESTIONS="$SUGGESTIONS\n  → /reflect 1 week — analyze patterns and improve"
+fi
+
+# After review failed
+if echo "$PROMPT" | grep -qiE '\b(review (failed|found issues|found problems)|needs (fixes|changes)|problems found)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /implement \"fix review issues\" — address review findings"
+fi
+
+# After diagnosis
+if echo "$PROMPT" | grep -qiE '\b(found (the bug|root cause|the issue)|diagnosis (complete|done)|identified (the|root) cause)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /implement \"fix <issue>\" — apply the fix"
+  SUGGESTIONS="$SUGGESTIONS\n  → /generate-tests <file> — add regression test"
+fi
+
+# After generating tests
+if echo "$PROMPT" | grep -qiE '\b(tests (generated|created|added|passing)|test generation (done|complete))\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /implement \"<task>\" — proceed with implementation"
+fi
+
+# After generating docs
+if echo "$PROMPT" | grep -qiE '\b(docs? (generated|created|written)|documentation (done|complete|generated))\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /audit-docs — verify documentation consistency"
+fi
+
+# After audit found issues
+if echo "$PROMPT" | grep -qiE '\b(audit found|issues detected|doc.*(issues|problems) found)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /repair-docs — fix documentation issues"
+fi
+
 if [[ -n "$SUGGESTIONS" ]]; then
   echo -e "Available commands for this task:$SUGGESTIONS"
 fi

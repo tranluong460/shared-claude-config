@@ -36,14 +36,14 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | ------------------ | -------- | ------------------------------ | ------------------- | ----------------------------------------------------------------------------- |
 | `/audit-code`      | audit    | Code quality review            | reviewer            | coding-standards, naming-conventions, architecture-patterns                   |
 | `/audit-naming`    | audit    | Naming convention audit        | reviewer            | naming-conventions                                                            |
-| `/audit-project`   | audit    | Full architecture audit        | architect           | architecture-patterns, coding-standards, naming-conventions                   |
+| `/audit-project`   | audit    | Full architecture audit        | architect           | architecture-patterns, coding-standards, naming-conventions, project-context  |
 | `/audit-docs`      | audit    | .claude/ documentation audit (read-only) | doc-auditor | architecture-patterns, documentation-standards                                |
 | `/repair-docs`     | execute  | Fix issues found by /audit-docs | doc-auditor         | architecture-patterns, documentation-standards                                |
-| `/diagnose`        | verify   | Bug investigation              | debugger            | coding-standards, architecture-patterns                                       |
+| `/diagnose`        | analyze  | Bug investigation              | debugger            | coding-standards, architecture-patterns, project-context                      |
 | `/refactor-plan`   | plan     | Refactoring strategy           | architect           | refactoring-strategy, architecture-patterns, naming-conventions               |
-| `/generate-tests`  | execute  | Test generation                | test-architect      | testing-strategy, coding-standards, naming-conventions                        |
-| `/generate-docs`   | execute  | Documentation generation       | doc-writer          | documentation-standards                                                       |
-| `/implement`       | execute  | Execute implementation         | task-executor       | coding-standards, naming-conventions, testing-strategy, architecture-patterns |
+| `/generate-tests`  | execute  | Test generation                | test-architect      | testing-strategy, coding-standards, naming-conventions, project-context       |
+| `/generate-docs`   | execute  | Documentation generation       | doc-writer          | documentation-standards, project-context                                      |
+| `/implement`       | execute  | Execute implementation         | task-executor       | coding-standards, naming-conventions, testing-strategy, architecture-patterns, project-context |
 | `/parallel-review` | verify   | Independent worktree review    | reviewer            | coding-standards, naming-conventions, architecture-patterns, testing-strategy |
 | `/reflect`         | improve  | Session analysis & improve     | reflection-analyzer | reflection, coding-standards                                                  |
 
@@ -51,14 +51,14 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 
 | Agent                    | Role                                                 | Primary Skills                                                                    |
 | ------------------------ | ---------------------------------------------------- | --------------------------------------------------------------------------------- |
-| **architect**            | Analyzes architecture, plans refactoring             | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions |
+| **architect**            | Analyzes architecture, plans refactoring             | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions, project-context |
 | **reviewer**             | Reviews code quality (standard + independent worktree modes) | coding-standards, naming-conventions, architecture-patterns, testing-strategy |
-| **debugger**             | Cross-process debugging, root cause analysis         | coding-standards, architecture-patterns                                           |
+| **debugger**             | Cross-process debugging, root cause analysis         | coding-standards, architecture-patterns, testing-methodology, project-context     |
 | **doc-auditor**          | Audits and repairs .claude/ documentation consistency | architecture-patterns, documentation-standards                                    |
-| **doc-writer**           | Creates and reviews documentation                    | documentation-standards                                                           |
+| **doc-writer**           | Creates and reviews documentation                    | documentation-standards, project-context                                          |
 | **reflection-analyzer**  | Analyzes sessions, detects patterns, suggests fixes  | reflection, coding-standards                                                      |
-| **task-executor**        | Implements changes with project-aware recipes        | coding-standards, naming-conventions, testing-strategy, architecture-patterns     |
-| **test-architect**       | Test strategy with Electron/Library mock patterns    | testing-strategy, coding-standards, naming-conventions                            |
+| **task-executor**        | Implements changes with project-aware recipes        | coding-standards, naming-conventions, testing-strategy, architecture-patterns, testing-methodology, project-context |
+| **test-architect**       | Test strategy with Electron/Library mock patterns    | testing-strategy, coding-standards, naming-conventions, project-context            |
 
 ### Skills (9) — Knowledge Modules
 
@@ -125,10 +125,14 @@ The toolkit supports the full development improvement cycle:
 ```
 /diagnose               Find root cause
         ↓
-/implement              Apply the fix + regression test
+/generate-tests         Regression test
+        ↓
+/implement              Apply the fix
         ↓
 /audit-code             Verify fix quality
 ```
+
+> Machine-readable workflow definitions: see `workflows/*.yaml`
 
 ---
 
@@ -150,11 +154,12 @@ Create `commands/<name>.md` with:
 ```yaml
 ---
 description: What this command does
-category: audit|plan|execute|verify|improve
+category: audit|plan|execute|verify|analyze|improve
 mutates: false
 consumes: [source-code]
 produces: [report]
-next: [follow-up-command]
+next_on_success: [follow-up-on-success]
+next_on_fail: [follow-up-on-failure]
 ---
 ```
 
@@ -177,7 +182,7 @@ description: <what knowledge this provides>
 
 | Hook                     | Event              | Script / Type                        | What it does                                                            |
 | ------------------------ | ------------------ | ------------------------------------ | ----------------------------------------------------------------------- |
-| Suggest commands         | `UserPromptSubmit` | `hooks/suggest-commands.sh`          | Auto-suggest relevant `/commands` based on user prompt keywords         |
+| Suggest commands         | `UserPromptSubmit` | `hooks/suggest-commands.sh`          | Auto-suggest `/commands` based on keywords + post-action detection      |
 | Block dangerous commands | `PreToolUse`       | `hooks/block-dangerous-commands.sh`  | Blocks `rm -rf`, `git push --force`, `chmod 777`, `curl\|sh`, etc.     |
 | Auto-format after edit   | `PostToolUse`      | `hooks/auto-format.sh`              | Runs `prettier --write` on `.ts`/`.tsx` files                           |
 | Context persistence      | `PostCompact`      | inline                               | Re-injects rules reminder, active tasks, `/clear` vs `/compact` tip    |
@@ -198,6 +203,32 @@ External scripts in `.claude/hooks/` — readable, testable, maintainable:
 
 - **Allow**: Bash, all Claude tools (Read, Write, Edit, Grep, Glob, WebSearch, WebFetch)
 - **Deny**: `.env`, credentials, secrets, SSH keys, GPG, Docker config, Kubernetes config, shell profiles — never read or edit
+
+---
+
+## Infrastructure
+
+### Workflows (`workflows/*.yaml`)
+
+Formalized command pipelines that define step-by-step execution paths:
+
+| Workflow | Steps | Trigger |
+|----------|-------|---------|
+| `feature-delivery.yaml` | audit → plan → test → implement → review → docs → reflect | New feature or enhancement |
+| `bug-fix.yaml` | diagnose → test → implement → audit → review | Bug report or unexpected behavior |
+| `docs-repair.yaml` | audit-docs → repair-docs → audit-docs (verify) | Periodic maintenance |
+
+### Memory (`memory/`)
+
+Persistence layer for reflection and telemetry:
+
+- `lessons.md` — Accumulated insights from `/reflect` sessions
+- `command-history.jsonl` — Command invocation log (for future tooling)
+- `workflow-runs/` — Per-run artifacts
+
+### Configs (`configs/`)
+
+- `command-contracts.schema.json` — JSON Schema validating command frontmatter
 
 ---
 

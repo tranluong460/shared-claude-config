@@ -4,7 +4,7 @@ category: audit
 mutates: false
 consumes: [source-code]
 produces: [naming-report]
-next: [implement]
+next_on_success: [implement]
 ---
 
 You are executing the `/audit-naming` command.

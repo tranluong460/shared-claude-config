@@ -1,0 +1,44 @@
+# Feature Delivery Workflow
+# Full cycle from audit to documentation for new features or enhancements
+
+name: feature-delivery
+description: End-to-end feature implementation with quality gates
+trigger: New feature request or enhancement
+
+steps:
+  - command: /audit-project
+    purpose: Understand current architecture before changes
+    optional: true
+    on_success: proceed
+
+  - command: /refactor-plan
+    purpose: Plan changes if structural work needed
+    optional: true
+    on_success: proceed
+
+  - command: /generate-tests
+    purpose: Write tests first (TDD when infrastructure exists)
+    on_success: proceed
+
+  - command: /implement
+    purpose: Execute the feature implementation
+    on_success: proceed
+    on_fail:
+      - command: /diagnose
+        purpose: Investigate implementation failure
+
+  - command: /parallel-review
+    purpose: Independent quality gate
+    on_success: proceed
+    on_fail:
+      - command: /implement
+        purpose: Fix review findings
+
+  - command: /generate-docs
+    purpose: Document the new feature
+    on_success: proceed
+
+  - command: /reflect
+    purpose: Weekly retrospective
+    optional: true
+    cadence: weekly
