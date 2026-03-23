@@ -6,7 +6,7 @@ A reusable AI toolkit for developing Node.js / TypeScript / Electron projects at
 
 | I want to...             | Command                                | What happens                                             |
 | ------------------------ | -------------------------------------- | -------------------------------------------------------- |
-| Review code quality      | `/review src/modules/user`             | Code review with severity-ranked issues                  |
+| Review code quality      | `/audit-code src/modules/user`         | Code review with severity-ranked issues                  |
 | Audit naming conventions | `/audit-naming src/`                   | Scan names (E/I prefix, A/HC/LC, S-I-D), suggest renames |
 | Audit full project       | `/audit-project`                       | Auto-detect type → architecture, IPC, deps, health score |
 | Generate tests           | `/generate-tests src/services/auth.ts` | Detect framework → plan → generate tests                 |
@@ -30,7 +30,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 
 | Command            | Description                 | Agent             | Skills Used                                                                   |
 | ------------------ | --------------------------- | ----------------- | ----------------------------------------------------------------------------- |
-| `/review`          | Code quality review         | code-reviewer     | coding-standards, naming-conventions, architecture-patterns                   |
+| `/audit-code`      | Code quality review         | code-reviewer     | coding-standards, naming-conventions, architecture-patterns                   |
 | `/audit-naming`    | Naming convention audit     | code-reviewer     | naming-conventions                                                            |
 | `/audit-project`   | Full architecture audit     | architect         | architecture-patterns, coding-standards, naming-conventions                   |
 | `/generate-tests`  | Test generation             | test-architect    | testing-strategy, coding-standards, naming-conventions                        |
@@ -97,7 +97,7 @@ The toolkit supports the full development improvement cycle:
 ```
 /audit-project          Understand current state
         ↓
-/review + /audit-naming  Identify specific issues
+/audit-code + /audit-naming  Identify specific issues
         ↓
 /refactor-plan          Plan the improvements
         ↓
@@ -119,7 +119,7 @@ The toolkit supports the full development improvement cycle:
         ↓
 /implement              Apply the fix + regression test
         ↓
-/review                 Verify fix quality
+/audit-code             Verify fix quality
 ```
 
 ---

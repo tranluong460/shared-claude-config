@@ -22,7 +22,7 @@ fi
 
 # Review/check keywords
 if echo "$PROMPT" | grep -qiE '\b(review|check|quality|smell|code review)\b'; then
-  SUGGESTIONS="$SUGGESTIONS\n  → /review <scope> — code quality review"
+  SUGGESTIONS="$SUGGESTIONS\n  → /audit-code <scope> — code quality review"
 fi
 
 # Architecture/audit keywords

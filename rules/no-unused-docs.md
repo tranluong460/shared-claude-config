@@ -1,3 +1,8 @@
+---
+paths:
+  - .claude/**
+---
+
 # No Unused Documentation (always active)
 
 > Self-protection rule for the `.claude/` system. Run `/audit-docs` to verify.

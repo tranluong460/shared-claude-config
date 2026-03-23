@@ -1,3 +1,9 @@
+---
+paths:
+  - src/**
+  - package.json
+---
+
 # Project Type Detection (always active)
 
 > Auto-detect project type before applying analysis. This is the canonical detection table — do not duplicate in commands or agents.

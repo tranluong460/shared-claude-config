@@ -1,3 +1,8 @@
+---
+name: testing-methodology
+description: 4-step analysis process for logic changes — Input Assumptions, Flow Analysis, Report, Implement.
+---
+
 # Testing & Analysis Methodology (always active)
 
 > Canonical process for analyzing and testing logic changes. Agents and commands reference here — do not duplicate.

@@ -2,7 +2,7 @@
 description: Review code quality, patterns, and anti-patterns in the specified scope with project-aware checks
 ---
 
-You are executing the `/review` command.
+You are executing the `/audit-code` command.
 
 ## Input
 

@@ -15,6 +15,7 @@ Scope: $ARGUMENTS (default: entire `.claude/` directory)
 Read and apply:
 
 - `.claude/skills/architecture-patterns/SKILL.md`
+- `.claude/rules/no-unused-docs.md`
 
 ### Step 1b: Agent
 
