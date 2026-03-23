@@ -1,6 +1,7 @@
 ---
 name: testing-methodology
 description: 4-step analysis process for logic changes — Input Assumptions, Flow Analysis, Report, Implement.
+layer: workflow
 ---
 
 # Testing & Analysis Methodology (always active)

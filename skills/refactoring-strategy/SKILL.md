@@ -1,6 +1,7 @@
 ---
 name: refactoring-strategy
 description: Refactoring techniques, strategy selection, risk assessment, and incremental approach for Node.js / Electron / module-based library projects. Includes Electron-specific and provider pattern recipes.
+layer: architecture
 ---
 
 # Refactoring Strategy for Node.js / TypeScript / Electron

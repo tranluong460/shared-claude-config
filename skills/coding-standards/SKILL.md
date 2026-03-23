@@ -1,6 +1,7 @@
 ---
 name: coding-standards
 description: Clean code principles, TypeScript best practices, anti-patterns, error handling, and logging conventions for Node.js / Electron / TypeScript projects.
+layer: core
 ---
 
 # Coding Standards for Node.js / TypeScript

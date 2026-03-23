@@ -1,5 +1,10 @@
 ---
 description: Analyze recent sessions — identify patterns, recurring mistakes, and suggest config improvements
+category: improve
+mutates: false
+consumes: [git-history]
+produces: [reflection-report, config-suggestions]
+next: []
 ---
 
 You are executing the `/reflect` command.

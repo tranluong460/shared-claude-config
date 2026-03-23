@@ -1,5 +1,10 @@
 ---
 description: Analyze code and create a structured refactoring plan with phases, risk assessment, and project-aware recipes
+category: plan
+mutates: false
+consumes: [source-code]
+produces: [refactoring-plan]
+next: [generate-tests, implement]
 ---
 
 You are executing the `/refactor-plan` command.

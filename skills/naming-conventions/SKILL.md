@@ -1,6 +1,7 @@
 ---
 name: naming-conventions
 description: Naming reference with examples for Node.js / TypeScript / Electron projects. Core rules enforced via .claude/rules/code-quality.md — this skill provides detailed examples and patterns.
+layer: core
 ---
 
 # Naming Conventions — Reference & Examples

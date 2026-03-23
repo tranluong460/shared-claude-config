@@ -1,6 +1,6 @@
 ---
 name: doc-auditor
-description: Enforces documentation consistency in the .claude/ system — detects unused, dead, or weakly integrated documents.
+description: Audits and repairs .claude/ documentation consistency — detects unused, dead, or weakly integrated documents.
 tools: Read, Grep, Glob
 skills: architecture-patterns, documentation-standards
 ---

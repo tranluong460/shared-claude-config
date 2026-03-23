@@ -1,5 +1,10 @@
 ---
 description: Generate documentation for specified code — README, guides, API docs, design docs, ADRs, troubleshooting, or changelog
+category: execute
+mutates: true
+consumes: [source-code]
+produces: [documentation]
+next: [audit-docs]
 ---
 
 You are executing the `/generate-docs` command.

@@ -1,5 +1,10 @@
 ---
 description: Full architecture audit of the project — structure, dependencies, patterns, and health assessment
+category: audit
+mutates: false
+consumes: [source-code, package-json]
+produces: [architecture-report]
+next: [audit-code, audit-naming, refactor-plan]
 ---
 
 You are executing the `/audit-project` command.

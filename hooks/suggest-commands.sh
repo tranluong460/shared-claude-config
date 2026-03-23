@@ -55,6 +55,11 @@ if echo "$PROMPT" | grep -qiE '\b(dead doc|unused doc|orphan|audit.?doc|doc.?con
   SUGGESTIONS="$SUGGESTIONS\n  → /audit-docs — audit .claude/ documentation consistency"
 fi
 
+# Documentation repair keywords
+if echo "$PROMPT" | grep -qiE '\b(fix doc|repair doc|sync doc|doc.?repair|doc.?fix|fix.?unused)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /repair-docs — fix documentation issues found by /audit-docs"
+fi
+
 # Logic and flow analysis
 if echo "$PROMPT" | grep -qiE '\b(logic|flow|data.?flow|state.?manag|edge.?case|race.?condition)\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /diagnose \"<description>\" — investigate logic/flow issue"

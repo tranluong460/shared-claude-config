@@ -1,5 +1,10 @@
 ---
 description: Audit naming conventions across the project and suggest renames
+category: audit
+mutates: false
+consumes: [source-code]
+produces: [naming-report]
+next: [implement]
 ---
 
 You are executing the `/audit-naming` command.
@@ -55,7 +60,7 @@ Identify which context each file belongs to (determines which rules apply):
 
 ### Step 4: Audit Categories
 
-Act as the **code-reviewer** agent focused on naming. Check each category:
+Act as the **reviewer** agent focused on naming. Check each category:
 
 #### 4.1 Folder Naming
 

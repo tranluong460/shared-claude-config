@@ -1,6 +1,7 @@
 ---
 name: reflection
 description: Session analysis and self-improvement — review recent work patterns, identify recurring mistakes, and suggest config improvements.
+layer: workflow
 ---
 
 # Reflection & Self-Improvement

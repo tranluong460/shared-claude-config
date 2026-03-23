@@ -1,6 +1,7 @@
 ---
 name: architecture-patterns
 description: Project structure reference for Electron apps, Node.js projects, and module-based libraries. Process rules enforced via .claude/rules/ — this skill provides structure diagrams and pattern examples.
+layer: architecture
 ---
 
 # Architecture Patterns — Reference

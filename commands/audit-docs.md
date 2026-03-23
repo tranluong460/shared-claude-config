@@ -1,5 +1,10 @@
 ---
-description: Audit documentation consistency — detect unused, duplicated, or weakly integrated docs in .claude/
+description: Audit documentation consistency — detect unused, duplicated, or weakly integrated docs in .claude/ (read-only analysis)
+category: audit
+mutates: false
+consumes: [claude-config]
+produces: [doc-audit-report]
+next: [repair-docs]
 ---
 
 You are executing the `/audit-docs` command.
@@ -178,7 +183,7 @@ Detect cases where a document SHOULD be loaded but is not:
 
 | Command | Uses Agent | Loads Skills | Hook Suggested | Classification |
 | ------- | ---------- | ------------ | -------------- | -------------- |
-| audit-naming | code-reviewer | 1 | Yes | Active |
+| audit-naming | reviewer | 1 | Yes | Active |
 | ... | ... | ... | ... | ... |
 
 ### Issues Found
@@ -215,36 +220,9 @@ Detect cases where a document SHOULD be loaded but is not:
 | 2 | <specific action> | <specific files> |
 ```
 
-### Step 7: Enforce (MANDATORY)
-
-After producing the report, execute fixes for all critical issues:
-
-#### 7a. Dead Documents
-- **Attach** to relevant command/agent OR **delete**
-- Output: exact file path + exact change (line number, content to add)
-
-#### 7b. Passive Critical Documents
-- Promote to Active by injecting into relevant command or agent
-- Output: which command/agent file, what line to add
-
-#### 7c. Missing Integrations
-- Add reference in the target command/agent
-- Output: exact edit with old_string → new_string
-
-#### 7d. Broken Pipelines
-- Fix by creating missing agent or adding missing skill reference
-- Output: file to create or edit
-
-**Format for each fix:**
-```
-File: <path>
-Action: <add/edit/delete>
-Change: <exact content>
-```
-
-Do NOT just report issues — fix them or provide copy-paste-ready fixes.
-
 ## Notes
+
+> To fix issues found by this audit, run `/repair-docs`.
 
 - Auto-injected rules (with `paths:` frontmatter) are passive by design -- this is acceptable
 - Rules are meant to be concise, skills are meant to be detailed -- some conceptual overlap is normal

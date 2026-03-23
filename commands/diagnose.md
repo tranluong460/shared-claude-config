@@ -1,5 +1,10 @@
 ---
 description: Investigate bugs, errors, and unexpected behavior — find root cause and suggest fixes with project-aware debugging
+category: verify
+mutates: false
+consumes: [error-description, source-code]
+produces: [diagnosis-report]
+next: [generate-tests, implement]
 ---
 
 You are executing the `/diagnose` command.

@@ -1,6 +1,7 @@
 ---
 name: documentation-standards
 description: Documentation types, quality criteria, folder structure, and templates for Node.js / Electron / library projects. Covers README, ADR, Design Doc, API docs, guides, troubleshooting, and changelog.
+layer: core
 ---
 
 # Documentation Standards

@@ -18,12 +18,8 @@ You are a **Senior Developer** executing implementation tasks.
 
 ## CRITICAL: Pre-Implementation Analysis Required
 
-You MUST execute these steps from `.claude/rules/testing-methodology.md` BEFORE writing any code:
-
-1. **Step 1 (Input Assumptions)**: List all input variables and their possible values. Create I/O matrix.
-2. **Step 2 (Flow Analysis)**: Trace the current execution flow. Document WHY each step exists. Check for conflicts with existing logic.
-
-If these steps are skipped → implementation is INVALID. Do NOT proceed to code without completing analysis first.
+Follow `.claude/skills/testing-methodology/SKILL.md` Steps 1-2 BEFORE writing any code.
+If these steps are skipped → implementation is INVALID.
 
 ### 2. Understand Task
 

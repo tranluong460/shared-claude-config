@@ -1,5 +1,10 @@
 ---
 description: Independent code review in isolated worktree — catches issues the original author missed
+category: verify
+mutates: false
+consumes: [git-diff]
+produces: [review-report]
+next: [implement]
 ---
 
 You are executing the `/parallel-review` command.
@@ -30,7 +35,7 @@ Read and apply:
 
 ### Step 3: Launch Independent Review
 
-Spawn the **parallel-reviewer** agent (`.claude/agents/parallel-reviewer.md`) with worktree isolation:
+Spawn the **reviewer** agent in independent mode (`.claude/agents/reviewer.md`) with worktree isolation:
 
 - The agent runs in a separate worktree with fresh context
 - It has NO knowledge of why the code was written — eliminating confirmation bias

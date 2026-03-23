@@ -1,5 +1,10 @@
 ---
 description: Execute implementation tasks — refactoring, bug fixes, or feature additions with project-aware recipes
+category: execute
+mutates: true
+consumes: [plan, source-code]
+produces: [code-changes]
+next: [parallel-review, audit-code, generate-tests]
 ---
 
 You are executing the `/implement` command.

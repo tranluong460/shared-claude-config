@@ -1,6 +1,7 @@
 ---
 name: testing-strategy
 description: Test design patterns, mock strategies, and project-specific testing guides. Test rules enforced via .claude/rules/testing.md — this skill provides mock pattern examples and testability guides.
+layer: testing
 ---
 
 # Testing Strategy — Reference

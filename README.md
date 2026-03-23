@@ -9,6 +9,8 @@ A reusable AI toolkit for developing Node.js / TypeScript / Electron projects at
 | Review code quality      | `/audit-code src/modules/user`         | Code review with severity-ranked issues                  |
 | Audit naming conventions | `/audit-naming src/`                   | Scan names (E/I prefix, A/HC/LC, S-I-D), suggest renames |
 | Audit full project       | `/audit-project`                       | Auto-detect type → architecture, IPC, deps, health score |
+| Audit .claude/ docs      | `/audit-docs`                          | Detect dead, duplicate, or weakly integrated docs        |
+| Fix .claude/ doc issues  | `/repair-docs`                         | Fix documentation issues found by /audit-docs            |
 | Generate tests           | `/generate-tests src/services/auth.ts` | Detect framework → plan → generate tests                 |
 | Generate documentation   | `/generate-docs <type>`                | Categorized docs: guides, API, ADR, fix, changelog       |
 | Plan refactoring         | `/refactor-plan src/utils/`            | Risk assessment → phased plan                            |
@@ -22,52 +24,55 @@ A reusable AI toolkit for developing Node.js / TypeScript / Electron projects at
 ## Architecture
 
 ```
+CLAUDE.md (entry point)
+    ↓
 Commands  ──call──▶  Agents  ──use──▶  Skills
 (actions)           (AI roles)        (knowledge)
 ```
 
-### Commands (11) — User-Facing Actions
+### Commands (12) — User-Facing Actions
 
-| Command            | Description                 | Agent             | Skills Used                                                                   |
-| ------------------ | --------------------------- | ----------------- | ----------------------------------------------------------------------------- |
-| `/audit-code`      | Code quality review         | code-reviewer     | coding-standards, naming-conventions, architecture-patterns                   |
-| `/audit-naming`    | Naming convention audit     | code-reviewer     | naming-conventions                                                            |
-| `/audit-project`   | Full architecture audit     | architect         | architecture-patterns, coding-standards, naming-conventions                   |
-| `/generate-tests`  | Test generation             | test-architect    | testing-strategy, coding-standards, naming-conventions                        |
-| `/generate-docs`   | Documentation generation    | doc-writer        | documentation-standards                                                       |
-| `/refactor-plan`   | Refactoring strategy        | architect         | refactoring-strategy, architecture-patterns, naming-conventions               |
-| `/diagnose`        | Bug investigation           | debugger          | coding-standards, architecture-patterns                                       |
-| `/implement`       | Execute implementation      | task-executor     | coding-standards, naming-conventions, testing-strategy, architecture-patterns |
-| `/parallel-review` | Independent worktree review | parallel-reviewer | coding-standards, naming-conventions, architecture-patterns, testing-strategy |
-| `/reflect`         | Session analysis & improve  | reflection-analyzer | reflection, coding-standards                                                  |
-| `/audit-docs`      | Audit `.claude/` documentation consistency — detect dead, duplicate, or weakly integrated docs | doc-auditor       | architecture-patterns, documentation-standards                                |
+| Command            | Category | Description                    | Agent               | Skills Used                                                                   |
+| ------------------ | -------- | ------------------------------ | ------------------- | ----------------------------------------------------------------------------- |
+| `/audit-code`      | audit    | Code quality review            | reviewer            | coding-standards, naming-conventions, architecture-patterns                   |
+| `/audit-naming`    | audit    | Naming convention audit        | reviewer            | naming-conventions                                                            |
+| `/audit-project`   | audit    | Full architecture audit        | architect           | architecture-patterns, coding-standards, naming-conventions                   |
+| `/audit-docs`      | audit    | .claude/ documentation audit (read-only) | doc-auditor | architecture-patterns, documentation-standards                                |
+| `/repair-docs`     | execute  | Fix issues found by /audit-docs | doc-auditor         | architecture-patterns, documentation-standards                                |
+| `/diagnose`        | verify   | Bug investigation              | debugger            | coding-standards, architecture-patterns                                       |
+| `/refactor-plan`   | plan     | Refactoring strategy           | architect           | refactoring-strategy, architecture-patterns, naming-conventions               |
+| `/generate-tests`  | execute  | Test generation                | test-architect      | testing-strategy, coding-standards, naming-conventions                        |
+| `/generate-docs`   | execute  | Documentation generation       | doc-writer          | documentation-standards                                                       |
+| `/implement`       | execute  | Execute implementation         | task-executor       | coding-standards, naming-conventions, testing-strategy, architecture-patterns |
+| `/parallel-review` | verify   | Independent worktree review    | reviewer            | coding-standards, naming-conventions, architecture-patterns, testing-strategy |
+| `/reflect`         | improve  | Session analysis & improve     | reflection-analyzer | reflection, coding-standards                                                  |
 
-### Agents (9) — AI Roles
+### Agents (8) — AI Roles
 
 | Agent                    | Role                                                 | Primary Skills                                                                    |
 | ------------------------ | ---------------------------------------------------- | --------------------------------------------------------------------------------- |
 | **architect**            | Analyzes architecture, plans refactoring             | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions |
-| **code-reviewer**        | Reviews code quality with Electron/Library awareness | coding-standards, naming-conventions, architecture-patterns                       |
-| **parallel-reviewer**    | Independent review in isolated worktree (no bias)    | coding-standards, naming-conventions, architecture-patterns, testing-strategy     |
+| **reviewer**             | Reviews code quality (standard + independent worktree modes) | coding-standards, naming-conventions, architecture-patterns, testing-strategy |
 | **debugger**             | Cross-process debugging, root cause analysis         | coding-standards, architecture-patterns                                           |
-| **doc-auditor**          | Enforces .claude/ documentation consistency          | architecture-patterns, documentation-standards                                    |
+| **doc-auditor**          | Audits and repairs .claude/ documentation consistency | architecture-patterns, documentation-standards                                    |
 | **doc-writer**           | Creates and reviews documentation                    | documentation-standards                                                           |
 | **reflection-analyzer**  | Analyzes sessions, detects patterns, suggests fixes  | reflection, coding-standards                                                      |
 | **task-executor**        | Implements changes with project-aware recipes        | coding-standards, naming-conventions, testing-strategy, architecture-patterns     |
 | **test-architect**       | Test strategy with Electron/Library mock patterns    | testing-strategy, coding-standards, naming-conventions                            |
 
-### Skills (8) — Knowledge Modules
+### Skills (9) — Knowledge Modules
 
-| Skill                       | Content                                                                                               |
-| --------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **coding-standards**        | Clean code, TypeScript best practices, error handling, anti-patterns                                  |
-| **naming-conventions**      | S-I-D, A/HC/LC, E prefix (enums), I prefix (interfaces/types), IPC channels, React naming             |
-| **testing-strategy**        | Test design, AAA pattern, mocking, Electron/Library test guides, bootstrap                            |
-| **documentation-standards** | Categorized docs structure, templates for guides, ADR, API, IPC, entities, troubleshooting, changelog |
-| **architecture-patterns**   | Electron (IPC, process isolation), provider/factory pattern, dependency rules, audit checklists       |
-| **refactoring-strategy**    | Techniques, risk assessment, Electron/Library recipes, incremental migration                          |
-| **reflection**              | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions  |
-| **testing-methodology**     | 4-step analysis process: Input Assumptions, Flow Analysis, Report, Implement                          |
+| Skill                       | Layer        | Content                                                                                               |
+| --------------------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
+| **coding-standards**        | core         | Clean code, TypeScript best practices, error handling, anti-patterns                                  |
+| **naming-conventions**      | core         | S-I-D, A/HC/LC, E prefix (enums), I prefix (interfaces/types), IPC channels, React naming             |
+| **documentation-standards** | core         | Categorized docs structure, templates for guides, ADR, API, IPC, entities, troubleshooting, changelog |
+| **architecture-patterns**   | architecture | Electron (IPC, process isolation), provider/factory pattern, dependency rules, audit checklists       |
+| **refactoring-strategy**    | architecture | Techniques, risk assessment, Electron/Library recipes, incremental migration                          |
+| **testing-strategy**        | testing      | Test design, AAA pattern, mocking, Electron/Library test guides, bootstrap                            |
+| **testing-methodology**     | workflow     | 4-step analysis process: Input Assumptions, Flow Analysis, Report, Implement                          |
+| **reflection**              | workflow     | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions  |
+| **project-context**         | project      | Template for project-specific tech stack, commands, architecture decisions, business rules             |
 
 ### Rules (13) — Context-Aware Enforcement
 
@@ -100,6 +105,8 @@ The toolkit supports the full development improvement cycle:
         ↓
 /audit-code + /audit-naming  Identify specific issues
         ↓
+/audit-docs             Check .claude/ consistency
+        ↓               (/repair-docs to fix)
 /refactor-plan          Plan the improvements
         ↓
 /generate-tests         Add test safety net
@@ -129,7 +136,7 @@ The toolkit supports the full development improvement cycle:
 
 ### Adding Project-Specific Context
 
-Create a `skills/project-context/SKILL.md` with:
+Fill in the template at `skills/project-context/SKILL.md` with:
 
 - Project tech stack
 - Build and test commands
@@ -143,6 +150,11 @@ Create `commands/<name>.md` with:
 ```yaml
 ---
 description: What this command does
+category: audit|plan|execute|verify|improve
+mutates: false
+consumes: [source-code]
+produces: [report]
+next: [follow-up-command]
 ---
 ```
 

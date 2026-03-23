@@ -1,5 +1,10 @@
 ---
 description: Generate tests for specified code — bootstrap test infra if needed, then plan and generate tests
+category: execute
+mutates: true
+consumes: [source-code]
+produces: [test-files]
+next: [audit-code]
 ---
 
 You are executing the `/generate-tests` command.

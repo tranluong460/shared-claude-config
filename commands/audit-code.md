@@ -1,5 +1,10 @@
 ---
 description: Review code quality, patterns, and anti-patterns in the specified scope with project-aware checks
+category: audit
+mutates: false
+consumes: [source-code]
+produces: [review-report]
+next: [refactor-plan, audit-naming, implement]
 ---
 
 You are executing the `/audit-code` command.
@@ -37,8 +42,8 @@ Determine what to review:
 
 ### Step 4: Delegate to Agent
 
-Delegate to the **code-reviewer** agent with full context from Steps 1-3.
-The agent follows its complete review process defined in `.claude/agents/code-reviewer.md`:
+Delegate to the **reviewer** agent (standard mode) with full context from Steps 1-3.
+The agent follows its complete review process defined in `.claude/agents/reviewer.md`:
 
 1. Code quality analysis (Critical -> Major -> Minor)
 2. Naming audit (E/I prefix, A/HC/LC, S-I-D)
