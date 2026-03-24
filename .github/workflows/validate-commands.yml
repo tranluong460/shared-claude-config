@@ -1,0 +1,24 @@
+name: Validate Command Graph
+
+on:
+  push:
+    paths:
+      - 'commands/*.md'
+      - 'workflows/*.yaml'
+      - 'configs/*.json'
+      - 'scripts/validate-graph.sh'
+  pull_request:
+    paths:
+      - 'commands/*.md'
+      - 'workflows/*.yaml'
+      - 'configs/*.json'
+      - 'scripts/validate-graph.sh'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate command graph and workflow integrity
+        run: bash scripts/validate-graph.sh

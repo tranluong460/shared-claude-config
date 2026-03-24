@@ -191,7 +191,7 @@ description: <what knowledge this provides>
 | ------------------------ | ------------------ | ------------------------------------ | ----------------------------------------------------------------------- |
 | Suggest commands         | `UserPromptSubmit` | `hooks/suggest-commands.sh`          | Auto-suggest `/commands` based on keywords + result-state detection     |
 | Block dangerous commands | `PreToolUse`       | `hooks/block-dangerous-commands.sh`  | Blocks `rm -rf`, `git push --force`, `chmod 777`, `curl\|sh`, etc.     |
-| Log commands             | `PostToolUse`      | `hooks/log-command.sh`              | Logs command invocations to `memory/command-history.jsonl`              |
+| Log commands             | `UserPromptSubmit` | `hooks/log-command.sh`              | Logs `/command` invocations to `memory/command-history.jsonl`          |
 | Auto-format after edit   | `PostToolUse`      | `hooks/auto-format.sh`              | Runs `prettier --write` on `.ts`/`.tsx` files                           |
 | Context persistence      | `PostCompact`      | inline                               | Re-injects rules reminder, active tasks, `/clear` vs `/compact` tip    |
 | Notification on finish   | `Stop`             | inline                               | System sound (Windows) / native notification (macOS/Linux)              |
@@ -203,7 +203,7 @@ External scripts in `.claude/hooks/` — readable, testable, maintainable:
 ```
 .claude/hooks/
 ├── block-dangerous-commands.sh   # PreToolUse: deny dangerous bash patterns
-├── log-command.sh                # PostToolUse: log commands to memory/command-history.jsonl
+├── log-command.sh                # UserPromptSubmit: log /command invocations to memory/command-history.jsonl
 ├── auto-format.sh                # PostToolUse: prettier for .ts/.tsx
 └── suggest-commands.sh           # UserPromptSubmit: keyword + result-state → command suggestion
 ```
@@ -240,6 +240,10 @@ Persistence layer for reflection and telemetry:
 
 - `command-contracts.schema.json` — JSON Schema validating command frontmatter (includes `result_states` + `next_on_result`)
 - `workflow-contracts.schema.json` — JSON Schema validating workflow YAML definitions (includes `on_result` semantics)
+
+### CI (`github/workflows/`)
+
+- `validate-commands.yml` — Runs `scripts/validate-graph.sh` on push/PR when commands, workflows, or configs change. Fails the build if command references are dangling or workflow result states are incomplete.
 
 ---
 
