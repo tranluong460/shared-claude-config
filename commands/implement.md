@@ -4,12 +4,13 @@ category: execute
 mutates: true
 consumes: [plan, source-code]
 produces: [code-changes]
-result_states: [success, validation_failed, build_failed, blocked]
+result_states: [success, validation_failed, build_failed, blocked, execution_error]
 next_on_result:
   success: [parallel-review]
   validation_failed: [diagnose]
   build_failed: [diagnose]
   blocked: [refactor-plan]
+  execution_error: [diagnose]
 ---
 
 You are executing the `/implement` command.

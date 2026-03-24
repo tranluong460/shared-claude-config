@@ -82,8 +82,7 @@ Rules auto-inject when Claude works on matching files. Unlike skills (full knowl
 
 | Rule                 | Paths                                   | Enforces                                                |
 | -------------------- | --------------------------------------- | ------------------------------------------------------- |
-| **typescript**       | `src/**/*.ts,tsx`                       | No `any`, return types, max 50 lines, error handling    |
-| **naming**           | `src/**/*.ts,tsx`                       | E/I prefix, IPC naming, kebab-case, boolean prefix      |
+| **code-quality**     | `src/**/*.ts,tsx`                       | No `any`, return types, max 50 lines, naming (E/I prefix), error handling |
 | **electron**         | `src/main,preload,renderer/**`          | Process isolation, IPC via preload, no Node in renderer |
 | **ipc**              | `src/main/ipc/**`, `src/preload/ipc/**` | 5-layer sync, channel naming, handler pattern           |
 | **database**         | `src/main/database/**`                  | Entity pattern, Model pattern, IMainResponse            |
@@ -92,6 +91,7 @@ Rules auto-inject when Claude works on matching files. Unlike skills (full knowl
 | **implementation**   | `src/**`                                | Read before write, verify commands, multi-file IPC      |
 | **error-patterns**   | `src/**`                                | Common errors quick reference table                     |
 | **provider-pattern** | `src/providers/**`, `src/core/**`       | Provider structure, action rules, barrel exports        |
+| **project-detection**| (auto-detect)                           | Identify project type: Electron / Library / Server      |
 | **testing-methodology** | `src/**`                             | 4-step analysis process: Input → Flow → Report → Implement |
 | **documentation**    | `docs/**`                               | Folder structure, file naming, when to create docs      |
 | **no-unused-docs**   | `.claude/**`                            | Every .claude/ doc must be referenced; run /audit-docs  |

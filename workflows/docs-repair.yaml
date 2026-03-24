@@ -21,6 +21,7 @@ steps:
       success: proceed
       validation_failed: escalate
       blocked: escalate
+      execution_error: escalate
 
   - command: /audit-docs
     purpose: Verify repairs resolved all issues

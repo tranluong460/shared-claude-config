@@ -4,11 +4,12 @@ category: execute
 mutates: true
 consumes: [source-code]
 produces: [test-files]
-result_states: [success, validation_failed, blocked]
+result_states: [success, validation_failed, blocked, execution_error]
 next_on_result:
   success: [implement]
   validation_failed: [diagnose]
   blocked: [diagnose]
+  execution_error: [diagnose]
 ---
 
 You are executing the `/generate-tests` command.

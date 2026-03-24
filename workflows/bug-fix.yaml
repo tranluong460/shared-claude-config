@@ -21,6 +21,7 @@ steps:
         - command: /diagnose
           purpose: Investigate test infrastructure issue
       blocked: escalate
+      execution_error: escalate
 
   - command: /implement
     purpose: Apply the fix
@@ -33,6 +34,7 @@ steps:
         - command: /diagnose
           purpose: Re-investigate if build breaks
       blocked: escalate
+      execution_error: escalate
 
   - command: /audit-code
     purpose: Verify fix quality

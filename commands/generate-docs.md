@@ -4,11 +4,12 @@ category: execute
 mutates: true
 consumes: [source-code]
 produces: [documentation]
-result_states: [success, validation_failed, blocked]
+result_states: [success, validation_failed, blocked, execution_error]
 next_on_result:
   success: [audit-docs]
   validation_failed: [diagnose]
   blocked: []
+  execution_error: [diagnose]
 ---
 
 You are executing the `/generate-docs` command.

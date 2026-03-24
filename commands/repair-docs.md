@@ -4,11 +4,12 @@ category: execute
 mutates: true
 consumes: [doc-audit-report]
 produces: [fixed-claude-config]
-result_states: [success, validation_failed, blocked]
+result_states: [success, validation_failed, blocked, execution_error]
 next_on_result:
   success: [audit-docs]
   validation_failed: [audit-docs]
   blocked: []
+  execution_error: [diagnose]
 ---
 
 You are executing the `/repair-docs` command.

@@ -30,6 +30,7 @@ steps:
         - command: /diagnose
           purpose: Investigate test infrastructure failure
       blocked: escalate
+      execution_error: escalate
 
   - command: /implement
     purpose: Execute the feature implementation
@@ -42,6 +43,7 @@ steps:
         - command: /diagnose
           purpose: Investigate build failure
       blocked: escalate
+      execution_error: escalate
 
   - command: /parallel-review
     purpose: Independent quality gate
@@ -60,6 +62,7 @@ steps:
         - command: /diagnose
           purpose: Investigate documentation validation failure
       blocked: escalate
+      execution_error: escalate
 
   - command: /reflect
     purpose: Weekly retrospective
