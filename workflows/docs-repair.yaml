@@ -27,5 +27,5 @@ steps:
     purpose: Verify repairs resolved all issues
     on_result:
       clean: done
-      issues_found: escalate  # manual review needed for remaining issues
+      issues_found: escalate # manual review needed for remaining issues
       execution_error: escalate

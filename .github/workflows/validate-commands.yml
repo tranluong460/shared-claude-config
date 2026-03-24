@@ -6,13 +6,13 @@ on:
       - 'commands/*.md'
       - 'workflows/*.yaml'
       - 'configs/*.json'
-      - 'scripts/validate-graph.sh'
+      - scripts/validate-graph.sh
   pull_request:
     paths:
       - 'commands/*.md'
       - 'workflows/*.yaml'
       - 'configs/*.json'
-      - 'scripts/validate-graph.sh'
+      - scripts/validate-graph.sh
 
 jobs:
   validate:

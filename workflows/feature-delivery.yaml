@@ -11,7 +11,7 @@ steps:
     optional: true
     on_result:
       clean: proceed
-      issues_found: proceed  # note issues but continue — feature may not touch them
+      issues_found: proceed # note issues but continue — feature may not touch them
       execution_error: escalate
 
   - command: /refactor-plan

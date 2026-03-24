@@ -53,4 +53,4 @@ steps:
       changes_requested:
         - command: /implement
           purpose: Address review findings
-      blocked: done  # review optional — if blocked, still acceptable
+      blocked: done # review optional — if blocked, still acceptable
