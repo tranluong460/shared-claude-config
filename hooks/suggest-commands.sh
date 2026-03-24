@@ -85,43 +85,70 @@ if echo "$PROMPT" | grep -qiE '\b(reflect|improve config|session review|lesson|p
   SUGGESTIONS="$SUGGESTIONS\n  → /reflect 1 week — analyze patterns and suggest config improvements"
 fi
 
-# --- Post-action suggestions (detect "I just finished X" language) ---
+# --- Post-action suggestions based on result semantics ---
+# These match result states from command frontmatter (result_states + next_on_result)
 
-# After implementing
-if echo "$PROMPT" | grep -qiE '\b(done implement|implementation (done|complete|finished)|just implemented|finished (coding|building|implementing))\b'; then
+# After implement → success: suggest parallel-review
+if echo "$PROMPT" | grep -qiE '\b(done implement|implementation (done|complete|finished)|just implemented|finished (coding|building|implementing)|changes (applied|made|committed))\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /parallel-review latest — independent review of your changes"
 fi
 
-# After review passed
+# After implement → validation_failed/build_failed: suggest diagnose
+if echo "$PROMPT" | grep -qiE '\b(build (failed|broken|error)|typecheck (failed|error)|flint (failed|error)|validation (failed|error)|tests? (failed|failing))\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /diagnose \"<error>\" — investigate the failure"
+fi
+
+# After parallel-review → approved: suggest generate-docs, reflect
 if echo "$PROMPT" | grep -qiE '\b(review (passed|clean|looks good|approved)|lgtm|no issues found|all checks passed)\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /generate-docs <type> — document what changed"
   SUGGESTIONS="$SUGGESTIONS\n  → /reflect 1 week — analyze patterns and improve"
 fi
 
-# After review failed
-if echo "$PROMPT" | grep -qiE '\b(review (failed|found issues|found problems)|needs (fixes|changes)|problems found)\b'; then
+# After parallel-review → changes_requested: suggest implement
+if echo "$PROMPT" | grep -qiE '\b(review (failed|found issues|found problems|requested changes)|needs (fixes|changes)|changes requested|problems found)\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /implement \"fix review issues\" — address review findings"
 fi
 
-# After diagnosis
-if echo "$PROMPT" | grep -qiE '\b(found (the bug|root cause|the issue)|diagnosis (complete|done)|identified (the|root) cause)\b'; then
-  SUGGESTIONS="$SUGGESTIONS\n  → /implement \"fix <issue>\" — apply the fix"
+# After diagnose → root_cause_found: suggest generate-tests, implement
+if echo "$PROMPT" | grep -qiE '\b(found (the bug|root cause|the issue)|diagnosis (complete|done)|identified (the|root) cause|root cause.*(is|was|found))\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /generate-tests <file> — add regression test"
+  SUGGESTIONS="$SUGGESTIONS\n  → /implement \"fix <issue>\" — apply the fix"
 fi
 
-# After generating tests
+# After diagnose → insufficient_evidence: suggest audit-code, audit-project
+if echo "$PROMPT" | grep -qiE '\b(insufficient evidence|unclear|cannot determine|not enough (data|info|evidence)|need more (context|info|data))\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /audit-code <scope> — gather more code quality data"
+  SUGGESTIONS="$SUGGESTIONS\n  → /audit-project — broader architecture analysis"
+fi
+
+# After generate-tests → success: suggest implement
 if echo "$PROMPT" | grep -qiE '\b(tests (generated|created|added|passing)|test generation (done|complete))\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /implement \"<task>\" — proceed with implementation"
 fi
 
-# After generating docs
+# After generate-docs → success: suggest audit-docs
 if echo "$PROMPT" | grep -qiE '\b(docs? (generated|created|written)|documentation (done|complete|generated))\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /audit-docs — verify documentation consistency"
 fi
 
-# After audit found issues
-if echo "$PROMPT" | grep -qiE '\b(audit found|issues detected|doc.*(issues|problems) found)\b'; then
-  SUGGESTIONS="$SUGGESTIONS\n  → /repair-docs — fix documentation issues"
+# After audit-* → issues_found: suggest appropriate fix
+if echo "$PROMPT" | grep -qiE '\b(audit found|issues (detected|found)|doc.*(issues|problems) found|critical issues|major issues)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /repair-docs — fix documentation issues (if doc audit)"
+  SUGGESTIONS="$SUGGESTIONS\n  → /implement \"fix <issues>\" — fix code issues (if code audit)"
+fi
+
+# After audit-* → clean: suggest next in workflow
+if echo "$PROMPT" | grep -qiE '\b(audit (clean|passed)|no issues|all (clean|good|passed)|zero (issues|violations|problems))\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /reflect 1 week — capture what went well"
+fi
+
+# Workflow execution suggestion
+if echo "$PROMPT" | grep -qiE '\b(new feature|feature request|start (feature|workflow)|run workflow|execute workflow)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → Run feature-delivery workflow: start with /audit-project"
+fi
+
+if echo "$PROMPT" | grep -qiE '\b(bug report|bug fix|fix bug|unexpected behavior|production (bug|issue))\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → Run bug-fix workflow: start with /diagnose \"<description>\""
 fi
 
 if [[ -n "$SUGGESTIONS" ]]; then

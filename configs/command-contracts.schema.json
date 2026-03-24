@@ -3,7 +3,7 @@
   "title": "Command Frontmatter",
   "description": "Schema for .claude/commands/*.md YAML frontmatter",
   "type": "object",
-  "required": ["description", "category", "mutates", "consumes", "produces"],
+  "required": ["description", "category", "mutates", "consumes", "produces", "result_states"],
   "properties": {
     "description": {
       "type": "string",
@@ -28,15 +28,19 @@
       "items": { "type": "string" },
       "description": "Output artifact types"
     },
-    "next_on_success": {
+    "result_states": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "Suggested commands after successful completion"
+      "minItems": 1,
+      "description": "Possible business outcome states (not just success/fail)"
     },
-    "next_on_fail": {
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "Suggested commands when issues are found"
+    "next_on_result": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "description": "Maps each result_state to suggested follow-up commands"
     }
   },
   "additionalProperties": true

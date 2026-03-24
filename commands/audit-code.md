@@ -4,7 +4,11 @@ category: audit
 mutates: false
 consumes: [source-code]
 produces: [review-report]
-next_on_success: [refactor-plan, implement]
+result_states: [clean, issues_found, execution_error]
+next_on_result:
+  clean: [refactor-plan, implement]
+  issues_found: [implement, refactor-plan]
+  execution_error: [diagnose]
 ---
 
 You are executing the `/audit-code` command.

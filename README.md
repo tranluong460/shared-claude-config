@@ -47,10 +47,11 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | `/parallel-review` | verify   | Independent worktree review    | reviewer            | coding-standards, naming-conventions, architecture-patterns, testing-strategy |
 | `/reflect`         | improve  | Session analysis & improve     | reflection-analyzer | reflection, coding-standards                                                  |
 
-### Agents (8) — AI Roles
+### Agents (9) — AI Roles
 
 | Agent                    | Role                                                 | Primary Skills                                                                    |
 | ------------------------ | ---------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **orchestrator**         | Reads workflow YAML, manages multi-step pipelines with result semantics | coding-standards, architecture-patterns, project-context |
 | **architect**            | Analyzes architecture, plans refactoring             | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions, project-context |
 | **reviewer**             | Reviews code quality (standard + independent worktree modes) | coding-standards, naming-conventions, architecture-patterns, testing-strategy |
 | **debugger**             | Cross-process debugging, root cause analysis         | coding-standards, architecture-patterns, testing-methodology, project-context     |
@@ -158,12 +159,17 @@ category: audit|plan|execute|verify|analyze|improve
 mutates: false
 consumes: [source-code]
 produces: [report]
-next_on_success: [follow-up-on-success]
-next_on_fail: [follow-up-on-failure]
+result_states: [state_a, state_b, execution_error]
+next_on_result:
+  state_a: [follow-up-command]
+  state_b: [other-command]
+  execution_error: [diagnose]
 ---
 ```
 
 Then define the workflow: which agent to use, which skills to load.
+
+> **Important**: `result_states` must reflect **business outcomes**, not execution status. An audit that runs successfully but finds issues has result `issues_found`, not `success`. See `agents/orchestrator.md` for the full result classification guide.
 
 ### Adding New Skills
 
@@ -182,8 +188,9 @@ description: <what knowledge this provides>
 
 | Hook                     | Event              | Script / Type                        | What it does                                                            |
 | ------------------------ | ------------------ | ------------------------------------ | ----------------------------------------------------------------------- |
-| Suggest commands         | `UserPromptSubmit` | `hooks/suggest-commands.sh`          | Auto-suggest `/commands` based on keywords + post-action detection      |
+| Suggest commands         | `UserPromptSubmit` | `hooks/suggest-commands.sh`          | Auto-suggest `/commands` based on keywords + result-state detection     |
 | Block dangerous commands | `PreToolUse`       | `hooks/block-dangerous-commands.sh`  | Blocks `rm -rf`, `git push --force`, `chmod 777`, `curl\|sh`, etc.     |
+| Log commands             | `PostToolUse`      | `hooks/log-command.sh`              | Logs command invocations to `memory/command-history.jsonl`              |
 | Auto-format after edit   | `PostToolUse`      | `hooks/auto-format.sh`              | Runs `prettier --write` on `.ts`/`.tsx` files                           |
 | Context persistence      | `PostCompact`      | inline                               | Re-injects rules reminder, active tasks, `/clear` vs `/compact` tip    |
 | Notification on finish   | `Stop`             | inline                               | System sound (Windows) / native notification (macOS/Linux)              |
@@ -195,8 +202,9 @@ External scripts in `.claude/hooks/` — readable, testable, maintainable:
 ```
 .claude/hooks/
 ├── block-dangerous-commands.sh   # PreToolUse: deny dangerous bash patterns
+├── log-command.sh                # PostToolUse: log commands to memory/command-history.jsonl
 ├── auto-format.sh                # PostToolUse: prettier for .ts/.tsx
-└── suggest-commands.sh           # UserPromptSubmit: keyword → command suggestion
+└── suggest-commands.sh           # UserPromptSubmit: keyword + result-state → command suggestion
 ```
 
 ### Permissions
@@ -228,7 +236,8 @@ Persistence layer for reflection and telemetry:
 
 ### Configs (`configs/`)
 
-- `command-contracts.schema.json` — JSON Schema validating command frontmatter
+- `command-contracts.schema.json` — JSON Schema validating command frontmatter (includes `result_states` + `next_on_result`)
+- `workflow-contracts.schema.json` — JSON Schema validating workflow YAML definitions (includes `on_result` semantics)
 
 ---
 

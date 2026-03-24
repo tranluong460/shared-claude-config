@@ -8,13 +8,23 @@ trigger: Periodic maintenance or after structural changes
 steps:
   - command: /audit-docs
     purpose: Detect dead, duplicate, or weakly integrated docs
-    on_success: done
-    on_fail:
-      - command: /repair-docs
-        purpose: Fix documentation issues
+    on_result:
+      clean: done
+      issues_found:
+        - command: /repair-docs
+          purpose: Fix documentation issues
+      execution_error: escalate
+
+  - command: /repair-docs
+    purpose: Apply fixes for detected issues
+    on_result:
+      success: proceed
+      validation_failed: escalate
+      blocked: escalate
 
   - command: /audit-docs
     purpose: Verify repairs resolved all issues
-    on_success: done
-    on_fail:
-      - note: Manual review needed for remaining issues
+    on_result:
+      clean: done
+      issues_found: escalate  # manual review needed for remaining issues
+      execution_error: escalate

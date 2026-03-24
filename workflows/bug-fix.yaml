@@ -8,27 +8,47 @@ trigger: Bug report or unexpected behavior
 steps:
   - command: /diagnose
     purpose: Find root cause with evidence
-    on_success: proceed
+    on_result:
+      root_cause_found: proceed
+      insufficient_evidence: escalate
+      execution_error: escalate
 
   - command: /generate-tests
     purpose: Write regression test for the bug
-    on_success: proceed
+    on_result:
+      success: proceed
+      validation_failed:
+        - command: /diagnose
+          purpose: Investigate test infrastructure issue
+      blocked: escalate
 
   - command: /implement
     purpose: Apply the fix
-    on_success: proceed
-    on_fail:
-      - command: /diagnose
-        purpose: Re-investigate if fix fails
+    on_result:
+      success: proceed
+      validation_failed:
+        - command: /diagnose
+          purpose: Re-investigate if fix fails validation
+      build_failed:
+        - command: /diagnose
+          purpose: Re-investigate if build breaks
+      blocked: escalate
 
   - command: /audit-code
     purpose: Verify fix quality
-    on_success: proceed
+    on_result:
+      clean: proceed
+      issues_found:
+        - command: /implement
+          purpose: Fix quality issues found in the fix
+      execution_error: escalate
 
   - command: /parallel-review
     purpose: Independent verification
     optional: true
-    on_success: done
-    on_fail:
-      - command: /implement
-        purpose: Address review findings
+    on_result:
+      approved: done
+      changes_requested:
+        - command: /implement
+          purpose: Address review findings
+      blocked: done  # review optional — if blocked, still acceptable

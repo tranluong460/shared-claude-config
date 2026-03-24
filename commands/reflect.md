@@ -2,9 +2,13 @@
 description: Analyze recent sessions — identify patterns, recurring mistakes, and suggest config improvements
 category: improve
 mutates: false
-consumes: [git-history]
+consumes: [git-history, command-history, lessons]
 produces: [reflection-report, config-suggestions]
-next_on_success: []
+result_states: [insights_found, no_patterns, execution_error]
+next_on_result:
+  insights_found: []
+  no_patterns: []
+  execution_error: []
 ---
 
 You are executing the `/reflect` command.
@@ -50,12 +54,29 @@ git diff --name-only HEAD~10 -- '*.ts' '*.tsx'
 
 Then check each for: `any` types, `console.log`, empty catch, missing return types, functions >50 lines.
 
-4. **Tasks and lessons** (if they exist):
+4. **Command history** (if exists):
 
 ```
-Read tasks/lessons.md (if exists)
-Read tasks/todo.md (if exists)
+Read .claude/memory/command-history.jsonl
 ```
+
+Analyze: which commands ran most, which result states occurred, any patterns of repeated failures or retries.
+
+5. **Previous lessons** (if exists):
+
+```
+Read .claude/memory/lessons.md
+```
+
+Check: are previous lessons being followed? Any recurring issues that were already identified?
+
+6. **Workflow run artifacts** (if exist):
+
+```
+Glob .claude/memory/workflow-runs/*.json
+```
+
+Analyze: workflow completion rates, common failure points, steps that get skipped.
 
 ### Step 3: Analyze Patterns
 
@@ -86,7 +107,7 @@ Present findings using the output format from the reflection skill.
 If the user approves changes:
 
 1. Update the relevant config files
-2. If new lessons found → append to `tasks/lessons.md`
+2. If new lessons found → append to `.claude/memory/lessons.md` using format: `### YYYY-MM-DD — <topic>` followed by bullet points
 3. Verify no contradictions introduced between rules/skills
 
 ## Notes

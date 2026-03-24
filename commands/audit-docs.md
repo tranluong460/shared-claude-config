@@ -4,8 +4,11 @@ category: audit
 mutates: false
 consumes: [claude-config]
 produces: [doc-audit-report]
-next_on_success: []
-next_on_fail: [repair-docs]
+result_states: [clean, issues_found, execution_error]
+next_on_result:
+  clean: []
+  issues_found: [repair-docs]
+  execution_error: [diagnose]
 ---
 
 You are executing the `/audit-docs` command.

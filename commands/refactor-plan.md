@@ -4,7 +4,11 @@ category: plan
 mutates: false
 consumes: [source-code]
 produces: [refactoring-plan]
-next_on_success: [generate-tests, implement]
+result_states: [plan_ready, needs_input, execution_error]
+next_on_result:
+  plan_ready: [generate-tests, implement]
+  needs_input: []
+  execution_error: [diagnose]
 ---
 
 You are executing the `/refactor-plan` command.

@@ -4,7 +4,11 @@ category: audit
 mutates: false
 consumes: [source-code, package-json]
 produces: [architecture-report]
-next_on_success: [audit-code, audit-naming, refactor-plan]
+result_states: [clean, issues_found, execution_error]
+next_on_result:
+  clean: [audit-code, audit-naming]
+  issues_found: [refactor-plan, audit-code, audit-naming]
+  execution_error: [diagnose]
 ---
 
 You are executing the `/audit-project` command.

@@ -4,7 +4,11 @@ category: analyze
 mutates: false
 consumes: [error-description, source-code]
 produces: [diagnosis-report]
-next_on_success: [generate-tests, implement]
+result_states: [root_cause_found, insufficient_evidence, execution_error]
+next_on_result:
+  root_cause_found: [generate-tests, implement]
+  insufficient_evidence: [audit-code, audit-project]
+  execution_error: []
 ---
 
 You are executing the `/diagnose` command.
