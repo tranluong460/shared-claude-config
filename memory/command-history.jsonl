@@ -1,1 +1,229 @@
 
+{"timestamp":"2026-03-24T02:35:50Z","command":"/implement"}
+{"timestamp":"2026-03-24T02:49:42Z","command":"/implement","args":"Tôi đã đọc toàn bộ 50 files chứa logger trong hệ thống. Đây là báo cáo tổng hợp:
+
+  ---
+  BÁO CÁO PHÂN TÍCH TOÀN BỘ HỆ THỐNG LOGGING — mkt-browser
+
+  Thống kê tổng quan
+
+  ┌───────────────────────────────┬──────────┐
+  │            Metric             │ Số lượng │
+  ├───────────────────────────────┼──────────┤
+  │ Tổng logger calls             │ ~347     │
+  ├───────────────────────────────┼──────────┤
+  │ Files có logging              │ 50       │
+  ├───────────────────────────────┼──────────┤
+  │ Dùng this.logger.*            │ 39 files │
+  ├───────────────────────────────┼──────────┤
+  │ Dùng CoreLogger.getInstance() │ 10 files │
+  ├───────────────────────────────┼──────────┤
+  │ Dùng console.*                │ 1 file   │
+  └───────────────────────────────┴──────────┘
+
+  Phân bổ theo log level
+
+  ┌───────┬──────────┬───────┐
+  │ Level │ Số lượng │ Tỷ lệ │
+  ├───────┼──────────┼───────┤
+  │ debug │ ~125     │ 36%   │
+  ├───────┼──────────┼───────┤
+  │ info  │ ~66      │ 19%   │
+  ├───────┼──────────┼───────┤
+  │ warn  │ ~50      │ 14%   │
+  ├───────┼──────────┼───────┤
+  │ error │ ~106     │ 31%   │
+  └───────┴──────────┴───────┘
+
+  ---
+  Phân bổ theo module
+
+  ┌────────────────────────────────────┬───────┬──────┬──────┬───────┬──────┬──────────────────────┐
+  │               Module               │ debug │ info │ warn │ error │ Tổng │       Nhận xét       │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Core/Process (5 files)             │ 25    │ 12   │ 14   │ 18    │ 69   │ Đầy đủ nhất          │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Core/Lifecycle (3 files)           │ 12    │ 7    │ 2    │ 3     │ 24   │ Vừa cải thiện        │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Core/Download (3 files)            │ 32    │ 12   │ 0    │ 5     │ 49   │ Rất chi tiết         │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Core/Extension (1 file)            │ 0     │ 1    │ 0    │ 5     │ 6    │ Chỉ log lỗi          │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Core/Tunnel (4 files)              │ 1     │ 5    │ 3    │ 2     │ 11   │ Quá ít               │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Core/Registry (2 files)            │ 0     │ 0    │ 0    │ 2     │ 2    │ Gần như không log    │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Providers/Shared (5 files)         │ 25    │ 8    │ 5    │ 5     │ 43   │ Tốt                  │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Providers/MKT-Hidemium (7 files)   │ 17    │ 3    │ 1    │ 11    │ 32   │ Nhiều error, ít flow │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Providers/MKT-Ads (2 files)        │ 0     │ 3    │ 0    │ 3     │ 6    │ Quá ít               │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Puppeteer/Legacy-Actions (6 files) │ 0     │ 0    │ 7    │ 42    │ 49   │ Chỉ log lỗi          │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Puppeteer/Smart-Waiting (6 files)  │ 3     │ 4    │ 3    │ 4     │ 14   │ Trung bình           │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Utils (5 files)                    │ 8     │ 6    │ 5    │ 4     │ 23   │ Tốt                  │
+  ├────────────────────────────────────┼───────┼──────┼──────┼───────┼──────┼──────────────────────┤
+  │ Database (1 file)                  │ 0     │ 0    │ 0    │ 2     │ 2    │ Chỉ log lỗi          │
+  └────────────────────────────────────┴───────┴──────┴──────┴───────┴──────┴──────────────────────┘
+
+  ---
+  7 VẤN ĐỀ CHÍNH
+
+  1. Legacy Actions: CHỈ log error, không log flow (49 calls — 42 error, 7 warn, 0 info, 0 debug)
+
+  6 files action (File, Keyboard, Mouse, Navigation, Touch, MktPage) chỉ log khi thất bại. Khi thành công → im lặng hoàn toàn. Không thể trace được action nào đã chạy, trên element nào, mất bao lâu.
+
+  // Hiện tại: chỉ biết khi fail
+  [ERROR] [MouseAction, clickForSelector] Click for selector failed: ...
+
+  // Không biết: action nào đã chạy thành công? thứ tự ra sao?
+
+  2. Tunnel: Log quá ít cho hệ thống network phức tạp (11 calls cho 4 files)
+
+  HttpTunnel.ts và SocksTunnel.ts xử lý SOCKS5/HTTP proxy protocol nhưng gần như không log. Không log:
+  - Tunnel start/stop thành công
+  - Connection count
+  - Socket state (add/remove)
+  - Local port assignment
+  - Auth method selection
+  - CONNECT target address
+
+  3. Registry/PluginLoader: Gần như invisible (2 calls tổng cộng)
+
+  BrowserProviderFacade và PluginLoader load plugin, tạo provider, gọi start() — nhưng chỉ có 1 error log mỗi file. Không biết:
+  - Plugin nào được load?
+  - Provider nào được tạo?
+  - start() được gọi khi nào?
+
+  4. Error cause chain bị mất ở nhiều nơi
+
+  Không chỉ ở browser launch flow (đã fix). Nhiều nơi khác cũng wrap error mà mất context:
+  - HideMiumProfile.make(): Catch AxiosError nhưng chỉ log error.response?.data
+  - ProfileSyncService: Catch error rồi return { success: false } — caller không biết lỗi gì
+  - AdsConfigBuilder: Catch JSON parse error → return null im lặng
+
+  5. Không có correlation giữa các module
+
+  Mỗi module log với prefix riêng nhưng không có chung profileId/requestId xuyên suốt. Khi debug phải grep profileId thủ công qua các dòng log.
+
+  6. Log level không nhất quán
+
+  ┌───────────────────────────────────────────────┬─────────────────────────────────────────────────────────────────────────────┐
+  │                    Vấn đề                     │                                    Ví dụ                                    │
+  ├───────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
+  │ Thành công = debug, nên là info               │ Init browser success, profile loaded                                        │
+  ├───────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
+  │ Navigation error = warn, action error = error │ NavigationAction.goto vs MouseAction.click — cùng severity nhưng khác level │
+  ├───────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
+  │ Hash mismatch = info, nên là warn             │ BrowserDownloader dòng 197                                                  │
+  ├───────────────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────────┤
+  │ IP lookup = info, nên là debug                │ ip-lookup.ts log mỗi DNS resolution                                         │
+  └───────────────────────────────────────────────┴─────────────────────────────────────────────────────────────────────────────┘
+
+  7. Silent error catch (1 chỗ)
+
+  MktPageAction.ts dòng 852: catch block hoàn toàn trống trong getElementExistFromListDisplayed() — nuốt error.
+
+  ---
+  ĐỀ XUẤT: CHUẨN HÓA LOG LEVELS
+
+  ERROR — Lỗi cần chú ý, có thể ảnh hưởng flow
+
+  Nên log:
+  - Operation thất bại không recover được
+  - Lỗi kết nối (DB, proxy, browser process)
+  - File I/O fail (write config, extract browser)
+  - Cause chain đầy đủ (dùng formatWithContext() hoặc log cả error.cause)
+
+  Format: [Class, method] Mô tả lỗi: {profileId} + error object (bao gồm cause)
+
+  Không nên:
+  - Log error cho expected failures (element not found → nên là warn)
+  - Log error nhiều lần cho cùng 1 lỗi ở nhiều layer
+
+  WARN — Lỗi đã recover hoặc tình huống bất thường
+
+  Nên log:
+  - Retry failure (mỗi attempt fail trước khi retry)
+  - Fallback activated (graceful close fail → force kill)
+  - Resource constraint (SystemResourceGuard throttling)
+  - Element not found (expected trong automation)
+  - Hash mismatch → retry download
+  - Navigation timeout (page load chậm nhưng không crash)
+  - Orphan process detected & killed
+
+  Không nên:
+  - Dùng warn cho normal flow
+
+  INFO — Milestone quan trọng trong flow, dùng cho production monitoring
+
+  Nên log:
+  - Lifecycle events: Browser start/stop, tunnel start/stop, profile create/load
+  - Flow milestones: Download start/complete, extraction complete, CDP connected
+  - Result summary: Duration, port, PID, endpoint URL
+  - Action execution (legacy-actions): Action name + target (selector/xpath) + result
+
+  Format: [Class] Verb + Object: {profileId} ({timing}ms)
+
+  Ví dụ chuẩn:
+  [INFO] [BrowserProvider] Browser started: 12312-win (3500ms)
+  [INFO] [TunnelSetupService] SOCKS tunnel ready: 12312-win → 127.0.0.1:54321
+  [INFO] [HideMiumProfile] Profile loaded from DB: 12312-win
+  [INFO] [MouseAction] clickForSelector: #submit-btn (success, 120ms)
+  [INFO] [BrowserDownloader] Download completed: v3.2.2 (45000ms)
+
+  DEBUG — Chi tiết cho developer debug, tắt ở production
+
+  Nên log:
+  - Config/Args: Launch args, proxy config, extension paths
+  - Intermediate steps: Port acquired, beforeMake done, args built
+  - Retry details: Attempt number, delay, elapsed time
+  - Resource state: Active process count, tunnel map size, connection count
+  - Protocol details: stderr output, WS endpoint parsing, SOCKS auth method
+
+  Không nên:
+  - Log debug cho những thứ đã có ở info level
+  - Log constructor params (quá noisy)
+
+  ---
+  ĐỀ XUẤT: CÁC THAY ĐỔI CỤ THỂ THEO MODULE
+
+  Module 1: Legacy Actions (6 files) — Thêm INFO cho mỗi action
+
+  Hiện tại chỉ log error. Cần thêm info log cho mỗi action call với: action name, target (selector/xpath), duration.
+
+  Module 2: Tunnel (4 files) — Thêm lifecycle + connection logging
+
+  - HttpTunnel/SocksTunnel: Log INFO khi start (local port), DEBUG cho connection count, WARN khi CONNECT fail
+  - TunnelSetupService: Log DEBUG trước mỗi step, ERROR khi fail (hiện tại throw mà không log)
+
+  Module 3: Registry (2 files) — Thêm INFO cho plugin load + provider creation
+
+  - PluginLoader: Log INFO khi load plugin thành công
+  - BrowserProviderFacade: Log INFO khi create provider, khi start() thành công
+
+  Module 4: Hidemium/Ads vendor — Thêm flow logging
+
+  - ServiceClass: Log INFO cho mỗi major step (load/create/sync profile)
+  - NetworkConfigManager: Log INFO khi network config updated (thay vì chỉ log error)
+  - AdsServiceClass: Log DEBUG cho manager calls
+
+  Module 5: Database — Thêm INFO cho connect success
+
+  Hiện chỉ log error. Cần INFO khi connect thành công.
+
+  Module 6: Fix log level sai
+
+  ┌───────────────────────┬───────────────────────────┬──────────┬────────────────────────────────────┐
+  │         File          │         Hiện tại          │ Đề xuất  │               Lý do                │
+  ├───────────────────────┼───────────────────────────┼──────────┼────────────────────────────────────┤
+  │ BrowserDownloader:197 │ info "Hash mismatch"      │ warn     │ Hash mismatch = bất thường         │
+  ├───────────────────────┼───────────────────────────┼──────────┼────────────────────────────────────┤
+  │ NavigationAction      │ warn cho navigation error │ Giữ warn │ Navigation timeout là expected     │
+  ├───────────────────────┼───────────────────────────┼──────────┼────────────────────────────────────┤
+  │ ip-lookup.ts:39,50,60 │ info DNS resolution       │ debug    │ Quá chi tiết cho production        │
+  ├───────────────────────┼───────────────────────────┼──────────┼────────────────────────────────────┤
+  │ BrowserExtension:242  │ info "Removing old ext"   │ debug    │ Cleanup routine, không cần monitor │
+  └───────────────────────┴───────────────────────────┴──────────┴────────────────────────────────────┘"}
