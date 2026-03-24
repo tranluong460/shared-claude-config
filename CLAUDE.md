@@ -44,6 +44,7 @@ Commands (commands/*.md)  ──call──▶  Agents (agents/*.md)  ──use�
 - Architecture patterns: `skills/architecture-patterns/SKILL.md`
 - Naming conventions: `skills/naming-conventions/SKILL.md`
 - Testing methodology: `skills/testing-methodology/SKILL.md`
+- Orchestration contracts: `skills/orchestration-contracts/SKILL.md`
 - Project-specific context: `skills/project-context/SKILL.md` (fill in for your project)
 
 ## Infrastructure
@@ -52,6 +53,7 @@ Commands (commands/*.md)  ──call──▶  Agents (agents/*.md)  ──use�
 - **Orchestrator**: `agents/orchestrator.md` — reads workflow YAML, classifies results by business outcome, manages step transitions
 - **Memory**: `memory/lessons.md` — accumulated `/reflect` insights; `memory/command-history.jsonl` — auto-logged command invocations; `memory/workflow-runs/` — per-run artifacts
 - **Configs**: `configs/command-contracts.schema.json` + `configs/workflow-contracts.schema.json` — JSON Schema for frontmatter and workflow validation
+- **Scripts**: `scripts/validate-graph.sh` — validates command graph integrity and workflow result-state coverage
 
 ## Command Metadata
 

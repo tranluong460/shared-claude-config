@@ -56,6 +56,9 @@ steps:
     purpose: Document the new feature
     on_result:
       success: proceed
+      validation_failed:
+        - command: /diagnose
+          purpose: Investigate documentation validation failure
       blocked: escalate
 
   - command: /reflect
@@ -64,3 +67,4 @@ steps:
     on_result:
       insights_found: done
       no_patterns: done
+      execution_error: escalate

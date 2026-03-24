@@ -51,7 +51,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 
 | Agent                    | Role                                                 | Primary Skills                                                                    |
 | ------------------------ | ---------------------------------------------------- | --------------------------------------------------------------------------------- |
-| **orchestrator**         | Reads workflow YAML, manages multi-step pipelines with result semantics | coding-standards, architecture-patterns, project-context |
+| **orchestrator**         | Reads workflow YAML, manages multi-step pipelines with result semantics | coding-standards, architecture-patterns, project-context, orchestration-contracts |
 | **architect**            | Analyzes architecture, plans refactoring             | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions, project-context |
 | **reviewer**             | Reviews code quality (standard + independent worktree modes) | coding-standards, naming-conventions, architecture-patterns, testing-strategy |
 | **debugger**             | Cross-process debugging, root cause analysis         | coding-standards, architecture-patterns, testing-methodology, project-context     |
@@ -61,7 +61,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **task-executor**        | Implements changes with project-aware recipes        | coding-standards, naming-conventions, testing-strategy, architecture-patterns, testing-methodology, project-context |
 | **test-architect**       | Test strategy with Electron/Library mock patterns    | testing-strategy, coding-standards, naming-conventions, project-context            |
 
-### Skills (9) — Knowledge Modules
+### Skills (10) — Knowledge Modules
 
 | Skill                       | Layer        | Content                                                                                               |
 | --------------------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
@@ -73,6 +73,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **testing-strategy**        | testing      | Test design, AAA pattern, mocking, Electron/Library test guides, bootstrap                            |
 | **testing-methodology**     | workflow     | 4-step analysis process: Input Assumptions, Flow Analysis, Report, Implement                          |
 | **reflection**              | workflow     | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions  |
+| **orchestration-contracts** | workflow     | Result state taxonomy, artifact schemas, workflow patterns, state machine rules for pipelines         |
 | **project-context**         | project      | Template for project-specific tech stack, commands, architecture decisions, business rules             |
 
 ### Rules (13) — Context-Aware Enforcement

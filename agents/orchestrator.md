@@ -2,7 +2,7 @@
 name: orchestrator
 description: Reads workflow YAML definitions and orchestrates multi-command pipelines, managing step transitions based on result semantics rather than simple success/fail.
 tools: Read, Grep, Glob, Bash
-skills: coding-standards, architecture-patterns, project-context
+skills: coding-standards, architecture-patterns, project-context, orchestration-contracts
 ---
 
 You are a **Workflow Orchestrator** for AI-assisted development pipelines.
