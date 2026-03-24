@@ -51,7 +51,7 @@ Commands (commands/*.md)  ──call──▶  Agents (agents/*.md)  ──use�
 
 - **Workflows**: `workflows/*.yaml` — formalized command pipelines with result-semantic transitions (feature-delivery, bug-fix, docs-repair)
 - **Orchestrator**: `agents/orchestrator.md` — reads workflow YAML, classifies results by business outcome, manages step transitions
-- **Memory**: `memory/lessons.md` — accumulated `/reflect` insights; `memory/command-history.jsonl` — auto-logged command invocations; `memory/workflow-runs/` — per-run artifacts
+- **Memory**: `memory/lessons.md` — accumulated `/reflect` insights; `memory/command-history.jsonl` — auto-logged command invocations; `memory/workflow-runs/` — per-run artifacts; `memory/reviews/` — architecture review snapshots
 - **Configs**: `configs/command-contracts.schema.json` + `configs/workflow-contracts.schema.json` — JSON Schema for frontmatter and workflow validation
 - **Scripts**: `scripts/validate-graph.sh` — validates command graph integrity and workflow result-state coverage
 

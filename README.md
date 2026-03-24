@@ -234,6 +234,7 @@ Persistence layer for reflection and telemetry:
 - `lessons.md` — Accumulated insights from `/reflect` sessions
 - `command-history.jsonl` — Command invocation log (for future tooling)
 - `workflow-runs/` — Per-run artifacts
+- `reviews/` — Architecture review snapshots and community benchmark assessments
 
 ### Configs (`configs/`)
 
