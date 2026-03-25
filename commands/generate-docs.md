@@ -52,6 +52,7 @@ Parse the input to decide what to generate:
 > Project type detection: see `.claude/rules/project-detection.md`
 
 After detection, apply project-specific extra doc types:
+
 - **Electron**: `ipc`, `entities`, `guide`
 - **Library**: `providers`, `api`
 
@@ -71,9 +72,9 @@ The agent follows its complete process defined in `.claude/agents/doc-writer.md`
 
 ### Files Created/Updated
 
-| File                       | Type          | Status  |
-| -------------------------- | ------------- | ------- |
-| `docs/guides/{name}.md`    | Guide         | Created |
+| File                    | Type  | Status  |
+| ----------------------- | ----- | ------- |
+| `docs/guides/{name}.md` | Guide | Created |
 
 ### Remaining Gaps
 

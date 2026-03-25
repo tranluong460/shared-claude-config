@@ -32,6 +32,7 @@ Read and apply:
 > Project type detection: see `.claude/rules/project-detection.md`
 
 After detection, apply project-specific checks:
+
 - **Electron**: IPC consistency, process isolation, preload mirror
 - **Library**: Provider pattern, factory contract, barrel exports
 - **Server**: API design, middleware, auth
@@ -89,10 +90,10 @@ Output a structured review report:
 
 ### Electron Checks (if applicable)
 
-| Check                 | Status | Details   |
-| --------------------- | ------ | --------- |
-| IPC ↔ Preload sync    | ✅/❌  | <details> |
-| Process isolation     | ✅/❌  | <details> |
+| Check              | Status | Details   |
+| ------------------ | ------ | --------- |
+| IPC ↔ Preload sync | ✅/❌  | <details> |
+| Process isolation  | ✅/❌  | <details> |
 
 ### Library Checks (if applicable)
 

@@ -23,25 +23,25 @@ Execute multi-step workflows defined in `.claude/workflows/*.yaml`. You read wor
 
 ## Result Classification Guide
 
-| Command Category | Possible Results | How to Classify |
-|-----------------|-----------------|-----------------|
-| **audit** (`/audit-code`, `/audit-project`, `/audit-naming`, `/audit-docs`) | `clean` — no issues found | Output has 0 critical/major issues |
-| | `issues_found` — issues detected | Output lists critical or major issues |
-| | `execution_error` — command failed to run | Tool error, file not found, etc. |
-| **analyze** (`/diagnose`) | `root_cause_found` — diagnosis complete | Output identifies specific root cause with evidence |
-| | `insufficient_evidence` — needs more data | Output has competing hypotheses, no clear winner |
-| | `execution_error` | Tool error during investigation |
-| **verify** (`/parallel-review`) | `approved` — no blocking issues | Review output is clean or minor-only |
-| | `changes_requested` — issues need fixing | Review output lists critical/major issues |
-| | `blocked` — cannot review (no diff, etc.) | Missing input, no changes to review |
-| **execute** (`/implement`, `/generate-tests`, `/generate-docs`, `/repair-docs`) | `success` — changes applied and verified | Verification commands pass |
-| | `validation_failed` — changes made but checks fail | `flint`/`typecheck`/`test` fails |
-| | `build_failed` — cannot compile/build | Build step fails |
-| | `blocked` — cannot proceed | Missing dependency, unclear requirements |
-| **plan** (`/refactor-plan`) | `plan_ready` — actionable plan created | Plan has phases, verification steps |
-| | `needs_input` — requires user decisions | Ambiguous scope, multiple valid approaches |
-| **improve** (`/reflect`) | `insights_found` — actionable improvements | Output has config change proposals |
-| | `no_patterns` — nothing actionable | Clean history, no recurring issues |
+| Command Category                                                                | Possible Results                                   | How to Classify                                     |
+| ------------------------------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------- |
+| **audit** (`/audit-code`, `/audit-project`, `/audit-naming`, `/audit-docs`)     | `clean` — no issues found                          | Output has 0 critical/major issues                  |
+|                                                                                 | `issues_found` — issues detected                   | Output lists critical or major issues               |
+|                                                                                 | `execution_error` — command failed to run          | Tool error, file not found, etc.                    |
+| **analyze** (`/diagnose`)                                                       | `root_cause_found` — diagnosis complete            | Output identifies specific root cause with evidence |
+|                                                                                 | `insufficient_evidence` — needs more data          | Output has competing hypotheses, no clear winner    |
+|                                                                                 | `execution_error`                                  | Tool error during investigation                     |
+| **verify** (`/parallel-review`)                                                 | `approved` — no blocking issues                    | Review output is clean or minor-only                |
+|                                                                                 | `changes_requested` — issues need fixing           | Review output lists critical/major issues           |
+|                                                                                 | `blocked` — cannot review (no diff, etc.)          | Missing input, no changes to review                 |
+| **execute** (`/implement`, `/generate-tests`, `/generate-docs`, `/repair-docs`) | `success` — changes applied and verified           | Verification commands pass                          |
+|                                                                                 | `validation_failed` — changes made but checks fail | `flint`/`typecheck`/`test` fails                    |
+|                                                                                 | `build_failed` — cannot compile/build              | Build step fails                                    |
+|                                                                                 | `blocked` — cannot proceed                         | Missing dependency, unclear requirements            |
+| **plan** (`/refactor-plan`)                                                     | `plan_ready` — actionable plan created             | Plan has phases, verification steps                 |
+|                                                                                 | `needs_input` — requires user decisions            | Ambiguous scope, multiple valid approaches          |
+| **improve** (`/reflect`)                                                        | `insights_found` — actionable improvements         | Output has config change proposals                  |
+|                                                                                 | `no_patterns` — nothing actionable                 | Clean history, no recurring issues                  |
 
 ## Workflow Execution Process
 
@@ -88,6 +88,7 @@ For each step in order:
 ### Step 4: Handle Optional Steps
 
 Steps marked `optional: true`:
+
 - Ask user whether to run or skip
 - If skipped, move to next step
 - Log as `{"result": "skipped"}`
@@ -101,11 +102,11 @@ After all steps complete (or workflow is stopped):
 
 ### Execution Log
 
-| Step | Command | Result | Summary |
-|------|---------|--------|---------|
-| 1 | /diagnose | root_cause_found | Found null ref in auth.ts:42 |
-| 2 | /generate-tests | success | Added 3 regression tests |
-| ...  | ...     | ...    | ...     |
+| Step | Command         | Result           | Summary                      |
+| ---- | --------------- | ---------------- | ---------------------------- |
+| 1    | /diagnose       | root_cause_found | Found null ref in auth.ts:42 |
+| 2    | /generate-tests | success          | Added 3 regression tests     |
+| ...  | ...             | ...              | ...                          |
 
 ### Outcome
 
@@ -147,17 +148,17 @@ Write the full execution log to `memory/workflow-runs/<timestamp>-<workflow-name
 
 When a step produces an artifact that the next step consumes:
 
-| Producer | Artifact | Consumer |
-|----------|----------|----------|
-| `/audit-project` | architecture-report | `/refactor-plan` |
-| `/audit-code` | review-report | `/implement` |
-| `/audit-docs` | doc-audit-report | `/repair-docs` |
-| `/diagnose` | diagnosis-report | `/implement`, `/generate-tests` |
-| `/refactor-plan` | refactoring-plan | `/implement` |
-| `/generate-tests` | test-files | `/implement` |
-| `/implement` | code-changes | `/parallel-review` |
-| `/parallel-review` | review-report | `/implement` (if changes_requested) |
-| `/reflect` | config-suggestions | manual application |
+| Producer           | Artifact            | Consumer                            |
+| ------------------ | ------------------- | ----------------------------------- |
+| `/audit-project`   | architecture-report | `/refactor-plan`                    |
+| `/audit-code`      | review-report       | `/implement`                        |
+| `/audit-docs`      | doc-audit-report    | `/repair-docs`                      |
+| `/diagnose`        | diagnosis-report    | `/implement`, `/generate-tests`     |
+| `/refactor-plan`   | refactoring-plan    | `/implement`                        |
+| `/generate-tests`  | test-files          | `/implement`                        |
+| `/implement`       | code-changes        | `/parallel-review`                  |
+| `/parallel-review` | review-report       | `/implement` (if changes_requested) |
+| `/reflect`         | config-suggestions  | manual application                  |
 
 Pass artifact context between steps by summarizing key findings from the previous step's output when invoking the next command.
 

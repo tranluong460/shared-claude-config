@@ -33,6 +33,7 @@ Read and apply:
 > Project type detection: see `.claude/rules/project-detection.md`
 
 After detection, apply project-specific debug focus:
+
 - **Electron**: IPC errors, process crashes, preload issues, DB errors, worker thread failures
 - **Library**: Provider loading, factory errors, action failures, logUpdate issues
 - **Server**: API errors, middleware issues, DB queries

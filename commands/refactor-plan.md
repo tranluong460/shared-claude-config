@@ -32,6 +32,7 @@ Read and apply:
 > Project type detection: see `.claude/rules/project-detection.md`
 
 After detection, apply project-specific risk factors:
+
 - **Electron**: IPC consistency, preload sync, process isolation, submodule
 - **Library**: Provider contract, factory interface, consumer impact
 - **Server**: API contract, middleware chain, DB migration

@@ -24,11 +24,13 @@ Used when invoked by `/parallel-review`. You run in an isolated worktree with co
 ### 1. Scope & Context
 
 **Standard mode**:
+
 - Specific target → review that scope
 - No target → `git diff --name-only HEAD~5`
 - Classify files by context: main / preload / renderer / core / types
 
 **Independent mode**:
+
 - Run `git diff HEAD~1` or `git diff main...HEAD` to discover all changes
 - Categorize files: new / modified / deleted
 - Classify by context: main / preload / renderer / core / types / test
@@ -107,23 +109,29 @@ Verify: index.ts (register) ↔ factory.ts ↔ provider.ts ↔ services/actions/
 ## Independent Review: <scope>
 
 ### Change Summary
+
 - Files changed: N (new: N, modified: N, deleted: N)
 - Lines added/removed: +N / -N
 
 ### Critical Issues
+
 1. **[file:line]** <description> — **Fix**: <suggestion>
 
 ### Major Issues
+
 1. **[file:line]** <description> — **Fix**: <suggestion>
 
 ### Minor Issues
+
 1. **[file:line]** <description> — **Fix**: <suggestion>
 
 ### Verdict
+
 - [ ] APPROVE — Ready to merge
 - [ ] REQUEST CHANGES — Issues must be fixed
 - [ ] NEEDS DISCUSSION — Architectural concerns
 
 ### What I'd Do Differently
+
 - <alternative approaches worth considering>
 ```

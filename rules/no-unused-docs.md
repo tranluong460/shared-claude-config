@@ -10,6 +10,7 @@ paths:
 ## Rule
 
 Every document in `.claude/` MUST be referenced by at least one of:
+
 - A command (in `commands/`)
 - An agent (in `agents/`)
 - `paths:` frontmatter (for auto-injection)
@@ -23,9 +24,9 @@ Every document in `.claude/` MUST be referenced by at least one of:
 
 ## Classification
 
-| Rule type | Minimum integration |
-|---|---|
-| Code style (naming, formatting) | `paths:` frontmatter only = OK |
+| Rule type                               | Minimum integration                  |
+| --------------------------------------- | ------------------------------------ |
+| Code style (naming, formatting)         | `paths:` frontmatter only = OK       |
 | Logic/methodology (testing-methodology) | `paths:` + command + agent reference |
-| Error reference (error-patterns) | `paths:` + command reference |
-| Architecture (electron, ipc) | `paths:` + skill reference |
+| Error reference (error-patterns)        | `paths:` + command reference         |
+| Architecture (electron, ipc)            | `paths:` + skill reference           |

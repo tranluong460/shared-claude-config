@@ -17,6 +17,7 @@ Create clear, accurate, and useful documentation. Prioritize developer experienc
 > If `.claude/skills/project-context/SKILL.md` has been filled in, use it for project-specific tech stack, commands, and conventions.
 
 After detection, apply project-specific extra doc types:
+
 - **Electron**: IPC channel docs, entity docs, window lifecycle
 - **Library**: Provider docs, API reference, usage examples
 - **Server**: API endpoint docs, middleware docs

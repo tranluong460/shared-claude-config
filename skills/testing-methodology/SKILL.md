@@ -130,32 +130,38 @@ Goal: Consolidate findings into a clear, actionable summary before implementing.
 **Scope**: <files and functions affected>
 
 #### Input Analysis Summary
+
 - Total input combinations analyzed: N
 - Edge cases identified: N
 - Breaking combinations found: N (list them)
 
 #### Flow Impact
+
 - Current flow steps affected: <which steps change>
 - Callers affected: <list files/functions>
 - Backward compatible: Yes / No
 
 #### Proposed Solution
+
 - <Clear description of what to change and why>
 
 #### Performance Considerations
+
 - [ ] Does this add async operations to a sync path?
 - [ ] Does this increase memory usage (caching, buffering)?
 - [ ] Does this add network calls in a loop?
 - [ ] Does this change O(n) complexity?
 
 #### Affected Files
-| File                    | Change Type        | Risk   |
-| ----------------------- | ------------------ | ------ |
-| src/core/proxy.ts       | Logic change       | Medium |
-| src/utils/validator.ts  | New validation     | Low    |
-| ...                     | ...                | ...    |
+
+| File                   | Change Type    | Risk   |
+| ---------------------- | -------------- | ------ |
+| src/core/proxy.ts      | Logic change   | Medium |
+| src/utils/validator.ts | New validation | Low    |
+| ...                    | ...            | ...    |
 
 #### Risks
+
 - <Risk 1>: <mitigation>
 - <Risk 2>: <mitigation>
 ```
@@ -185,11 +191,11 @@ Goal: Implement only after Steps 1-3 are complete and reviewed.
 
 ## Quick Reference: Common Mistakes This Process Prevents
 
-| Mistake                                    | Which step catches it |
-| ------------------------------------------ | --------------------- |
-| Missing null/undefined handling             | Step 1                |
-| Breaking existing callers                   | Step 2                |
-| Duplicating logic that already exists       | Step 2                |
-| Performance regression                      | Step 3                |
-| Implementing before understanding the problem | Step 1 + 2          |
-| Fixing symptom instead of root cause        | Step 2                |
+| Mistake                                       | Which step catches it |
+| --------------------------------------------- | --------------------- |
+| Missing null/undefined handling               | Step 1                |
+| Breaking existing callers                     | Step 2                |
+| Duplicating logic that already exists         | Step 2                |
+| Performance regression                        | Step 3                |
+| Implementing before understanding the problem | Step 1 + 2            |
+| Fixing symptom instead of root cause          | Step 2                |

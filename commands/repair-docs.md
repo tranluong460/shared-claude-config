@@ -45,22 +45,27 @@ Re-run the audit inventory (Steps 2-6 from `/audit-docs`) to get a fresh view of
 For each issue found, apply the appropriate fix:
 
 #### 3a. Dead Documents
+
 - **Attach** to relevant command/agent OR **delete**
 - Output: exact file path + exact change (line number, content to add)
 
 #### 3b. Passive Critical Documents
+
 - Promote to Active by injecting into relevant command or agent
 - Output: which command/agent file, what line to add
 
 #### 3c. Missing Integrations
+
 - Add reference in the target command/agent
 - Output: exact edit with old_string → new_string
 
 #### 3d. Broken Pipelines
+
 - Fix by creating missing agent or adding missing skill reference
 - Output: file to create or edit
 
 **Format for each fix:**
+
 ```
 File: <path>
 Action: <add/edit/delete>
@@ -78,23 +83,23 @@ Re-run the audit inventory to confirm all issues are resolved. Report any remain
 
 ### Fixes Applied
 
-| # | File | Action | Change |
-|---|------|--------|--------|
-| 1 | <path> | <add/edit/delete> | <description> |
+| #   | File   | Action            | Change        |
+| --- | ------ | ----------------- | ------------- |
+| 1   | <path> | <add/edit/delete> | <description> |
 
 ### Remaining Issues
 
-| Issue | Reason Not Fixed |
-|-------|-----------------|
+| Issue   | Reason Not Fixed                                           |
+| ------- | ---------------------------------------------------------- |
 | <issue> | <reason — needs manual review / ambiguous / cross-cutting> |
 
 ### Verification
 
-| Check | Before | After |
-|-------|--------|-------|
-| Dead documents | N | N |
-| Missing integrations | N | N |
-| Broken pipelines | N | N |
+| Check                | Before | After |
+| -------------------- | ------ | ----- |
+| Dead documents       | N      | N     |
+| Missing integrations | N      | N     |
+| Broken pipelines     | N      | N     |
 ```
 
 ## Notes

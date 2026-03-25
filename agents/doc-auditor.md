@@ -42,11 +42,11 @@ For each document, check who loads or references it:
 
 ### 3. Classify
 
-| Classification | Criteria |
-| -------------- | -------- |
-| **Active** | Referenced by command/agent AND has path-scoped frontmatter (for rules) |
-| **Passive** | Has `paths:` frontmatter (auto-injects) but NOT explicitly referenced |
-| **Dead** | Not referenced anywhere AND has no `paths:` frontmatter |
+| Classification | Criteria                                                                |
+| -------------- | ----------------------------------------------------------------------- |
+| **Active**     | Referenced by command/agent AND has path-scoped frontmatter (for rules) |
+| **Passive**    | Has `paths:` frontmatter (auto-injects) but NOT explicitly referenced   |
+| **Dead**       | Not referenced anywhere AND has no `paths:` frontmatter                 |
 
 ### 4. Propose Fixes
 

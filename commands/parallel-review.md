@@ -30,12 +30,12 @@ Read and apply:
 
 ### Step 2: Determine Diff Scope
 
-| Input          | Git command                          |
-| -------------- | ------------------------------------ |
-| "latest"       | `git diff HEAD~1`                    |
-| Branch name    | `git diff main...<branch>`          |
-| Commit range   | `git diff <range>`                   |
-| No input       | `git diff HEAD~1` (default: latest)  |
+| Input        | Git command                         |
+| ------------ | ----------------------------------- |
+| "latest"     | `git diff HEAD~1`                   |
+| Branch name  | `git diff main...<branch>`          |
+| Commit range | `git diff <range>`                  |
+| No input     | `git diff HEAD~1` (default: latest) |
 
 ### Step 3: Launch Independent Review
 

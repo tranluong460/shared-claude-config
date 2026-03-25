@@ -11,33 +11,33 @@ layer: project
 
 ## Project Identity
 
-| Field | Value |
-|-------|-------|
-| Name | <!-- project name --> |
-| Type | <!-- Electron App / Module Library / Node.js Server --> |
-| Description | <!-- one-line purpose --> |
+| Field       | Value                                                   |
+| ----------- | ------------------------------------------------------- |
+| Name        | <!-- project name -->                                   |
+| Type        | <!-- Electron App / Module Library / Node.js Server --> |
+| Description | <!-- one-line purpose -->                               |
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Runtime | <!-- Node.js X.x / Electron X.x --> |
-| Language | <!-- TypeScript X.x --> |
-| Database | <!-- TypeORM + SQLite / Prisma + PostgreSQL / none --> |
-| UI Framework | <!-- React / Vue / none --> |
-| Build Tool | <!-- electron-vite / Vite / tsc --> |
-| Test Framework | <!-- vitest / jest / none --> |
+| Layer          | Technology                                             |
+| -------------- | ------------------------------------------------------ |
+| Runtime        | <!-- Node.js X.x / Electron X.x -->                    |
+| Language       | <!-- TypeScript X.x -->                                |
+| Database       | <!-- TypeORM + SQLite / Prisma + PostgreSQL / none --> |
+| UI Framework   | <!-- React / Vue / none -->                            |
+| Build Tool     | <!-- electron-vite / Vite / tsc -->                    |
+| Test Framework | <!-- vitest / jest / none -->                          |
 
 ## Build & Test Commands
 
-| Action | Command |
-|--------|---------|
-| Install | <!-- yarn install --> |
-| Dev | <!-- npm run dev --> |
-| Build | <!-- npm run build --> |
-| Lint + Format | <!-- npm run flint --> |
-| Typecheck | <!-- npm run typecheck --> |
-| Test | <!-- yarn test --> |
+| Action        | Command                    |
+| ------------- | -------------------------- |
+| Install       | <!-- yarn install -->      |
+| Dev           | <!-- npm run dev -->       |
+| Build         | <!-- npm run build -->     |
+| Lint + Format | <!-- npm run flint -->     |
+| Typecheck     | <!-- npm run typecheck --> |
+| Test          | <!-- yarn test -->         |
 
 ## Architecture Decisions
 

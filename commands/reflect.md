@@ -90,13 +90,13 @@ For each finding, categorize:
 
 For each recurring issue, propose a specific change:
 
-| Type | How to fix |
-| ---- | ---------- |
-| Missing convention | Add rule in `.claude/rules/` |
-| Rule ignored | Strengthen wording or promote to hook |
-| Missing knowledge | Add to relevant skill |
-| Build/test gap | Add to CLAUDE.md or implementation rule |
-| Repeated manual step | Automate with hook |
+| Type                 | How to fix                              |
+| -------------------- | --------------------------------------- |
+| Missing convention   | Add rule in `.claude/rules/`            |
+| Rule ignored         | Strengthen wording or promote to hook   |
+| Missing knowledge    | Add to relevant skill                   |
+| Build/test gap       | Add to CLAUDE.md or implementation rule |
+| Repeated manual step | Automate with hook                      |
 
 ### Step 5: Report
 

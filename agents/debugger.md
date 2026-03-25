@@ -17,6 +17,7 @@ Investigate bugs and unexpected behavior systematically. Gather evidence, form h
 > If `.claude/skills/project-context/SKILL.md` has been filled in, use it for project-specific tech stack, commands, and conventions.
 
 After detection, apply project-specific debug focus:
+
 - **Electron**: Cross-process tracing (main<>preload<>renderer), IPC errors, DB issues, worker crashes
 - **Library**: Provider loading chain (Facade->Loader->Registry->Factory->Provider->Action)
 - **Server**: Request pipeline, middleware chain, DB queries

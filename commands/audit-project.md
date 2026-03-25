@@ -33,6 +33,7 @@ Read and apply:
 > Project type detection: see `.claude/rules/project-detection.md`
 
 After detection, apply project-specific checklists:
+
 - **Electron**: Electron + General
 - **Library**: Provider Pattern + General
 - **Server**: Server + General
@@ -80,11 +81,11 @@ Generate a comprehensive audit report:
 
 ### Technology Stack
 
-| Layer            | Technology                   |
-| ---------------- | ---------------------------- |
-| Runtime          | Node.js / Electron           |
-| Database         | <TypeORM + SQLite / none>    |
-| Build            | <electron-vite / Vite / tsc> |
+| Layer    | Technology                   |
+| -------- | ---------------------------- |
+| Runtime  | Node.js / Electron           |
+| Database | <TypeORM + SQLite / none>    |
+| Build    | <electron-vite / Vite / tsc> |
 
 ### Architecture Summary
 
@@ -94,15 +95,15 @@ Generate a comprehensive audit report:
 
 ### IPC Channel Inventory (Electron only)
 
-| Domain | Handler (main/) | Proxy (preload/) | Status |
-| --- | --- | --- | --- |
-| account | ✅ | ✅ | Synced |
+| Domain  | Handler (main/) | Proxy (preload/) | Status |
+| ------- | --------------- | ---------------- | ------ |
+| account | ✅              | ✅               | Synced |
 
 ### Provider Inventory (Library only)
 
-| Provider | Factory | Provider Class | Actions | Status |
-| --- | --- | --- | --- | --- |
-| automated | ✅ | ✅ | N | OK |
+| Provider  | Factory | Provider Class | Actions | Status |
+| --------- | ------- | -------------- | ------- | ------ |
+| automated | ✅      | ✅             | N       | OK     |
 
 ### Strengths
 
@@ -120,16 +121,16 @@ Generate a comprehensive audit report:
 
 ### Improvement Roadmap
 
-| Priority | Issue | Category | Effort | Impact |
-| --- | --- | --- | --- | --- |
-| 1 | <issue> | Security/Structure/Quality | S/M/L | High/Med/Low |
+| Priority | Issue   | Category                   | Effort | Impact       |
+| -------- | ------- | -------------------------- | ------ | ------------ |
+| 1        | <issue> | Security/Structure/Quality | S/M/L  | High/Med/Low |
 
 ### Dependency Summary
 
-| Metric | Count |
-| --- | --- |
-| Production deps | N |
-| Dev deps | N |
+| Metric          | Count |
+| --------------- | ----- |
+| Production deps | N     |
+| Dev deps        | N     |
 ```
 
 ## Notes

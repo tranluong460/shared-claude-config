@@ -17,6 +17,7 @@ Analyze project architecture, identify structural problems, design solutions, an
 > If `.claude/skills/project-context/SKILL.md` has been filled in, use it for project-specific tech stack, commands, and conventions.
 
 After detection, apply project-specific focus:
+
 - **Electron**: IPC consistency, process isolation, window management, worker threads
 - **Library**: Provider pattern compliance, interface contracts, packaging
 - **Server**: API design, middleware, database layer

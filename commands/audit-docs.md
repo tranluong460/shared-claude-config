@@ -57,9 +57,9 @@ Read the full `.claude/` directory structure and categorize every document:
 Build an inventory table:
 
 ```markdown
-| File | Type | Has Frontmatter | Path Scope |
-| ---- | ---- | --------------- | ---------- |
-| ...  | rule/command/agent/skill/hook | Yes/No | paths value or N/A |
+| File | Type                          | Has Frontmatter | Path Scope         |
+| ---- | ----------------------------- | --------------- | ------------------ |
+| ...  | rule/command/agent/skill/hook | Yes/No          | paths value or N/A |
 ```
 
 ### Step 3: Map References
@@ -99,13 +99,13 @@ For each file in `commands/`:
 
 Based on the reference mapping, classify:
 
-| Classification | Criteria |
-| -------------- | -------- |
-| **Active** | Referenced by at least one command/agent AND has path-scoped frontmatter (for rules) |
-| **Passive** | Has `paths:` frontmatter (auto-injects) but NOT explicitly referenced by any command or agent |
-| **Weakly Integrated** | Referenced by only 1 command/agent, or has no frontmatter but is referenced |
-| **Dead** | Not referenced anywhere AND has no `paths:` frontmatter |
-| **Orphaned** | Claims to be referenced (e.g., "agents reference here") but actually is not |
+| Classification        | Criteria                                                                                      |
+| --------------------- | --------------------------------------------------------------------------------------------- |
+| **Active**            | Referenced by at least one command/agent AND has path-scoped frontmatter (for rules)          |
+| **Passive**           | Has `paths:` frontmatter (auto-injects) but NOT explicitly referenced by any command or agent |
+| **Weakly Integrated** | Referenced by only 1 command/agent, or has no frontmatter but is referenced                   |
+| **Dead**              | Not referenced anywhere AND has no `paths:` frontmatter                                       |
+| **Orphaned**          | Claims to be referenced (e.g., "agents reference here") but actually is not                   |
 
 ### Step 5: Detect Issues
 
@@ -131,11 +131,11 @@ Note: Rules are meant to be concise enforcement, skills are detailed reference. 
 
 Detect cases where a document SHOULD be loaded but is not:
 
-| Signal | Missing Integration |
-| ------ | ------------------- |
-| Rule covers topic X, command handles topic X | Command should reference the rule |
-| Skill exists for domain Y, agent works in domain Y | Agent should list the skill |
-| Command exists but `suggest-commands.sh` has no keyword match | Hook should suggest the command |
+| Signal                                                        | Missing Integration               |
+| ------------------------------------------------------------- | --------------------------------- |
+| Rule covers topic X, command handles topic X                  | Command should reference the rule |
+| Skill exists for domain Y, agent works in domain Y            | Agent should list the skill       |
+| Command exists but `suggest-commands.sh` has no keyword match | Hook should suggest the command   |
 
 #### 5d. Inconsistencies
 
@@ -163,65 +163,65 @@ Detect cases where a document SHOULD be loaded but is not:
 
 #### Rules
 
-| Rule | Frontmatter | Commands | Agents | Skills | Classification |
-| ---- | ----------- | -------- | ------ | ------ | -------------- |
-| `code-quality.md` | `src/**` | - | - | coding-standards, naming-conventions | Passive |
-| `error-patterns.md` | - | diagnose | debugger | - | Active |
-| ... | ... | ... | ... | ... | ... |
+| Rule                | Frontmatter | Commands | Agents   | Skills                               | Classification |
+| ------------------- | ----------- | -------- | -------- | ------------------------------------ | -------------- |
+| `code-quality.md`   | `src/**`    | -        | -        | coding-standards, naming-conventions | Passive        |
+| `error-patterns.md` | -           | diagnose | debugger | -                                    | Active         |
+| ...                 | ...         | ...      | ...      | ...                                  | ...            |
 
 #### Skills
 
-| Skill | Loaded by Commands | Loaded by Agents | Classification |
-| ----- | ------------------ | ---------------- | -------------- |
-| coding-standards | audit-project, ... | architect, ... | Active |
-| ... | ... | ... | ... |
+| Skill            | Loaded by Commands | Loaded by Agents | Classification |
+| ---------------- | ------------------ | ---------------- | -------------- |
+| coding-standards | audit-project, ... | architect, ...   | Active         |
+| ...              | ...                | ...              | ...            |
 
 #### Agents
 
-| Agent | Used by Commands | Skills Loaded | Classification |
-| ----- | ---------------- | ------------- | -------------- |
-| architect | audit-project, refactor-plan | 4 skills | Active |
-| ... | ... | ... | ... |
+| Agent     | Used by Commands             | Skills Loaded | Classification |
+| --------- | ---------------------------- | ------------- | -------------- |
+| architect | audit-project, refactor-plan | 4 skills      | Active         |
+| ...       | ...                          | ...           | ...            |
 
 #### Commands
 
-| Command | Uses Agent | Loads Skills | Hook Suggested | Classification |
-| ------- | ---------- | ------------ | -------------- | -------------- |
-| audit-naming | reviewer | 1 | Yes | Active |
-| ... | ... | ... | ... | ... |
+| Command      | Uses Agent | Loads Skills | Hook Suggested | Classification |
+| ------------ | ---------- | ------------ | -------------- | -------------- |
+| audit-naming | reviewer   | 1            | Yes            | Active         |
+| ...          | ...        | ...          | ...            | ...            |
 
 ### Issues Found
 
 #### Dead Documents
 
-| File | Reason | Recommendation |
-| ---- | ------ | -------------- |
+| File           | Reason                        | Recommendation                                                      |
+| -------------- | ----------------------------- | ------------------------------------------------------------------- |
 | `rules/xxx.md` | No frontmatter, no references | Add paths: frontmatter OR reference from relevant command OR delete |
 
 #### Duplicate Content
 
-| Content | Found In | Recommendation |
-| ------- | -------- | -------------- |
-| "..." | rule X, skill Y | Keep in skill, reference from rule |
+| Content | Found In        | Recommendation                     |
+| ------- | --------------- | ---------------------------------- |
+| "..."   | rule X, skill Y | Keep in skill, reference from rule |
 
 #### Missing Integrations
 
-| Document | Should Be Referenced By | Why |
-| -------- | ----------------------- | --- |
-| `rules/xxx.md` | `commands/yyy.md` | Command handles the same domain |
+| Document       | Should Be Referenced By | Why                             |
+| -------------- | ----------------------- | ------------------------------- |
+| `rules/xxx.md` | `commands/yyy.md`       | Command handles the same domain |
 
 #### Inconsistencies
 
-| Issue | Location | Fix |
-| ----- | -------- | --- |
+| Issue                                      | Location       | Fix                           |
+| ------------------------------------------ | -------------- | ----------------------------- |
 | Claims "agents reference here" but none do | `rules/xxx.md` | Remove claim or add reference |
 
 ### Recommendations
 
-| Priority | Action | Files Affected |
-| -------- | ------ | -------------- |
-| 1 | <specific action> | <specific files> |
-| 2 | <specific action> | <specific files> |
+| Priority | Action            | Files Affected   |
+| -------- | ----------------- | ---------------- |
+| 1        | <specific action> | <specific files> |
+| 2        | <specific action> | <specific files> |
 ```
 
 ## Notes
