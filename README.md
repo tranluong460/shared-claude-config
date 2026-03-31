@@ -17,6 +17,7 @@ A reusable AI toolkit for developing Node.js / TypeScript / Electron projects at
 | Debug an issue           | `/diagnose "Error X when Y"`           | Cross-process trace → hypotheses → root cause → fix        |
 | Implement changes        | `/implement "refactor auth module"`    | Detect project → recipe-based implement → verify           |
 | Independent code review  | `/parallel-review latest`              | Fresh-eyes review in isolated worktree → no bias           |
+| Production readiness     | `/test-system src/main/sync`           | Multi-agent risk analysis → failure scenarios → judgment    |
 | Reflect & improve        | `/reflect 1 week`                      | Analyze recent work → find patterns → suggest config fixes |
 
 ---
@@ -30,7 +31,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 (actions)           (AI roles)        (knowledge)
 ```
 
-### Commands (12) — User-Facing Actions
+### Commands (13) — User-Facing Actions
 
 | Command            | Category | Description                              | Agent               | Skills Used                                                                                    |
 | ------------------ | -------- | ---------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
@@ -45,9 +46,10 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | `/generate-docs`   | execute  | Documentation generation                 | doc-writer          | documentation-standards, project-context                                                       |
 | `/implement`       | execute  | Execute implementation                   | task-executor       | coding-standards, naming-conventions, testing-strategy, architecture-patterns, project-context |
 | `/parallel-review` | verify   | Independent worktree review              | reviewer            | coding-standards, naming-conventions, architecture-patterns, testing-strategy                  |
+| `/test-system`     | verify   | Production readiness testing             | test-leader         | production-testing, coding-standards, architecture-patterns, testing-strategy, project-context |
 | `/reflect`         | improve  | Session analysis & improve               | reflection-analyzer | reflection, coding-standards                                                                   |
 
-### Agents (9) — AI Roles
+### Agents (10) — AI Roles
 
 | Agent                   | Role                                                                    | Primary Skills                                                                                                      |
 | ----------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -60,8 +62,9 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **reflection-analyzer** | Analyzes sessions, detects patterns, suggests fixes                     | reflection, coding-standards                                                                                        |
 | **task-executor**       | Implements changes with project-aware recipes                           | coding-standards, naming-conventions, testing-strategy, architecture-patterns, testing-methodology, project-context |
 | **test-architect**      | Test strategy with Electron/Library mock patterns                       | testing-strategy, coding-standards, naming-conventions, project-context                                             |
+| **test-leader**         | Production testing team leader — risk analysis, failure scenarios, judgment | production-testing, coding-standards, architecture-patterns, testing-strategy, project-context                    |
 
-### Skills (10) — Knowledge Modules
+### Skills (11) — Knowledge Modules
 
 | Skill                       | Layer        | Content                                                                                               |
 | --------------------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
@@ -72,6 +75,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **refactoring-strategy**    | architecture | Techniques, risk assessment, Electron/Library recipes, incremental migration                          |
 | **testing-strategy**        | testing      | Test design, AAA pattern, mocking, Electron/Library test guides, bootstrap                            |
 | **testing-methodology**     | workflow     | 4-step analysis process: Input Assumptions, Flow Analysis, Report, Implement                          |
+| **production-testing**      | testing      | Multi-agent production testing: risk assessment, failure imagination, proof-based validation, judgment |
 | **reflection**              | workflow     | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions  |
 | **orchestration-contracts** | workflow     | Result state taxonomy, artifact schemas, workflow patterns, state machine rules for pipelines         |
 | **project-context**         | project      | Template for project-specific tech stack, commands, architecture decisions, business rules            |
@@ -116,6 +120,8 @@ The toolkit supports the full development improvement cycle:
 /implement              Execute the plan
         ↓
 /parallel-review        Independent quality gate
+        ↓
+/test-system            Production readiness check
         ↓
 /generate-docs          Document what changed
         ↓

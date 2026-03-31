@@ -35,6 +35,7 @@ Commands (commands/*.md)  ──call──▶  Agents (agents/*.md)  ──use�
 | Implement changes | `/implement "<task>"` |
 | Generate documentation | `/generate-docs <type>` |
 | Independent review | `/parallel-review latest` |
+| Production readiness test | `/test-system <scope>` |
 | Reflect & improve | `/reflect 1 week` |
 
 ## Key Pointers
@@ -45,6 +46,7 @@ Commands (commands/*.md)  ──call──▶  Agents (agents/*.md)  ──use�
 - Naming conventions: `skills/naming-conventions/SKILL.md`
 - Testing methodology: `skills/testing-methodology/SKILL.md`
 - Testing strategy: `skills/testing-strategy/SKILL.md`
+- Production testing: `skills/production-testing/SKILL.md`
 - Orchestration contracts: `skills/orchestration-contracts/SKILL.md`
 - Project-specific context: `skills/project-context/SKILL.md` (fill in for your project)
 
