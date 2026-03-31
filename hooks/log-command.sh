@@ -25,7 +25,7 @@ fi
 CMD_NAME="${COMMAND#/}"
 
 # Only log known commands
-KNOWN_COMMANDS="audit-code audit-naming audit-project audit-docs diagnose refactor-plan generate-tests generate-docs implement parallel-review reflect repair-docs"
+KNOWN_COMMANDS="audit-code audit-project audit-docs diagnose refactor-plan generate-tests generate-docs implement parallel-review test-system reflect repair-docs"
 
 FOUND=false
 for known in $KNOWN_COMMANDS; do

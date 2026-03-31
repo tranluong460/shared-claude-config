@@ -60,7 +60,9 @@ fi
 if [[ -n "$VIOLATIONS" ]]; then
   echo -e "CODE QUALITY CHECK FAILED for $FILE_PATH:$VIOLATIONS" >&2
   echo -e "\nFix these violations before proceeding. Rules: .claude/rules/code-quality.md" >&2
-  # Exit 0 (warn) instead of exit 2 (block) to avoid blocking legitimate edits
-  # Change to exit 2 if you want hard enforcement
+  # Hard block for `any` type (most critical rule), warn for others
+  if [[ -n "$ANY_MATCHES" ]]; then
+    exit 2
+  fi
   exit 0
 fi
