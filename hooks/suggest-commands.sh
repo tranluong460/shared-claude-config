@@ -80,6 +80,11 @@ if echo "$PROMPT" | grep -qiE '\b(independent review|fresh eyes|worktree|paralle
   SUGGESTIONS="$SUGGESTIONS\n  → /parallel-review latest — independent review in isolated worktree"
 fi
 
+# Production testing keywords
+if echo "$PROMPT" | grep -qiE '\b(production test|readiness|ship|safe to deploy|risk assess|failure scenario|production ready|stress test|system test)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /test-system <scope> — multi-agent production readiness analysis"
+fi
+
 # Reflection keywords
 if echo "$PROMPT" | grep -qiE '\b(reflect|improve config|session review|lesson|pattern|what went wrong)\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /reflect 1 week — analyze patterns and suggest config improvements"
@@ -140,6 +145,13 @@ fi
 # After audit-* → clean: suggest next in workflow
 if echo "$PROMPT" | grep -qiE '\b(audit (clean|passed)|no issues|all (clean|good|passed)|zero (issues|violations|problems))\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /reflect 1 week — capture what went well"
+fi
+
+# After test-system → unsafe/conditional: suggest diagnose, implement, refactor-plan
+if echo "$PROMPT" | grep -qiE '\b(verdict.*(unsafe|conditional)|unsafe.*verdict|not (safe|ready) for production|critical (findings|issues|risks)|production.*unsafe)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /diagnose \"<finding>\" — investigate critical finding"
+  SUGGESTIONS="$SUGGESTIONS\n  → /implement \"fix <issue>\" — fix critical issues"
+  SUGGESTIONS="$SUGGESTIONS\n  → /refactor-plan <scope> — plan structural improvements"
 fi
 
 # Workflow execution suggestion

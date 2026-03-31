@@ -199,7 +199,8 @@ description: <what knowledge this provides>
 | Block dangerous commands | `PreToolUse`       | `hooks/block-dangerous-commands.sh` | Blocks `rm -rf`, `git push --force`, `chmod 777`, `curl\|sh`, etc.  |
 | Log commands             | `UserPromptSubmit` | `hooks/log-command.sh`              | Logs `/command` invocations to `memory/command-history.jsonl`       |
 | Auto-format after edit   | `PostToolUse`      | `hooks/auto-format.sh`              | Runs `prettier --write` on `.ts`/`.tsx` files                       |
-| Context persistence      | `PostCompact`      | inline                              | Re-injects rules reminder, active tasks, `/clear` vs `/compact` tip |
+| Code quality enforcement | `PostToolUse`      | `hooks/check-code-quality.sh`       | Checks `any` type, `console.log`, 50-line/300-line limits           |
+| Context persistence      | `PostCompact`      | `hooks/post-compact.sh`             | Re-injects rules, modified files, branch, lessons, active tasks     |
 | Notification on finish   | `Stop`             | inline                              | System sound (Windows) / native notification (macOS/Linux)          |
 
 ### Hooks Directory
@@ -211,6 +212,8 @@ External scripts in `.claude/hooks/` — readable, testable, maintainable:
 ├── block-dangerous-commands.sh   # PreToolUse: deny dangerous bash patterns
 ├── log-command.sh                # UserPromptSubmit: log /command invocations to memory/command-history.jsonl
 ├── auto-format.sh                # PostToolUse: prettier for .ts/.tsx
+├── check-code-quality.sh         # PostToolUse: enforce no-any, no-console.log, line limits
+├── post-compact.sh               # PostCompact: restore context (rules, files, branch, lessons)
 └── suggest-commands.sh           # UserPromptSubmit: keyword + result-state → command suggestion
 ```
 
