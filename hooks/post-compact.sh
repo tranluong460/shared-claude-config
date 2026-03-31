@@ -44,11 +44,14 @@ if [[ -n "$BRANCH" ]]; then
   echo ""
 fi
 
-# --- Lessons reminder ---
+# --- Recent lessons (inject content directly, not just count) ---
 if [[ -f ".claude/memory/lessons.md" ]]; then
   LESSON_COUNT=$(grep -c '^### ' ".claude/memory/lessons.md" 2>/dev/null || echo "0")
   if [[ "$LESSON_COUNT" -gt 0 ]]; then
-    echo "LESSONS: $LESSON_COUNT lessons in .claude/memory/lessons.md — read before making decisions."
+    echo "RECENT LESSONS ($LESSON_COUNT total):"
+    # Inject last 15 lines of lessons — Claude reads these directly after compaction
+    tail -15 ".claude/memory/lessons.md" 2>/dev/null
+    echo ""
   fi
 fi
 
