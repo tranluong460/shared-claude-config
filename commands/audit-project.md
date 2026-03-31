@@ -6,8 +6,8 @@ consumes: [source-code, package-json]
 produces: [architecture-report]
 result_states: [clean, issues_found, execution_error]
 next_on_result:
-  clean: [audit-code, audit-naming]
-  issues_found: [refactor-plan, audit-code, audit-naming]
+  clean: [audit-code]
+  issues_found: [refactor-plan, audit-code]
   execution_error: [diagnose]
 ---
 

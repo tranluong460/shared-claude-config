@@ -6,7 +6,7 @@ consumes: [source-code]
 produces: [documentation]
 result_states: [success, validation_failed, blocked, execution_error]
 next_on_result:
-  success: [audit-docs]
+  success: [audit-config]
   validation_failed: [diagnose]
   blocked: []
   execution_error: [diagnose]

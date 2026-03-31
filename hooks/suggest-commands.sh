@@ -52,12 +52,12 @@ fi
 
 # Documentation audit keywords
 if echo "$PROMPT" | grep -qiE '\b(dead doc|unused doc|orphan|audit.?doc|doc.?consistency|doc.?audit|documentation.?(audit|check|unused|dead))\b'; then
-  SUGGESTIONS="$SUGGESTIONS\n  → /audit-docs — audit .claude/ documentation consistency"
+  SUGGESTIONS="$SUGGESTIONS\n  → /audit-config — audit .claude/ documentation consistency"
 fi
 
 # Documentation repair keywords
 if echo "$PROMPT" | grep -qiE '\b(fix doc|repair doc|sync doc|doc.?repair|doc.?fix|fix.?unused)\b'; then
-  SUGGESTIONS="$SUGGESTIONS\n  → /repair-docs — fix documentation issues found by /audit-docs"
+  SUGGESTIONS="$SUGGESTIONS\n  → /repair-config — fix documentation issues found by /audit-config"
 fi
 
 # Logic and flow analysis
@@ -132,14 +132,14 @@ if echo "$PROMPT" | grep -qiE '\b(tests (generated|created|added|passing)|test g
   SUGGESTIONS="$SUGGESTIONS\n  → /implement \"<task>\" — proceed with implementation"
 fi
 
-# After generate-docs → success: suggest audit-docs
+# After generate-docs → success: suggest audit-config
 if echo "$PROMPT" | grep -qiE '\b(docs? (generated|created|written)|documentation (done|complete|generated))\b'; then
-  SUGGESTIONS="$SUGGESTIONS\n  → /audit-docs — verify documentation consistency"
+  SUGGESTIONS="$SUGGESTIONS\n  → /audit-config — verify documentation consistency"
 fi
 
 # After audit-* → issues_found: suggest appropriate fix
 if echo "$PROMPT" | grep -qiE '\b(audit found|issues (detected|found)|doc.*(issues|problems) found|critical issues|major issues)\b'; then
-  SUGGESTIONS="$SUGGESTIONS\n  → /repair-docs — fix documentation issues (if doc audit)"
+  SUGGESTIONS="$SUGGESTIONS\n  → /repair-config — fix documentation issues (if doc audit)"
   SUGGESTIONS="$SUGGESTIONS\n  → /implement \"fix <issues>\" — fix code issues (if code audit)"
 fi
 
