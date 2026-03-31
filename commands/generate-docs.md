@@ -16,7 +16,15 @@ You are executing the `/generate-docs` command.
 
 ## Input
 
-Target: $ARGUMENTS (doc type + optional scope)
+Target: $ARGUMENTS (doc type, optionally followed by file/module path)
+
+Examples:
+- `/generate-docs API src/main/ipcs` — API reference for IPC handlers
+- `/generate-docs ADR` — Architecture Decision Record
+- `/generate-docs troubleshooting src/system/workers/sync` — troubleshooting guide for sync
+- `/generate-docs changelog` — changelog from recent commits
+
+Doc types: README, API, ADR, design, guide, troubleshooting, changelog, IPC, entity
 
 ## Workflow
 

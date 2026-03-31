@@ -19,7 +19,14 @@ You are executing the `/implement` command.
 
 ## Input
 
-Target: $ARGUMENTS (task description, plan file, or specific change)
+Target: $ARGUMENTS (task description, optionally followed by file/module path to scope the work)
+
+Examples:
+- `/implement "fix download retry logic" src/main/helpers/product/download-manager.ts`
+- `/implement "add IPC for user settings"`
+- `/implement "refactor scheduler recovery" src/main/helpers/scheduler`
+
+If a path is provided, focus changes on that scope. If not, infer from task description.
 
 ## Workflow
 

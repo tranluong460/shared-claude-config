@@ -15,7 +15,14 @@ You are executing the `/diagnose` command.
 
 ## Input
 
-Problem: $ARGUMENTS (error message, bug description, or unexpected behavior)
+Problem: $ARGUMENTS (error description, optionally followed by file/module path to narrow scope)
+
+Examples:
+- `/diagnose "sync fails after 100 records" src/system/workers/sync`
+- `/diagnose "scheduler jobs not recovering" src/main/helpers/scheduler`
+- `/diagnose "IPC timeout on account_create"`
+
+If a path is provided, start investigation there. If not, use error message to locate relevant code.
 
 ## Workflow
 
