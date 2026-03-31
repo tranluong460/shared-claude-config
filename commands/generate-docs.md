@@ -19,6 +19,7 @@ You are executing the `/generate-docs` command.
 Target: $ARGUMENTS (doc type, optionally followed by file/module path)
 
 Examples:
+
 - `/generate-docs API src/main/ipcs` — API reference for IPC handlers
 - `/generate-docs ADR` — Architecture Decision Record
 - `/generate-docs troubleshooting src/system/workers/sync` — troubleshooting guide for sync

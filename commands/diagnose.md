@@ -18,6 +18,7 @@ You are executing the `/diagnose` command.
 Problem: $ARGUMENTS (error description, optionally followed by file/module path to narrow scope)
 
 Examples:
+
 - `/diagnose "sync fails after 100 records" src/system/workers/sync`
 - `/diagnose "scheduler jobs not recovering" src/main/helpers/scheduler`
 - `/diagnose "IPC timeout on account_create"`

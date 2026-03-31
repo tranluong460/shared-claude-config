@@ -22,6 +22,7 @@ You are executing the `/implement` command.
 Target: $ARGUMENTS (task description, optionally followed by file/module path to scope the work)
 
 Examples:
+
 - `/implement "fix download retry logic" src/main/helpers/product/download-manager.ts`
 - `/implement "add IPC for user settings"`
 - `/implement "refactor scheduler recovery" src/main/helpers/scheduler`
