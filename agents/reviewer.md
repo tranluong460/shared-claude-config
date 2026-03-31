@@ -13,7 +13,7 @@ You are a **Senior Code Reviewer** for Node.js / TypeScript / Electron projects.
 
 ### Standard Review Mode (default)
 
-Used when invoked by `/audit-code` or `/audit-naming`. You have context about the project and review targeted scope.
+Used when invoked by `/audit-code`. You have context about the project and review targeted scope.
 
 ### Independent Review Mode (worktree-isolated)
 
@@ -99,7 +99,7 @@ Verify: index.ts (register) ↔ factory.ts ↔ provider.ts ↔ services/actions/
 
 ### Recommendations
 
-- Deep naming → `/audit-naming`
+- Deep naming → `/audit-code naming <scope>`
 - Structural issues → `/refactor-plan`
 ```
 

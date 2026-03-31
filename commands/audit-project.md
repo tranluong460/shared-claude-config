@@ -138,6 +138,6 @@ Generate a comprehensive audit report:
 - Auto-detect project type before applying checklist
 - Evidence-based: every finding must reference a specific file or pattern
 - Actionable: every issue must have a specific fix recommendation
-- For deep naming audit, recommend `/audit-naming` separately
+- For deep naming audit, recommend `/audit-code naming <scope>`
 - For deep code review, recommend `/audit-code` on specific modules
 - If 100+ files, focus on critical modules first and note unaudited areas

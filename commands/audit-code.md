@@ -121,7 +121,7 @@ Output a structured review report:
 
 ### Recommendations
 
-- Deep naming -> `/audit-naming`
+- Deep naming -> `/audit-code naming <scope>`
 - Structural issues -> `/refactor-plan`
 ```
 
