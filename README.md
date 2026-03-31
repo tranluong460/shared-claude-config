@@ -33,20 +33,20 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 
 ### Commands (12) — User-Facing Actions
 
-| Command            | Category | Description                              | Agent               | Skills Used                                                                                    |
-| ------------------ | -------- | ---------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
-| `/audit-code`      | audit    | Code quality + naming review (use `naming` prefix for naming-only mode) | reviewer | coding-standards, naming-conventions, architecture-patterns                    |
-| `/audit-project`   | audit    | Full architecture audit                  | architect           | architecture-patterns, coding-standards, naming-conventions, project-context                   |
-| `/audit-docs`      | audit    | .claude/ documentation audit (read-only) | doc-auditor         | architecture-patterns, documentation-standards                                                 |
-| `/repair-docs`     | execute  | Fix issues found by /audit-docs          | doc-auditor         | architecture-patterns, documentation-standards                                                 |
-| `/diagnose`        | analyze  | Bug investigation                        | debugger            | coding-standards, architecture-patterns, project-context                                       |
-| `/refactor-plan`   | plan     | Refactoring strategy                     | architect           | refactoring-strategy, architecture-patterns, naming-conventions                                |
-| `/generate-tests`  | execute  | Test generation                          | test-architect      | testing-strategy, coding-standards, naming-conventions, project-context                        |
-| `/generate-docs`   | execute  | Documentation generation                 | doc-writer          | documentation-standards, project-context                                                       |
-| `/implement`       | execute  | Execute implementation                   | task-executor       | coding-standards, naming-conventions, testing-strategy, architecture-patterns, project-context |
-| `/parallel-review` | verify   | Independent worktree review              | reviewer            | coding-standards, naming-conventions, architecture-patterns, testing-strategy                  |
-| `/test-system`     | verify   | Production readiness testing             | test-leader         | production-testing, coding-standards, architecture-patterns, testing-strategy, project-context |
-| `/reflect`         | improve  | Session analysis & improve               | reflection-analyzer | reflection, coding-standards                                                                   |
+| Command            | Category | Description                                                             | Agent               | Skills Used                                                                                    |
+| ------------------ | -------- | ----------------------------------------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
+| `/audit-code`      | audit    | Code quality + naming review (use `naming` prefix for naming-only mode) | reviewer            | coding-standards, naming-conventions, architecture-patterns                                    |
+| `/audit-project`   | audit    | Full architecture audit                                                 | architect           | architecture-patterns, coding-standards, naming-conventions, project-context                   |
+| `/audit-docs`      | audit    | .claude/ documentation audit (read-only)                                | doc-auditor         | architecture-patterns, documentation-standards                                                 |
+| `/repair-docs`     | execute  | Fix issues found by /audit-docs                                         | doc-auditor         | architecture-patterns, documentation-standards                                                 |
+| `/diagnose`        | analyze  | Bug investigation                                                       | debugger            | coding-standards, architecture-patterns, project-context                                       |
+| `/refactor-plan`   | plan     | Refactoring strategy                                                    | architect           | refactoring-strategy, architecture-patterns, naming-conventions                                |
+| `/generate-tests`  | execute  | Test generation                                                         | test-architect      | testing-strategy, coding-standards, naming-conventions, project-context                        |
+| `/generate-docs`   | execute  | Documentation generation                                                | doc-writer          | documentation-standards, project-context                                                       |
+| `/implement`       | execute  | Execute implementation                                                  | task-executor       | coding-standards, naming-conventions, testing-strategy, architecture-patterns, project-context |
+| `/parallel-review` | verify   | Independent worktree review                                             | reviewer            | coding-standards, naming-conventions, architecture-patterns, testing-strategy                  |
+| `/test-system`     | verify   | Production readiness testing                                            | test-leader         | production-testing, coding-standards, architecture-patterns, testing-strategy, project-context |
+| `/reflect`         | improve  | Session analysis & improve                                              | reflection-analyzer | reflection, coding-standards                                                                   |
 
 ### Agents (9) — AI Roles
 
@@ -75,7 +75,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **testing-methodology**     | workflow     | 4-step analysis process: Input Assumptions, Flow Analysis, Report, Implement                           |
 | **production-testing**      | testing      | Multi-agent production testing: risk assessment, failure imagination, proof-based validation, judgment |
 | **reflection**              | workflow     | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions   |
-| **project-context**         | project      | MKT Client: Electron + TypeORM + SQLite + React, architecture decisions, business rules               |
+| **project-context**         | project      | MKT Client: Electron + TypeORM + SQLite + React, architecture decisions, business rules                |
 
 ### Rules (13) — Context-Aware Enforcement
 

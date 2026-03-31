@@ -8,35 +8,35 @@ layer: project
 
 ## Project Identity
 
-| Field       | Value                                               |
-| ----------- | --------------------------------------------------- |
-| Name        | MKT Client                                          |
-| Type        | Electron App                                        |
+| Field       | Value                                                                              |
+| ----------- | ---------------------------------------------------------------------------------- |
+| Name        | MKT Client                                                                         |
+| Type        | Electron App                                                                       |
 | Description | Desktop app for managing MKT Software products, sync, scheduling, and auto-updates |
-| Version     | 5.4.5                                               |
-| Company     | MKT SOFTWARE, JSC.                                  |
+| Version     | 5.4.5                                                                              |
+| Company     | MKT SOFTWARE, JSC.                                                                 |
 
 ## Tech Stack
 
-| Layer          | Technology                       |
-| -------------- | -------------------------------- |
-| Runtime        | Node.js 24.x / Electron 33.x    |
-| Language       | TypeScript 5.5                   |
-| Database       | TypeORM + better-sqlite3 (SQLite)|
-| UI Framework   | React 18.3                       |
-| Build Tool     | electron-vite 2.3                |
+| Layer          | Technology                           |
+| -------------- | ------------------------------------ |
+| Runtime        | Node.js 24.x / Electron 33.x         |
+| Language       | TypeScript 5.5                       |
+| Database       | TypeORM + better-sqlite3 (SQLite)    |
+| UI Framework   | React 18.3                           |
+| Build Tool     | electron-vite 2.3                    |
 | Test Framework | None configured (vitest recommended) |
 | Package Mgr    | yarn (install/add) + npm (scripts)   |
 
 ## Build & Test Commands
 
-| Action        | Command                          |
-| ------------- | -------------------------------- |
-| Install       | `yarn install`                   |
-| Dev           | `npm run dev`                    |
-| Build         | `npm run build`                  |
-| Lint + Format | `npm run lint` + `npm run format`|
-| Typecheck     | `npm run typecheck`              |
+| Action        | Command                                |
+| ------------- | -------------------------------------- |
+| Install       | `yarn install`                         |
+| Dev           | `npm run dev`                          |
+| Build         | `npm run build`                        |
+| Lint + Format | `npm run lint` + `npm run format`      |
+| Typecheck     | `npm run typecheck`                    |
 | Test          | Not configured — bootstrap with vitest |
 
 ## Architecture
