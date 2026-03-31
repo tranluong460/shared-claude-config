@@ -46,23 +46,23 @@ Delegate to the `doc-auditor` agent for execution. The agent handles:
 
 ### Fixes Applied
 
-| # | File | Action | Change |
-| --- | --- | --- | --- |
-| 1 | <path> | <add/edit/delete> | <description> |
+| #   | File   | Action            | Change        |
+| --- | ------ | ----------------- | ------------- |
+| 1   | <path> | <add/edit/delete> | <description> |
 
 ### Remaining Issues
 
-| Issue | Reason Not Fixed |
-| --- | --- |
+| Issue   | Reason Not Fixed                  |
+| ------- | --------------------------------- |
 | <issue> | <needs manual review / ambiguous> |
 
 ### Verification
 
-| Check | Before | After |
-| --- | --- | --- |
-| Dead documents | N | N |
-| Missing integrations | N | N |
-| Broken pipelines | N | N |
+| Check                | Before | After |
+| -------------------- | ------ | ----- |
+| Dead documents       | N      | N     |
+| Missing integrations | N      | N     |
+| Broken pipelines     | N      | N     |
 ```
 
 ## Notes

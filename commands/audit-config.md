@@ -54,14 +54,14 @@ Delegate to the `doc-auditor` agent for execution. The agent handles:
 
 ### Issues Found
 
-| File | Classification | Issue | Recommendation |
-| ---- | -------------- | ----- | -------------- |
+| File | Classification | Issue | Recommendation   |
+| ---- | -------------- | ----- | ---------------- |
 | ...  | Dead/Passive   | ...   | Attach or delete |
 
 ### Pipeline Verification
 
-| Command | Hook Suggested | Agent | Skills Loaded | Status |
-| ------- | -------------- | ----- | ------------- | ------ |
+| Command | Hook Suggested | Agent | Skills Loaded | Status    |
+| ------- | -------------- | ----- | ------------- | --------- |
 | ...     | Yes/No         | ...   | N             | OK/Broken |
 
 ### Recommendations
