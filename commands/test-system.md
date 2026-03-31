@@ -37,14 +37,17 @@ Delegate to the **test-leader** agent with full context from the input and envir
 ### Step 3: Validate Input
 
 If system details are unclear or missing:
+
 - STOP and ask the user for clarification
 - DO NOT proceed with assumptions
 
 If input is a module path:
+
 - Read the code to build system understanding
 - Map data flows, state management, external dependencies
 
 If input is a description:
+
 - Parse and identify the system scope
 - Ask for code paths if needed
 
@@ -98,14 +101,14 @@ REJECT findings that are vague, assumption-based, or unrealistic.
 
 ### Team Composition
 
-| Role | Focus | Findings |
-| --- | --- | --- |
+| Role   | Focus  | Findings                     |
+| ------ | ------ | ---------------------------- |
 | <role> | <area> | N critical, N high, N medium |
 
 ### Risk Areas
 
-| Area | Risk Level | Coverage |
-| --- | --- | --- |
+| Area   | Risk Level           | Coverage                  |
+| ------ | -------------------- | ------------------------- |
 | <area> | Critical/High/Medium | Tested/Partial/Not tested |
 
 ### Critical Findings
@@ -119,8 +122,8 @@ REJECT findings that are vague, assumption-based, or unrealistic.
 ### What Matters vs What Does Not
 
 | Matters (test deeply) | Does Not Matter (skip) |
-| --- | --- |
-| <item> | <item> |
+| --------------------- | ---------------------- |
+| <item>                | <item>                 |
 
 ### Unknown Risks
 

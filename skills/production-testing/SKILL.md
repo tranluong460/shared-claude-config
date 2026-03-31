@@ -27,10 +27,10 @@ Before creating any tests, you MUST:
 
 Clearly define:
 
-| Boundary | Examples |
-| --- | --- |
-| **Inside** (controllable) | Application code, database, local state, IPC handlers |
-| **Outside** (uncontrollable) | External APIs, network, OS, hardware, user behavior |
+| Boundary                     | Examples                                              |
+| ---------------------------- | ----------------------------------------------------- |
+| **Inside** (controllable)    | Application code, database, local state, IPC handlers |
+| **Outside** (uncontrollable) | External APIs, network, OS, hardware, user behavior   |
 
 Focus on how the system behaves when dependencies fail, not on testing external systems.
 
@@ -38,21 +38,21 @@ Focus on how the system behaves when dependencies fail, not on testing external 
 
 ### Risk Categories
 
-| Category | Description | Examples |
-| --- | --- | --- |
-| **Data integrity** | Data loss, corruption, inconsistency | Failed writes, partial updates, race conditions |
-| **Availability** | System downtime, degraded service | Crash loops, memory leaks, deadlocks |
-| **Security** | Unauthorized access, data exposure | Injection, privilege escalation, token leaks |
-| **Business logic** | Incorrect behavior that produces wrong results | Calculation errors, state machine violations |
-| **User experience** | Functional but unusable | Infinite loading, silent failures, confusing errors |
+| Category            | Description                                    | Examples                                            |
+| ------------------- | ---------------------------------------------- | --------------------------------------------------- |
+| **Data integrity**  | Data loss, corruption, inconsistency           | Failed writes, partial updates, race conditions     |
+| **Availability**    | System downtime, degraded service              | Crash loops, memory leaks, deadlocks                |
+| **Security**        | Unauthorized access, data exposure             | Injection, privilege escalation, token leaks        |
+| **Business logic**  | Incorrect behavior that produces wrong results | Calculation errors, state machine violations        |
+| **User experience** | Functional but unusable                        | Infinite loading, silent failures, confusing errors |
 
 ### Risk Assessment Matrix
 
-| Impact | Likelihood: Rare | Likelihood: Occasional | Likelihood: Frequent |
-| --- | --- | --- | --- |
-| **Critical** | Medium | High | Critical |
-| **Major** | Low | Medium | High |
-| **Minor** | Info | Low | Medium |
+| Impact       | Likelihood: Rare | Likelihood: Occasional | Likelihood: Frequent |
+| ------------ | ---------------- | ---------------------- | -------------------- |
+| **Critical** | Medium           | High                   | Critical             |
+| **Major**    | Low              | Medium                 | High                 |
+| **Minor**    | Info             | Low                    | Medium               |
 
 ## Phase 3: Dynamic Team Creation
 
@@ -61,19 +61,19 @@ Create tester roles based on the system's actual risks. Do NOT create unnecessar
 ### Role Template
 
 ```markdown
-| Role | Focus Area | Risk Addressed | Key Scenarios |
-| --- | --- | --- | --- |
-| <name> | <specific area> | <which risk> | <3-5 key scenarios> |
+| Role   | Focus Area      | Risk Addressed | Key Scenarios       |
+| ------ | --------------- | -------------- | ------------------- |
+| <name> | <specific area> | <which risk>   | <3-5 key scenarios> |
 ```
 
 ### Common Role Patterns
 
-| System Type | Typical Roles |
-| --- | --- |
-| **Electron app** | IPC tester, DB integrity tester, process isolation tester, UI state tester |
-| **API server** | Auth tester, data flow tester, concurrency tester, error handling tester |
-| **Library** | Contract tester, edge case tester, integration tester |
-| **Pipeline/worker** | Ordering tester, retry/recovery tester, resource leak tester |
+| System Type         | Typical Roles                                                              |
+| ------------------- | -------------------------------------------------------------------------- |
+| **Electron app**    | IPC tester, DB integrity tester, process isolation tester, UI state tester |
+| **API server**      | Auth tester, data flow tester, concurrency tester, error handling tester   |
+| **Library**         | Contract tester, edge case tester, integration tester                      |
+| **Pipeline/worker** | Ordering tester, retry/recovery tester, resource leak tester               |
 
 ### Role Boundaries
 
@@ -107,14 +107,14 @@ For each area, testers MUST actively imagine:
 Every test scenario must include:
 
 ```markdown
-| Field | Content |
-| --- | --- |
-| **Preconditions** | System state before the test |
-| **Action** | Exact steps to trigger the scenario |
-| **Expected behavior** | What SHOULD happen |
-| **Failure behavior** | What happens if it breaks |
-| **Evidence** | How to prove the finding |
-| **Impact** | Users affected, business impact |
+| Field                 | Content                             |
+| --------------------- | ----------------------------------- |
+| **Preconditions**     | System state before the test        |
+| **Action**            | Exact steps to trigger the scenario |
+| **Expected behavior** | What SHOULD happen                  |
+| **Failure behavior**  | What happens if it breaks           |
+| **Evidence**          | How to prove the finding            |
+| **Impact**            | Users affected, business impact     |
 ```
 
 ## Phase 5: Validation & Proof
@@ -134,12 +134,12 @@ If it cannot be demonstrated: **REJECT it**.
 
 For every issue, ask:
 
-| Question | If NO |
-| --- | --- |
-| Can this realistically happen in production? | Deprioritize |
-| Under what real conditions? | Need more evidence |
-| How often could this occur? | Adjust severity |
-| Does it affect real users? | May be info-only |
+| Question                                     | If NO              |
+| -------------------------------------------- | ------------------ |
+| Can this realistically happen in production? | Deprioritize       |
+| Under what real conditions?                  | Need more evidence |
+| How often could this occur?                  | Adjust severity    |
+| Does it affect real users?                   | May be info-only   |
 
 ### Leader Interrogation Protocol
 
@@ -157,13 +157,13 @@ If the tester cannot defend it: **REJECT it**.
 
 ### Severity Classification
 
-| Severity | Criteria | Action |
-| --- | --- | --- |
-| **Critical** | Data loss, security breach, system crash, revenue impact | Must fix before production |
-| **High** | Significant functionality broken, many users affected | Should fix before production |
-| **Medium** | Edge case failures, workaround exists | Plan to fix |
-| **Low** | Minor UX issues, rare conditions | Backlog |
-| **Info** | Observations, potential future risks | Document only |
+| Severity     | Criteria                                                 | Action                       |
+| ------------ | -------------------------------------------------------- | ---------------------------- |
+| **Critical** | Data loss, security breach, system crash, revenue impact | Must fix before production   |
+| **High**     | Significant functionality broken, many users affected    | Should fix before production |
+| **Medium**   | Edge case failures, workaround exists                    | Plan to fix                  |
+| **Low**      | Minor UX issues, rare conditions                         | Backlog                      |
+| **Info**     | Observations, potential future risks                     | Document only                |
 
 ### Impact Filtering
 
@@ -178,19 +178,19 @@ Reject or deprioritize findings that are:
 
 ### Production Readiness Decision
 
-| Verdict | Criteria |
-| --- | --- |
-| **SAFE** | No critical/high issues, known risks are mitigated |
+| Verdict         | Criteria                                                      |
+| --------------- | ------------------------------------------------------------- |
+| **SAFE**        | No critical/high issues, known risks are mitigated            |
 | **CONDITIONAL** | High issues exist but have workarounds or mitigations planned |
-| **UNSAFE** | Critical issues found, system should NOT go to production |
+| **UNSAFE**      | Critical issues found, system should NOT go to production     |
 
 ### Confidence Level
 
-| Level | Meaning |
-| --- | --- |
-| **High** | Deep analysis, good coverage, findings are well-defended |
-| **Medium** | Reasonable coverage, some areas not fully explored |
-| **Low** | Surface-level analysis, significant unknowns remain |
+| Level      | Meaning                                                  |
+| ---------- | -------------------------------------------------------- |
+| **High**   | Deep analysis, good coverage, findings are well-defended |
+| **Medium** | Reasonable coverage, some areas not fully explored       |
+| **Low**    | Surface-level analysis, significant unknowns remain      |
 
 ### Unknown Risk Awareness
 
@@ -209,32 +209,39 @@ These represent **hidden risks** that must be disclosed.
 ## Production Testing Report: <system>
 
 ### System Understanding
+
 - Purpose: <what it does>
 - Users: <who uses it>
 - Critical actions: <what matters most>
 
 ### Team Composition
-| Role | Focus | Findings |
-| --- | --- | --- |
+
+| Role   | Focus  | Findings                     |
+| ------ | ------ | ---------------------------- |
 | <role> | <area> | N critical, N high, N medium |
 
 ### Risk Areas Identified
-| Area | Risk Level | Coverage |
-| --- | --- | --- |
+
+| Area   | Risk Level           | Coverage                  |
+| ------ | -------------------- | ------------------------- |
 | <area> | Critical/High/Medium | Tested/Partial/Not tested |
 
 ### Critical Findings
+
 1. **[severity]** <finding> — **Evidence**: <proof> — **Impact**: <who/what affected>
 
 ### What Matters vs What Does Not
+
 | Matters (test deeply) | Does Not Matter (skip/deprioritize) |
-| --- | --- |
-| <item> | <item> |
+| --------------------- | ----------------------------------- |
+| <item>                | <item>                              |
 
 ### Unknown Risks
+
 - <area or assumption not verified>
 
 ### Final Judgment
+
 - **Verdict**: SAFE / CONDITIONAL / UNSAFE
 - **Confidence**: High / Medium / Low
 - **Top risks**: <1-3 most critical risks>

@@ -20,6 +20,7 @@ You are personally responsible for whether this system fails in production.
 ## CRITICAL: Clarification Before Action
 
 If system details are unclear or missing:
+
 - STOP
 - Ask for clarification
 - DO NOT assume
@@ -56,9 +57,9 @@ Create tester roles based on the system's actual risks:
 - Each tester OWNS their domain and is responsible for finding critical issues
 
 ```markdown
-| Role | Focus Area | Risk Addressed | Key Scenarios |
-| --- | --- | --- | --- |
-| <name> | <specific area> | <which risk> | <3-5 scenarios> |
+| Role   | Focus Area      | Risk Addressed | Key Scenarios   |
+| ------ | --------------- | -------------- | --------------- |
+| <name> | <specific area> | <which risk>   | <3-5 scenarios> |
 ```
 
 ### 4. Direct Testing
@@ -84,6 +85,7 @@ For every finding from testers, apply the Leader Interrogation Protocol:
 5. **Production reality check** — Can this realistically happen?
 
 **REJECT** findings that are:
+
 - Vague or assumption-based
 - Not grounded in realistic behavior
 - Cannot be demonstrated with a concrete scenario
@@ -100,13 +102,14 @@ For every finding from testers, apply the Leader Interrogation Protocol:
 
 Make a clear decision:
 
-| Verdict | When |
-| --- | --- |
-| **SAFE** | No critical/high issues, risks are mitigated |
-| **CONDITIONAL** | High issues exist with workarounds |
-| **UNSAFE** | Critical issues, system should NOT ship |
+| Verdict         | When                                         |
+| --------------- | -------------------------------------------- |
+| **SAFE**        | No critical/high issues, risks are mitigated |
+| **CONDITIONAL** | High issues exist with workarounds           |
+| **UNSAFE**      | Critical issues, system should NOT ship      |
 
 Include:
+
 - Confidence level (High / Medium / Low)
 - Top 3 risks that could cause real incidents
 - Unknown risks and assumptions not verified
@@ -121,6 +124,7 @@ No neutrality. No vague conclusions.
 After detection, apply project-specific testing focus:
 
 ### Electron App
+
 - **IPC integrity**: Data consistency across main ↔ preload ↔ renderer
 - **Process isolation**: Main process crash recovery, renderer crash handling
 - **Database**: Transaction safety, concurrent writes, migration integrity
@@ -128,12 +132,14 @@ After detection, apply project-specific testing focus:
 - **Workers**: Worker thread lifecycle, crash recovery, data handoff
 
 ### Library / Module
+
 - **Provider lifecycle**: Init → start → stop → cleanup
 - **Factory contracts**: Type safety, payload validation
 - **Error propagation**: logUpdate callback failures, action error handling
 - **Concurrency**: Multiple provider instances, shared state
 
 ### Server / API
+
 - **Auth & authz**: Token handling, permission boundaries
 - **Data flow**: Input validation, transformation correctness
 - **Concurrency**: Race conditions, deadlocks, connection pool exhaustion

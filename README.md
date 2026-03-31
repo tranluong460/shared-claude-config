@@ -17,7 +17,7 @@ A reusable AI toolkit for developing Node.js / TypeScript / Electron projects at
 | Debug an issue           | `/diagnose "Error X when Y"`           | Cross-process trace → hypotheses → root cause → fix        |
 | Implement changes        | `/implement "refactor auth module"`    | Detect project → recipe-based implement → verify           |
 | Independent code review  | `/parallel-review latest`              | Fresh-eyes review in isolated worktree → no bias           |
-| Production readiness     | `/test-system src/main/sync`           | Multi-agent risk analysis → failure scenarios → judgment    |
+| Production readiness     | `/test-system src/main/sync`           | Multi-agent risk analysis → failure scenarios → judgment   |
 | Reflect & improve        | `/reflect 1 week`                      | Analyze recent work → find patterns → suggest config fixes |
 
 ---
@@ -51,34 +51,34 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 
 ### Agents (10) — AI Roles
 
-| Agent                   | Role                                                                    | Primary Skills                                                                                                      |
-| ----------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **orchestrator**        | Reads workflow YAML, manages multi-step pipelines with result semantics | coding-standards, architecture-patterns, project-context, orchestration-contracts                                   |
-| **architect**           | Analyzes architecture, plans refactoring                                | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions, project-context                  |
-| **reviewer**            | Reviews code quality (standard + independent worktree modes)            | coding-standards, naming-conventions, architecture-patterns, testing-strategy                                       |
-| **debugger**            | Cross-process debugging, root cause analysis                            | coding-standards, architecture-patterns, testing-methodology, project-context                                       |
-| **doc-auditor**         | Audits and repairs .claude/ documentation consistency                   | architecture-patterns, documentation-standards                                                                      |
-| **doc-writer**          | Creates and reviews documentation                                       | documentation-standards, project-context                                                                            |
-| **reflection-analyzer** | Analyzes sessions, detects patterns, suggests fixes                     | reflection, coding-standards                                                                                        |
-| **task-executor**       | Implements changes with project-aware recipes                           | coding-standards, naming-conventions, testing-strategy, architecture-patterns, testing-methodology, project-context |
-| **test-architect**      | Test strategy with Electron/Library mock patterns                       | testing-strategy, coding-standards, naming-conventions, project-context                                             |
-| **test-leader**         | Production testing team leader — risk analysis, failure scenarios, judgment | production-testing, coding-standards, architecture-patterns, testing-strategy, project-context                    |
+| Agent                   | Role                                                                        | Primary Skills                                                                                                      |
+| ----------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **orchestrator**        | Reads workflow YAML, manages multi-step pipelines with result semantics     | coding-standards, architecture-patterns, project-context, orchestration-contracts                                   |
+| **architect**           | Analyzes architecture, plans refactoring                                    | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions, project-context                  |
+| **reviewer**            | Reviews code quality (standard + independent worktree modes)                | coding-standards, naming-conventions, architecture-patterns, testing-strategy                                       |
+| **debugger**            | Cross-process debugging, root cause analysis                                | coding-standards, architecture-patterns, testing-methodology, project-context                                       |
+| **doc-auditor**         | Audits and repairs .claude/ documentation consistency                       | architecture-patterns, documentation-standards                                                                      |
+| **doc-writer**          | Creates and reviews documentation                                           | documentation-standards, project-context                                                                            |
+| **reflection-analyzer** | Analyzes sessions, detects patterns, suggests fixes                         | reflection, coding-standards                                                                                        |
+| **task-executor**       | Implements changes with project-aware recipes                               | coding-standards, naming-conventions, testing-strategy, architecture-patterns, testing-methodology, project-context |
+| **test-architect**      | Test strategy with Electron/Library mock patterns                           | testing-strategy, coding-standards, naming-conventions, project-context                                             |
+| **test-leader**         | Production testing team leader — risk analysis, failure scenarios, judgment | production-testing, coding-standards, architecture-patterns, testing-strategy, project-context                      |
 
 ### Skills (11) — Knowledge Modules
 
-| Skill                       | Layer        | Content                                                                                               |
-| --------------------------- | ------------ | ----------------------------------------------------------------------------------------------------- |
-| **coding-standards**        | core         | Clean code, TypeScript best practices, error handling, anti-patterns                                  |
-| **naming-conventions**      | core         | S-I-D, A/HC/LC, E prefix (enums), I prefix (interfaces/types), IPC channels, React naming             |
-| **documentation-standards** | core         | Categorized docs structure, templates for guides, ADR, API, IPC, entities, troubleshooting, changelog |
-| **architecture-patterns**   | architecture | Electron (IPC, process isolation), provider/factory pattern, dependency rules, audit checklists       |
-| **refactoring-strategy**    | architecture | Techniques, risk assessment, Electron/Library recipes, incremental migration                          |
-| **testing-strategy**        | testing      | Test design, AAA pattern, mocking, Electron/Library test guides, bootstrap                            |
-| **testing-methodology**     | workflow     | 4-step analysis process: Input Assumptions, Flow Analysis, Report, Implement                          |
+| Skill                       | Layer        | Content                                                                                                |
+| --------------------------- | ------------ | ------------------------------------------------------------------------------------------------------ |
+| **coding-standards**        | core         | Clean code, TypeScript best practices, error handling, anti-patterns                                   |
+| **naming-conventions**      | core         | S-I-D, A/HC/LC, E prefix (enums), I prefix (interfaces/types), IPC channels, React naming              |
+| **documentation-standards** | core         | Categorized docs structure, templates for guides, ADR, API, IPC, entities, troubleshooting, changelog  |
+| **architecture-patterns**   | architecture | Electron (IPC, process isolation), provider/factory pattern, dependency rules, audit checklists        |
+| **refactoring-strategy**    | architecture | Techniques, risk assessment, Electron/Library recipes, incremental migration                           |
+| **testing-strategy**        | testing      | Test design, AAA pattern, mocking, Electron/Library test guides, bootstrap                             |
+| **testing-methodology**     | workflow     | 4-step analysis process: Input Assumptions, Flow Analysis, Report, Implement                           |
 | **production-testing**      | testing      | Multi-agent production testing: risk assessment, failure imagination, proof-based validation, judgment |
-| **reflection**              | workflow     | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions  |
-| **orchestration-contracts** | workflow     | Result state taxonomy, artifact schemas, workflow patterns, state machine rules for pipelines         |
-| **project-context**         | project      | Template for project-specific tech stack, commands, architecture decisions, business rules            |
+| **reflection**              | workflow     | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions   |
+| **orchestration-contracts** | workflow     | Result state taxonomy, artifact schemas, workflow patterns, state machine rules for pipelines          |
+| **project-context**         | project      | Template for project-specific tech stack, commands, architecture decisions, business rules             |
 
 ### Rules (13) — Context-Aware Enforcement
 
