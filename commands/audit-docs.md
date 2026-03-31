@@ -26,11 +26,11 @@ Read and apply:
 - `.claude/skills/architecture-patterns/SKILL.md`
 - `.claude/rules/no-unused-docs.md`
 
-### Step 1b: Agent
+### Step 2: Delegate to Agent
 
 Delegate to the `doc-auditor` agent for execution.
 
-### Step 2: Inventory All Documents
+### Step 3: Inventory All Documents
 
 Read the full `.claude/` directory structure and categorize every document:
 
@@ -62,7 +62,7 @@ Build an inventory table:
 | ...  | rule/command/agent/skill/hook | Yes/No          | paths value or N/A |
 ```
 
-### Step 3: Map References
+### Step 4: Map References
 
 For each document, determine all references:
 
@@ -95,7 +95,7 @@ For each file in `commands/`:
 
 1. **Hook suggestion**: Check `hooks/suggest-commands.sh` for matching keyword patterns
 
-### Step 4: Classify Each Document
+### Step 5: Classify Each Document
 
 Based on the reference mapping, classify:
 
@@ -107,7 +107,7 @@ Based on the reference mapping, classify:
 | **Dead**              | Not referenced anywhere AND has no `paths:` frontmatter                                       |
 | **Orphaned**          | Claims to be referenced (e.g., "agents reference here") but actually is not                   |
 
-### Step 5: Detect Issues
+### Step 6: Detect Issues
 
 #### 5a. Dead Documents
 
@@ -144,7 +144,7 @@ Detect cases where a document SHOULD be loaded but is not:
 - Command references an agent that doesn't exist
 - Frontmatter `paths:` pattern that matches no files in the project
 
-### Step 6: Report
+### Step 7: Report
 
 ```markdown
 ## Documentation Audit: .claude/

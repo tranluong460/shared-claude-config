@@ -26,11 +26,11 @@ Read and apply:
 - `.claude/skills/reflection/SKILL.md`
 - `.claude/skills/coding-standards/SKILL.md`
 
-### Step 1b: Agent
+### Step 2: Delegate to Agent
 
 Delegate to the `reflection-analyzer` agent for execution.
 
-### Step 2: Gather Evidence
+### Step 3: Gather Evidence
 
 1. **Git history** within scope:
 
@@ -78,7 +78,7 @@ Glob .claude/memory/workflow-runs/*.json
 
 Analyze: workflow completion rates, common failure points, steps that get skipped.
 
-### Step 3: Analyze Patterns
+### Step 4: Analyze Patterns
 
 For each finding, categorize:
 
@@ -86,7 +86,7 @@ For each finding, categorize:
 - **One-off** → note but don't over-react
 - **Positive** → reinforce (don't just focus on negatives)
 
-### Step 4: Propose Config Improvements
+### Step 5: Propose Config Improvements
 
 For each recurring issue, propose a specific change:
 
@@ -98,11 +98,11 @@ For each recurring issue, propose a specific change:
 | Build/test gap       | Add to CLAUDE.md or implementation rule |
 | Repeated manual step | Automate with hook                      |
 
-### Step 5: Report
+### Step 6: Report
 
 Present findings using the output format from the reflection skill.
 
-### Step 6: Apply (If Approved)
+### Step 7: Apply (If Approved)
 
 If the user approves changes:
 

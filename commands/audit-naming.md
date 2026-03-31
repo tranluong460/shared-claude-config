@@ -7,7 +7,7 @@ produces: [naming-report]
 result_states: [clean, issues_found, execution_error]
 next_on_result:
   clean: []
-  issues_found: [implement]
+  issues_found: [implement, refactor-plan]
   execution_error: [diagnose]
 ---
 
@@ -49,117 +49,28 @@ Scan patterns:
 **/*.d.ts
 ```
 
-### Step 3: Classify by Context
+### Step 3: Delegate to Agent
 
-Identify which context each file belongs to (determines which rules apply):
+Delegate to the **reviewer** agent focused on naming with full context from Steps 1-2.
+The agent follows the naming conventions skill to audit each category:
 
-| Context          | Path pattern                      | Special rules                        |
-| ---------------- | --------------------------------- | ------------------------------------ |
-| Main process     | `src/main/**`                     | IPC handlers, services, entities     |
-| Preload          | `src/preload/**`                  | IPC proxies must mirror main/ipc/    |
-| Renderer (React) | `src/renderer/**`                 | Components, hooks, layouts, Props    |
-| Shared core      | `**/mkt-core/**`                  | Must work in both main and renderer  |
-| Library/Module   | `src/core/**`, `src/providers/**` | Factory, provider, registry patterns |
-| Tests            | `**/__tests__/**`, `**/*.test.ts` | Test naming conventions              |
+1. Folder naming (kebab-case)
+2. File naming (service, entity, component, hook, IPC, test conventions)
+3. Enum naming (E prefix + PascalCase)
+4. Interface & Type naming (I prefix + PascalCase, Props exception)
+5. Class naming (PascalCase, role suffixes)
+6. Function naming (A/HC/LC pattern, verb usage)
+7. Variable naming (camelCase, boolean prefixes, collection plurals)
+8. IPC channel naming (domain_actionCamelCase pattern)
+9. React-specific naming (renderer only)
+10. Database fields (snake_case for DB columns)
+11. S-I-D principle check (no single-letter, no contractions, natural English)
 
-### Step 4: Audit Categories
+Classify by file context (main process, preload, renderer, shared core, library, tests) to determine which rules apply.
 
-Act as the **reviewer** agent focused on naming. Check each category:
+### Step 4: Report
 
-#### 4.1 Folder Naming
-
-- [ ] All folders use `kebab-case`
-- [ ] No PascalCase, camelCase, or snake_case folders
-
-#### 4.2 File Naming
-
-- [ ] Services: `{entity}.service.ts`
-- [ ] Entities: `{Entity}Entity.ts` (PascalCase)
-- [ ] React components: `{ComponentName}.tsx` (PascalCase)
-- [ ] React hooks: `use{Name}.ts`
-- [ ] IPC handlers: `{domain}.ts` (one file per domain)
-- [ ] Preload proxies: mirror `main/ipc/` file names
-- [ ] Utils/helpers: `kebab-case.ts`
-- [ ] Constants: `{domain}.constants.ts` or `enum.ts`
-- [ ] Tests: `{source}.test.ts` or `{source}.spec.ts`
-- [ ] Barrel exports: `index.ts`
-- [ ] Factory: `factory.ts`
-- [ ] Provider: `provider.ts`
-
-#### 4.3 Enum Naming
-
-- [ ] All enums start with `E` prefix + PascalCase
-- [ ] Members use `UPPER_SNAKE_CASE` or `PascalCase`
-
-#### 4.4 Interface & Type Naming
-
-- [ ] All interfaces start with `I` prefix + PascalCase
-- [ ] All type aliases start with `I` prefix + PascalCase
-- [ ] **Exception**: React props use `{Component}Props` without `I` prefix
-- [ ] Suffix conventions: `Input`, `Result`, `Options`, `Config`, `Payload`, `Handler`, `Fn`
-
-> Naming conventions and examples: see `.claude/skills/naming-conventions/SKILL.md`
-
-#### 4.5 Class Naming
-
-- [ ] PascalCase, no prefix
-- [ ] Suffix reflects role: `Service`, `Manager`, `Factory`, `Provider`, `Registry`, `Repository`, `Store`, `Error`
-- [ ] Entity classes: plain name or `{Name}Entity`
-
-#### 4.6 Function Naming
-
-- [ ] Follows A/HC/LC pattern: `prefix? + action + highContext + lowContext?`
-- [ ] Correct action verb usage:
-  - `get` (immediate/sync) vs `fetch` (async/API/DB)
-  - `remove` (from collection, reversible) vs `delete` (permanent, DB)
-  - `set` (assign value) vs `reset` (restore initial)
-  - `create` (new entity) vs `build` (step-by-step) vs `compose` (from existing) vs `generate` (computed)
-- [ ] No contractions
-- [ ] No context duplication within class methods
-- [ ] No vague names: `processData`, `handleStuff`, `doWork`
-
-#### 4.7 Variable Naming
-
-- [ ] `camelCase` for variables
-- [ ] `UPPER_SNAKE_CASE` for exported constants
-- [ ] Booleans: `is`/`has`/`can`/`should` prefix (always)
-- [ ] Collections: plural (`users`, `activeIds`)
-- [ ] Single items: singular (`user`, `activeId`)
-- [ ] Maps: `entityByKey` or `entityMap`
-- [ ] Boundaries: `min`/`max` prefix (`minPosts`, `maxRetries`)
-- [ ] Reflects expected result (no negation needed)
-
-#### 4.8 IPC Channel Naming
-
-- [ ] Pattern: `{domain}_{actionCamelCase}`
-- [ ] Domain matches module/entity name
-- [ ] Action uses camelCase after underscore
-- [ ] Uses enum (`EPrefixIpcEnum`) for domain prefixes
-- [ ] Preload proxy mirrors exact channel name
-
-#### 4.9 React-Specific Naming (renderer only)
-
-- [ ] Components: PascalCase file and function name
-- [ ] Hooks: `use` + PascalCase
-- [ ] Layouts: `Layout` + PascalCase
-- [ ] Props interfaces: `{Component}Props` (no `I` prefix)
-- [ ] Event handlers: `on` + event name (`onUserCreated`)
-
-#### 4.10 Database Fields (entities only)
-
-- [ ] DB columns use `snake_case` (`is_auto`, `created_at`)
-- [ ] TypeScript entity class properties match DB convention
-
-#### 4.11 S-I-D Principle Check
-
-- [ ] No single-letter variables (except generics `T`, `K`, `V` and loop vars `i`, `j`)
-- [ ] No made-up words or unnatural phrasing
-- [ ] Names are short enough to type quickly
-- [ ] Names read naturally in English
-
-### Step 5: Report
-
-Generate a structured report:
+Generate a structured report based on the agent's findings:
 
 ```markdown
 ## Naming Audit: <target>

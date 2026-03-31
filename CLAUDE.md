@@ -44,6 +44,7 @@ Commands (commands/*.md)  ──call──▶  Agents (agents/*.md)  ──use�
 - Architecture patterns: `skills/architecture-patterns/SKILL.md`
 - Naming conventions: `skills/naming-conventions/SKILL.md`
 - Testing methodology: `skills/testing-methodology/SKILL.md`
+- Testing strategy: `skills/testing-strategy/SKILL.md`
 - Orchestration contracts: `skills/orchestration-contracts/SKILL.md`
 - Project-specific context: `skills/project-context/SKILL.md` (fill in for your project)
 

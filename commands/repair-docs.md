@@ -27,11 +27,11 @@ Read and apply:
 - `.claude/skills/architecture-patterns/SKILL.md`
 - `.claude/rules/no-unused-docs.md`
 
-### Step 1b: Agent
+### Step 2: Delegate to Agent
 
 Delegate to the `doc-auditor` agent for execution.
 
-### Step 2: Assess Current State
+### Step 3: Assess Current State
 
 Re-run the audit inventory (Steps 2-6 from `/audit-docs`) to get a fresh view of all issues:
 
@@ -40,7 +40,7 @@ Re-run the audit inventory (Steps 2-6 from `/audit-docs`) to get a fresh view of
 3. Classify each document (Active / Passive / Weakly Integrated / Dead / Orphaned)
 4. Detect issues (dead docs, duplicates, missing integrations, inconsistencies)
 
-### Step 3: Execute Fixes
+### Step 4: Execute Fixes
 
 For each issue found, apply the appropriate fix:
 
@@ -72,11 +72,11 @@ Action: <add/edit/delete>
 Change: <exact content>
 ```
 
-### Step 4: Verify
+### Step 5: Verify
 
 Re-run the audit inventory to confirm all issues are resolved. Report any remaining issues.
 
-### Step 5: Report
+### Step 6: Report
 
 ```markdown
 ## Documentation Repair: .claude/
