@@ -7,7 +7,7 @@ A reusable AI toolkit for developing Node.js / TypeScript / Electron projects at
 | I want to...             | Command                                | What happens                                               |
 | ------------------------ | -------------------------------------- | ---------------------------------------------------------- |
 | Review code quality      | `/audit-code src/modules/user`         | Code review with severity-ranked issues                    |
-| Audit naming conventions | `/audit-naming src/`                   | Scan names (E/I prefix, A/HC/LC, S-I-D), suggest renames   |
+| Audit naming conventions | `/audit-code naming src/`              | Deep naming scan (E/I prefix, A/HC/LC, S-I-D)              |
 | Audit full project       | `/audit-project`                       | Auto-detect type → architecture, IPC, deps, health score   |
 | Audit .claude/ docs      | `/audit-docs`                          | Detect dead, duplicate, or weakly integrated docs          |
 | Fix .claude/ doc issues  | `/repair-docs`                         | Fix documentation issues found by /audit-docs              |
@@ -31,12 +31,11 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 (actions)           (AI roles)        (knowledge)
 ```
 
-### Commands (13) — User-Facing Actions
+### Commands (12) — User-Facing Actions
 
 | Command            | Category | Description                              | Agent               | Skills Used                                                                                    |
 | ------------------ | -------- | ---------------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
-| `/audit-code`      | audit    | Code quality review                      | reviewer            | coding-standards, naming-conventions, architecture-patterns                                    |
-| `/audit-naming`    | audit    | Naming convention audit                  | reviewer            | naming-conventions                                                                             |
+| `/audit-code`      | audit    | Code quality + naming review (use `naming` prefix for naming-only mode) | reviewer | coding-standards, naming-conventions, architecture-patterns                    |
 | `/audit-project`   | audit    | Full architecture audit                  | architect           | architecture-patterns, coding-standards, naming-conventions, project-context                   |
 | `/audit-docs`      | audit    | .claude/ documentation audit (read-only) | doc-auditor         | architecture-patterns, documentation-standards                                                 |
 | `/repair-docs`     | execute  | Fix issues found by /audit-docs          | doc-auditor         | architecture-patterns, documentation-standards                                                 |
@@ -49,11 +48,10 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | `/test-system`     | verify   | Production readiness testing             | test-leader         | production-testing, coding-standards, architecture-patterns, testing-strategy, project-context |
 | `/reflect`         | improve  | Session analysis & improve               | reflection-analyzer | reflection, coding-standards                                                                   |
 
-### Agents (10) — AI Roles
+### Agents (9) — AI Roles
 
 | Agent                   | Role                                                                        | Primary Skills                                                                                                      |
 | ----------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **orchestrator**        | Reads workflow YAML, manages multi-step pipelines with result semantics     | coding-standards, architecture-patterns, project-context, orchestration-contracts                                   |
 | **architect**           | Analyzes architecture, plans refactoring                                    | architecture-patterns, coding-standards, refactoring-strategy, naming-conventions, project-context                  |
 | **reviewer**            | Reviews code quality (standard + independent worktree modes)                | coding-standards, naming-conventions, architecture-patterns, testing-strategy                                       |
 | **debugger**            | Cross-process debugging, root cause analysis                                | coding-standards, architecture-patterns, testing-methodology, project-context                                       |
@@ -64,7 +62,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **test-architect**      | Test strategy with Electron/Library mock patterns                           | testing-strategy, coding-standards, naming-conventions, project-context                                             |
 | **test-leader**         | Production testing team leader — risk analysis, failure scenarios, judgment | production-testing, coding-standards, architecture-patterns, testing-strategy, project-context                      |
 
-### Skills (11) — Knowledge Modules
+### Skills (10) — Knowledge Modules
 
 | Skill                       | Layer        | Content                                                                                                |
 | --------------------------- | ------------ | ------------------------------------------------------------------------------------------------------ |
@@ -77,8 +75,7 @@ Commands  ──call──▶  Agents  ──use──▶  Skills
 | **testing-methodology**     | workflow     | 4-step analysis process: Input Assumptions, Flow Analysis, Report, Implement                           |
 | **production-testing**      | testing      | Multi-agent production testing: risk assessment, failure imagination, proof-based validation, judgment |
 | **reflection**              | workflow     | Session analysis, self-improvement loop, recurring mistake detection, config improvement suggestions   |
-| **orchestration-contracts** | workflow     | Result state taxonomy, artifact schemas, workflow patterns, state machine rules for pipelines          |
-| **project-context**         | project      | Template for project-specific tech stack, commands, architecture decisions, business rules             |
+| **project-context**         | project      | MKT Client: Electron + TypeORM + SQLite + React, architecture decisions, business rules               |
 
 ### Rules (13) — Context-Aware Enforcement
 
@@ -109,7 +106,7 @@ The toolkit supports the full development improvement cycle:
 ```
 /audit-project          Understand current state
         ↓
-/audit-code + /audit-naming  Identify specific issues
+/audit-code              Identify specific issues (use "naming" prefix for naming-only)
         ↓
 /audit-docs             Check .claude/ consistency
         ↓               (/repair-docs to fix)
@@ -139,8 +136,6 @@ The toolkit supports the full development improvement cycle:
         ↓
 /audit-code             Verify fix quality
 ```
-
-> Machine-readable workflow definitions: see `workflows/*.yaml`
 
 ---
 
@@ -176,7 +171,7 @@ next_on_result:
 
 Then define the workflow: which agent to use, which skills to load.
 
-> **Important**: `result_states` must reflect **business outcomes**, not execution status. An audit that runs successfully but finds issues has result `issues_found`, not `success`. See `agents/orchestrator.md` for the full result classification guide.
+> **Important**: `result_states` must reflect **business outcomes**, not execution status. An audit that runs successfully but finds issues has result `issues_found`, not `success`.
 
 ### Adding New Skills
 
@@ -226,33 +221,12 @@ External scripts in `.claude/hooks/` — readable, testable, maintainable:
 
 ## Infrastructure
 
-### Workflows (`workflows/*.yaml`)
-
-Formalized command pipelines that define step-by-step execution paths:
-
-| Workflow                | Steps                                                     | Trigger                           |
-| ----------------------- | --------------------------------------------------------- | --------------------------------- |
-| `feature-delivery.yaml` | audit → plan → test → implement → review → docs → reflect | New feature or enhancement        |
-| `bug-fix.yaml`          | diagnose → test → implement → audit → review              | Bug report or unexpected behavior |
-| `docs-repair.yaml`      | audit-docs → repair-docs → audit-docs (verify)            | Periodic maintenance              |
-
 ### Memory (`memory/`)
 
 Persistence layer for reflection and telemetry:
 
-- `lessons.md` — Accumulated insights from `/reflect` sessions
-- `command-history.jsonl` — Command invocation log (for future tooling)
-- `workflow-runs/` — Per-run artifacts
-- `reviews/` — Architecture review snapshots and community benchmark assessments
-
-### Configs (`configs/`)
-
-- `command-contracts.schema.json` — JSON Schema validating command frontmatter (includes `result_states` + `next_on_result`)
-- `workflow-contracts.schema.json` — JSON Schema validating workflow YAML definitions (includes `on_result` semantics)
-
-### CI (`github/workflows/`)
-
-- `validate-commands.yml` — Runs `scripts/validate-graph.sh` on push/PR when commands, workflows, or configs change. Fails the build if command references are dangling or workflow result states are incomplete.
+- `lessons.md` — Accumulated insights from `/reflect` sessions (self-improving loop)
+- `command-history.jsonl` — Command invocation log (used by `/reflect` for usage analysis)
 
 ---
 

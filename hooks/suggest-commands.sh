@@ -47,7 +47,7 @@ fi
 
 # Naming keywords
 if echo "$PROMPT" | grep -qiE '\b(naming|rename|convention|prefix)\b'; then
-  SUGGESTIONS="$SUGGESTIONS\n  → /audit-naming <scope> — scan naming violations"
+  SUGGESTIONS="$SUGGESTIONS\n  → /audit-code naming <scope> — deep naming audit"
 fi
 
 # Documentation audit keywords
@@ -93,8 +93,9 @@ fi
 # --- Post-action suggestions based on result semantics ---
 # These match result states from command frontmatter (result_states + next_on_result)
 
-# After implement → success: suggest parallel-review
-if echo "$PROMPT" | grep -qiE '\b(done implement|implementation (done|complete|finished)|just implemented|finished (coding|building|implementing)|changes (applied|made|committed))\b'; then
+# After implement → success: suggest generate-tests THEN parallel-review
+if echo "$PROMPT" | grep -qiE '\b(done implement|implementation (done|complete|finished)|just implemented|finished (coding|building|implementing)|changes (applied|made|committed)|xong rồi|xong|hoàn thành)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /generate-tests <file> — add tests for changed logic (DO THIS FIRST)"
   SUGGESTIONS="$SUGGESTIONS\n  → /parallel-review latest — independent review of your changes"
 fi
 

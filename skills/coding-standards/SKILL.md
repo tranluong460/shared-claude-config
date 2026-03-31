@@ -6,6 +6,8 @@ layer: core
 
 # Coding Standards for Node.js / TypeScript
 
+> **Dedup note**: If `rules/code-quality.md` is already auto-injected (editing .ts/.tsx files), skip Core Principles, TypeScript Type Safety, and Function Design sections — they overlap. Focus on: Anti-Patterns, Error Handling, Logging, and Rule of Three below.
+
 ## Core Principles
 
 - **Simplicity First**: The simplest solution that works correctly is the best solution

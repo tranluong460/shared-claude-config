@@ -25,7 +25,7 @@ Commands (commands/*.md)  ──call──▶  Agents (agents/*.md)  ──use�
 | Goal | Command |
 |------|---------|
 | Review code quality | `/audit-code <scope>` |
-| Audit naming conventions | `/audit-naming <scope>` |
+| Audit naming conventions | `/audit-code naming <scope>` |
 | Full project audit | `/audit-project` |
 | Audit .claude/ docs | `/audit-docs` |
 | Fix .claude/ doc issues | `/repair-docs` |
@@ -47,17 +47,13 @@ Commands (commands/*.md)  ──call──▶  Agents (agents/*.md)  ──use�
 - Testing methodology: `skills/testing-methodology/SKILL.md`
 - Testing strategy: `skills/testing-strategy/SKILL.md`
 - Production testing: `skills/production-testing/SKILL.md`
-- Orchestration contracts: `skills/orchestration-contracts/SKILL.md`
-- Project-specific context: `skills/project-context/SKILL.md` (fill in for your project)
+- Project context (MKT Client): `skills/project-context/SKILL.md`
 
 ## Infrastructure
 
-- **Workflows**: `workflows/*.yaml` — formalized command pipelines with result-semantic transitions (feature-delivery, bug-fix, docs-repair)
-- **Orchestrator**: `agents/orchestrator.md` — reads workflow YAML, classifies results by business outcome, manages step transitions
-- **Memory**: `memory/lessons.md` — accumulated `/reflect` insights; `memory/command-history.jsonl` — auto-logged command invocations; `memory/workflow-runs/` — per-run artifacts; `memory/reviews/` — architecture review snapshots
-- **Configs**: `configs/command-contracts.schema.json` + `configs/workflow-contracts.schema.json` — JSON Schema for frontmatter and workflow validation
-- **Scripts**: `scripts/validate-graph.sh` — validates command graph integrity and workflow result-state coverage
+- **Memory**: `memory/lessons.md` — accumulated `/reflect` insights; `memory/command-history.jsonl` — command invocation log
+- **Hooks**: `hooks/` — 6 scripts for safety, formatting, code quality enforcement, command suggestion, context persistence
 
 ## Command Metadata
 
-Every command has `result_states` and `next_on_result` metadata in its frontmatter, enabling workflow chaining based on **business outcomes** (not just execution success/fail). The `orchestrator` agent reads workflow YAML definitions and manages step transitions using these result semantics. The `suggest-commands.sh` hook also detects result-state language to suggest next steps.
+Every command has `result_states` and `next_on_result` metadata in its frontmatter, enabling workflow chaining based on **business outcomes** (not just execution success/fail). The `suggest-commands.sh` hook detects result-state language to suggest next steps in the pipeline.

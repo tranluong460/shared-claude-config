@@ -15,7 +15,7 @@ You are executing the `/audit-code` command.
 
 ## Input
 
-Target: $ARGUMENTS (file, directory, module path, or "recent" for recent changes)
+Target: $ARGUMENTS (file, directory, module path, "recent" for recent changes, or "naming <scope>" for naming-focused audit)
 
 ## Workflow
 
@@ -48,12 +48,25 @@ Determine what to review:
 ### Step 4: Delegate to Agent
 
 Delegate to the **reviewer** agent (standard mode) with full context from Steps 1-3.
-The agent follows its complete review process defined in `.claude/agents/reviewer.md`:
+
+**Default mode** — full code review:
 
 1. Code quality analysis (Critical -> Major -> Minor)
 2. Naming audit (E/I prefix, A/HC/LC, S-I-D)
 3. Pattern detection (anti-patterns, code smells)
 4. Project-type-specific checks (IPC sync, provider pattern, etc.)
+
+**Naming focus mode** (when target starts with "naming") — deep naming-only audit:
+
+1. Folder naming (kebab-case)
+2. File naming (service, entity, component, hook, IPC, test conventions)
+3. Enum/Interface/Type naming (E/I prefix rules, Props exception)
+4. Function naming (A/HC/LC pattern, verb usage, no contractions)
+5. Variable naming (camelCase, boolean prefixes, collection plurals)
+6. IPC channel naming, React naming, DB fields
+7. S-I-D principle check
+
+Generate detailed naming report with violation tables (Current | Suggested | Location) per category.
 
 ### Step 5: Report
 
