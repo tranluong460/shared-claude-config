@@ -70,14 +70,6 @@ Read .claude/memory/lessons.md
 
 Check: are previous lessons being followed? Any recurring issues that were already identified?
 
-6. **Workflow run artifacts** (if exist):
-
-```
-Glob .claude/memory/workflow-runs/*.json
-```
-
-Analyze: workflow completion rates, common failure points, steps that get skipped.
-
 ### Step 4: Analyze Patterns
 
 For each finding, categorize:
