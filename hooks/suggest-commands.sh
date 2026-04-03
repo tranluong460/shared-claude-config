@@ -75,6 +75,11 @@ if echo "$PROMPT" | grep -qiE '\b(implement|build|create|add feature|new feature
   SUGGESTIONS="$SUGGESTIONS\n  → /implement \"<task>\" — recipe-based implementation"
 fi
 
+# Impact analysis keywords
+if echo "$PROMPT" | grep -qiE '\b(impact|blast radius|side effect|breaking change|dependency graph|who calls|who uses|affected files|change risk)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /impact-guard <file-or-function> — analyze blast radius before changing"
+fi
+
 # Independent review keywords
 if echo "$PROMPT" | grep -qiE '\b(independent review|fresh eyes|worktree|parallel review|second opinion)\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /parallel-review latest — independent review in isolated worktree"
