@@ -13,15 +13,15 @@ layer: architecture
 
 ## Khi Nào Cần Impact Analysis
 
-| Trigger | Mức độ khẩn cấp |
-| --- | --- |
-| Sửa function được nhiều module gọi (≥3 callers) | **Critical** — bắt buộc phân tích |
-| Thay đổi DB schema (thêm/sửa/xóa column) | **Critical** — ảnh hưởng toàn bộ data layer |
-| Sửa shared utility/helper function | **High** — có thể ảnh hưởng rộng |
-| Thay đổi interface/type definition | **High** — ảnh hưởng tất cả implementors |
-| Sửa API contract (request/response shape) | **High** — ảnh hưởng client lẫn server |
-| Refactor module nội bộ (1-2 files) | **Medium** — cần kiểm tra callers |
-| Thay đổi UI component đơn lẻ | **Low** — blast radius hạn chế |
+| Trigger                                         | Mức độ khẩn cấp                             |
+| ----------------------------------------------- | ------------------------------------------- |
+| Sửa function được nhiều module gọi (≥3 callers) | **Critical** — bắt buộc phân tích           |
+| Thay đổi DB schema (thêm/sửa/xóa column)        | **Critical** — ảnh hưởng toàn bộ data layer |
+| Sửa shared utility/helper function              | **High** — có thể ảnh hưởng rộng            |
+| Thay đổi interface/type definition              | **High** — ảnh hưởng tất cả implementors    |
+| Sửa API contract (request/response shape)       | **High** — ảnh hưởng client lẫn server      |
+| Refactor module nội bộ (1-2 files)              | **Medium** — cần kiểm tra callers           |
+| Thay đổi UI component đơn lẻ                    | **Low** — blast radius hạn chế              |
 
 ## Phân Tích Dependency Graph
 
@@ -51,12 +51,12 @@ Tạo dependency chain: `Caller → Target → Callee`
 
 ### Level 3: Cross-Boundary Dependencies
 
-| Boundary | Cách kiểm tra |
-| --- | --- |
-| Process boundary (Electron) | Kiểm tra main/ → preload/ → renderer/ |
-| Package boundary (Monorepo) | Kiểm tra cross-package imports |
-| API boundary (Client-Server) | Kiểm tra API contract consumers |
-| DB boundary | Kiểm tra tất cả queries/entities dùng table/column |
+| Boundary                     | Cách kiểm tra                                      |
+| ---------------------------- | -------------------------------------------------- |
+| Process boundary (Electron)  | Kiểm tra main/ → preload/ → renderer/              |
+| Package boundary (Monorepo)  | Kiểm tra cross-package imports                     |
+| API boundary (Client-Server) | Kiểm tra API contract consumers                    |
+| DB boundary                  | Kiểm tra tất cả queries/entities dùng table/column |
 
 ## Business Logic Classification
 
@@ -64,12 +64,12 @@ Tạo dependency chain: `Caller → Target → Callee`
 
 Business logic được phân loại theo mức độ critical:
 
-| Tier | Loại | Ví dụ | Quy tắc |
-| --- | --- | --- | --- |
-| **Tier 1** | Core Revenue | Payment, billing, subscription | Zero tolerance — phải có 100% test coverage trước khi sửa |
-| **Tier 2** | Core Function | Auth, permissions, data integrity | Near-zero tolerance — cần approval + comprehensive tests |
-| **Tier 3** | Business Rules | Validation, workflow, notifications | Careful — cần impact analysis + regression tests |
-| **Tier 4** | Supporting | Logging, formatting, UI helpers | Standard — basic testing đủ |
+| Tier       | Loại           | Ví dụ                               | Quy tắc                                                   |
+| ---------- | -------------- | ----------------------------------- | --------------------------------------------------------- |
+| **Tier 1** | Core Revenue   | Payment, billing, subscription      | Zero tolerance — phải có 100% test coverage trước khi sửa |
+| **Tier 2** | Core Function  | Auth, permissions, data integrity   | Near-zero tolerance — cần approval + comprehensive tests  |
+| **Tier 3** | Business Rules | Validation, workflow, notifications | Careful — cần impact analysis + regression tests          |
+| **Tier 4** | Supporting     | Logging, formatting, UI helpers     | Standard — basic testing đủ                               |
 
 ### Phát Hiện Business Logic
 
@@ -109,13 +109,13 @@ Grep: TargetFunction|TargetClass (across test/, __tests__/)
 
 ### Coverage Decision Matrix
 
-| Test Coverage | Business Tier | Action |
-| --- | --- | --- |
-| High (>80%) | Tier 1-2 | ✅ Proceed with caution |
-| High (>80%) | Tier 3-4 | ✅ Safe to proceed |
-| Low (<50%) | Tier 1-2 | 🛑 STOP — Viết tests trước, sửa code sau |
-| Low (<50%) | Tier 3-4 | ⚠️ Viết characterization tests trước |
-| None (0%) | Any | 🛑 STOP — Viết characterization tests trước |
+| Test Coverage | Business Tier | Action                                      |
+| ------------- | ------------- | ------------------------------------------- |
+| High (>80%)   | Tier 1-2      | ✅ Proceed with caution                     |
+| High (>80%)   | Tier 3-4      | ✅ Safe to proceed                          |
+| Low (<50%)    | Tier 1-2      | 🛑 STOP — Viết tests trước, sửa code sau    |
+| Low (<50%)    | Tier 3-4      | ⚠️ Viết characterization tests trước        |
+| None (0%)     | Any           | 🛑 STOP — Viết characterization tests trước |
 
 ## Git Co-Change Analysis
 
@@ -222,6 +222,7 @@ Phase 4: CLEANUP (sau khi stable)
 ## Impact Analysis Report
 
 ### Target Change
+
 - **What**: <mô tả thay đổi>
 - **File(s)**: <file paths>
 - **Function(s)**: <function names>
@@ -231,54 +232,61 @@ Phase 4: CLEANUP (sau khi stable)
 ### Blast Radius
 
 #### Direct Impact (Level 1)
-| File | Function | Dependency Type | Risk |
-| --- | --- | --- | --- |
-| file.ts:42 | callerA() | calls target | Medium |
+
+| File       | Function  | Dependency Type | Risk   |
+| ---------- | --------- | --------------- | ------ |
+| file.ts:42 | callerA() | calls target    | Medium |
 
 #### Transitive Impact (Level 2)
-| File | Function | Through | Risk |
-| --- | --- | --- | --- |
-| other.ts:15 | userFlow() | via callerA() | Low |
+
+| File        | Function   | Through       | Risk |
+| ----------- | ---------- | ------------- | ---- |
+| other.ts:15 | userFlow() | via callerA() | Low  |
 
 #### Cross-Boundary Impact
-| Boundary | Affected | Details |
-| --- | --- | --- |
-| DB | Yes/No | <tables/columns affected> |
-| API | Yes/No | <endpoints affected> |
-| Process | Yes/No | <main/preload/renderer> |
+
+| Boundary | Affected | Details                   |
+| -------- | -------- | ------------------------- |
+| DB       | Yes/No   | <tables/columns affected> |
+| API      | Yes/No   | <endpoints affected>      |
+| Process  | Yes/No   | <main/preload/renderer>   |
 
 ### Test Coverage
+
 - **Covered functions**: X/Y (Z%)
 - **Uncovered functions**: <list>
 - **Missing test scenarios**: <list>
 
 ### Risk Assessment
-| Factor | Level | Details |
-| --- | --- | --- |
-| Blast radius | Low/Med/High | N files, M functions |
-| Test coverage | Low/Med/High | Z% coverage |
-| Business criticality | Tier 1-4 | <reasoning> |
-| Rollback complexity | Low/Med/High | <reasoning> |
-| **Overall Risk** | **Low/Med/High/Critical** | |
+
+| Factor               | Level                     | Details              |
+| -------------------- | ------------------------- | -------------------- |
+| Blast radius         | Low/Med/High              | N files, M functions |
+| Test coverage        | Low/Med/High              | Z% coverage          |
+| Business criticality | Tier 1-4                  | <reasoning>          |
+| Rollback complexity  | Low/Med/High              | <reasoning>          |
+| **Overall Risk**     | **Low/Med/High/Critical** |                      |
 
 ### Recommended Strategy
+
 - **Approach**: <Expand-Contract / Feature Flag / Parallel Run / Direct>
 - **Pre-conditions**: <tests to write first>
 - **Verification**: <commands to run>
 
 ### Action Items
+
 1. [ ] <specific action>
 2. [ ] <specific action>
 ```
 
 ## Anti-Patterns
 
-| Anti-Pattern | Hậu quả | Cách đúng |
-| --- | --- | --- |
-| Sửa function mà không biết ai gọi nó | Break callers | Luôn tìm all callers trước |
-| Sửa DB schema trực tiếp | Data loss, downtime | Dùng expand-contract cho schema |
-| Sửa shared type/interface mà không check implementors | Compile errors everywhere | Grep tất cả implementors trước |
-| Xóa function "không ai dùng" mà không verify | Runtime errors | Grep toàn project + check dynamic calls |
-| Sửa business logic không có tests | Silent bugs | Viết characterization tests trước |
-| Batch sửa nhiều callers cùng lúc | Khó debug khi fail | Sửa từng caller, test sau mỗi cái |
-| Refactor + thay đổi behavior cùng lúc | Impossible to verify | Tách thành 2 commits riêng biệt |
+| Anti-Pattern                                          | Hậu quả                   | Cách đúng                               |
+| ----------------------------------------------------- | ------------------------- | --------------------------------------- |
+| Sửa function mà không biết ai gọi nó                  | Break callers             | Luôn tìm all callers trước              |
+| Sửa DB schema trực tiếp                               | Data loss, downtime       | Dùng expand-contract cho schema         |
+| Sửa shared type/interface mà không check implementors | Compile errors everywhere | Grep tất cả implementors trước          |
+| Xóa function "không ai dùng" mà không verify          | Runtime errors            | Grep toàn project + check dynamic calls |
+| Sửa business logic không có tests                     | Silent bugs               | Viết characterization tests trước       |
+| Batch sửa nhiều callers cùng lúc                      | Khó debug khi fail        | Sửa từng caller, test sau mỗi cái       |
+| Refactor + thay đổi behavior cùng lúc                 | Impossible to verify      | Tách thành 2 commits riêng biệt         |

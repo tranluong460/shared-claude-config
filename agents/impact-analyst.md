@@ -75,13 +75,13 @@ Grep: <exported_symbol> (across consuming projects if accessible)
 
 For each affected function/module, determine:
 
-| Question | How to determine |
-| --- | --- |
-| Is this a revenue-critical path? | Check if it handles payment, billing, pricing |
-| Is this an auth/permission path? | Check if it handles login, tokens, access control |
-| Is this a data integrity path? | Check if it handles DB writes, transactions, validation |
-| Is this a core business rule? | Check if it contains domain-specific calculations, workflows |
-| Is this a supporting utility? | Check if it's logging, formatting, UI helper |
+| Question                         | How to determine                                             |
+| -------------------------------- | ------------------------------------------------------------ |
+| Is this a revenue-critical path? | Check if it handles payment, billing, pricing                |
+| Is this an auth/permission path? | Check if it handles login, tokens, access control            |
+| Is this a data integrity path?   | Check if it handles DB writes, transactions, validation      |
+| Is this a core business rule?    | Check if it contains domain-specific calculations, workflows |
+| Is this a supporting utility?    | Check if it's logging, formatting, UI helper                 |
 
 Assign Business Tier (1-4) based on the highest-tier match.
 
@@ -99,6 +99,7 @@ Grep: it\(|test\(|describe\( (in found test files)
 ```
 
 Evaluate coverage quality:
+
 - Does it test happy path only, or also edge cases?
 - Does it test error scenarios?
 - Does it test business rule boundaries?
@@ -141,6 +142,7 @@ Always produce a structured Impact Analysis Report following the template in the
 ### When to BLOCK a change
 
 🛑 **Do NOT proceed** if:
+
 - Target is Tier 1 business logic AND test coverage < 80%
 - Change affects public API AND no migration strategy
 - DB schema change AND no expand-contract plan
@@ -149,6 +151,7 @@ Always produce a structured Impact Analysis Report following the template in the
 ### When to WARN
 
 ⚠️ **Proceed with caution** if:
+
 - Target is Tier 2-3 AND test coverage < 50%
 - Change affects 5-10 files
 - Co-change analysis reveals unexpected dependencies
@@ -157,6 +160,7 @@ Always produce a structured Impact Analysis Report following the template in the
 ### When to APPROVE
 
 ✅ **Safe to proceed** if:
+
 - Target is Tier 3-4 AND test coverage > 80%
 - Change is internal/unexported
 - Blast radius < 3 files

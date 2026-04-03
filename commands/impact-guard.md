@@ -83,70 +83,81 @@ Present a structured report:
 ## 🛡️ Impact Guard Report
 
 ### Target
+
 - **Change**: <what is being changed>
 - **File(s)**: <affected file paths>
 - **Scope**: Internal / Exported / Public API
 
 ### Business Logic Tier: <1/2/3/4>
+
 <Reasoning for tier assignment>
 
 ### Blast Radius
 
 #### Level 1 — Direct Dependencies (<N> files)
-| File | Function | Dependency Type | Risk |
-| --- | --- | --- | --- |
-| path:line | name() | calls/extends/imports | Low/Med/High |
+
+| File      | Function | Dependency Type       | Risk         |
+| --------- | -------- | --------------------- | ------------ |
+| path:line | name()   | calls/extends/imports | Low/Med/High |
 
 #### Level 2 — Transitive Dependencies (<N> files)
+
 | File | Function | Through | Risk |
-| --- | --- | --- | --- |
+| ---- | -------- | ------- | ---- |
 
 #### Cross-Boundary Impact
-| Boundary | Affected? | Details |
-| --- | --- | --- |
-| Database | Yes/No | <tables/columns> |
-| API Contract | Yes/No | <endpoints> |
-| Process Boundary | Yes/No | <main/preload/renderer> |
-| External Consumers | Yes/No | <packages/projects> |
+
+| Boundary           | Affected? | Details                 |
+| ------------------ | --------- | ----------------------- |
+| Database           | Yes/No    | <tables/columns>        |
+| API Contract       | Yes/No    | <endpoints>             |
+| Process Boundary   | Yes/No    | <main/preload/renderer> |
+| External Consumers | Yes/No    | <packages/projects>     |
 
 ### Test Coverage
+
 - **Total affected functions**: N
 - **Functions with tests**: X/N (Y%)
 - **Coverage gaps**: <list uncovered functions>
 - **Missing scenarios**: <edge cases not tested>
 
 ### Git Co-Change Pattern
+
 - **Frequently co-changed files**: <list>
 - **Recent authors**: <who has been working on this>
 - **Code warnings found**: <DO NOT MODIFY, etc.>
 
 ### Risk Assessment
 
-| Factor | Level | Details |
-| --- | --- | --- |
-| Blast radius | Low/Med/High | N files, M functions affected |
-| Test coverage | Low/Med/High | Y% coverage |
-| Business criticality | Tier 1-4 | <reasoning> |
-| Rollback complexity | Low/Med/High | <reasoning> |
-| Co-change risk | Low/Med/High | <hidden dependencies> |
-| **Overall Risk** | **<level>** | |
+| Factor               | Level        | Details                       |
+| -------------------- | ------------ | ----------------------------- |
+| Blast radius         | Low/Med/High | N files, M functions affected |
+| Test coverage        | Low/Med/High | Y% coverage                   |
+| Business criticality | Tier 1-4     | <reasoning>                   |
+| Rollback complexity  | Low/Med/High | <reasoning>                   |
+| Co-change risk       | Low/Med/High | <hidden dependencies>         |
+| **Overall Risk**     | **<level>**  |                               |
 
 ### Verdict: <SAFE ✅ / CAUTION ⚠️ / BLOCKED 🛑>
 
 ### Recommended Strategy
+
 - **Approach**: <Direct / Expand-Contract / Feature Flag / Parallel Run>
 - **Why**: <reasoning>
 
 ### Action Items (Before Making Changes)
+
 1. [ ] <write tests for X>
 2. [ ] <create migration for Y>
 3. [ ] <update callers A, B, C incrementally>
 4. [ ] <verify with: command>
 
 ### Safe Change Plan
+
 <Step-by-step instructions for making the change safely>
 
 ### Verification Checklist
+
 - [ ] All existing tests pass
 - [ ] New tests cover changed behavior
 - [ ] No TypeScript errors: `npm run typecheck`
