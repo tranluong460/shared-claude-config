@@ -20,12 +20,18 @@ Target: $ARGUMENTS (doc type, optionally followed by file/module path)
 
 Examples:
 
+- `/generate-docs onboarding` — developer onboarding track (required)
+- `/generate-docs user-guide` — end-user guide track (required)
+- `/generate-docs plan smart-waiting-refactor` — full plan folder with overview + ADRs + business-tdd + design
 - `/generate-docs API src/main/ipcs` — API reference for IPC handlers
-- `/generate-docs ADR` — Architecture Decision Record
-- `/generate-docs troubleshooting src/system/workers/sync` — troubleshooting guide for sync
+- `/generate-docs ADR` — standalone Architecture Decision Record
+- `/generate-docs fix src/system/workers/sync` — troubleshooting fix record
 - `/generate-docs changelog` — changelog from recent commits
 
-Doc types: README, API, ADR, design, guide, troubleshooting, changelog, IPC, entity
+Doc types:
+
+- **Required (every project)**: `onboarding`, `user-guide`
+- **Project-dependent**: `readme`, `plan`, `adr`, `design`, `overview`, `api`, `ipc`, `entities`, `providers`, `guide`, `fix`, `changelog`
 
 ## Workflow
 
@@ -40,30 +46,127 @@ Read and apply:
 
 Parse the input to decide what to generate:
 
+#### Required doc tracks (every project must have these)
+
+| Input         | Doc Type                     | Output Location     |
+| ------------- | ---------------------------- | ------------------- |
+| `onboarding`  | Developer onboarding track   | `docs/onboarding/`  |
+| `user-guide`  | End-user usage guide track   | `docs/user-guide/`  |
+
+Both tracks are **multi-file** — generate the full set, do not produce a single README. See Step 2a/2b for required file lists.
+
+#### Project-dependent docs (generate only when requested / needed)
+
 | Input              | Doc Type                             | Output Location                              |
 | ------------------ | ------------------------------------ | -------------------------------------------- |
-| `readme`           | README.md                            | Project root                                 |
-| `guide <topic>`    | Guide / tutorial / how-to            | `docs/guides/{topic}-guide.md`               |
-| `adr <decision>`   | Architecture Decision Record         | `docs/architecture/adr/ADR-NNNN-{title}.md`  |
+| `readme`           | Project README                       | Project root `README.md`                     |
+| `plan <name>`      | Work / implementation plan (folder)  | `docs/plans/YYYYMMDD-{plan-name}/` (see 2c)  |
+| `adr <decision>`   | Standalone ADR                       | `docs/architecture/adr/ADR-NNNN-{title}.md`  |
 | `design <feature>` | Feature design document              | `docs/architecture/design/{feature-name}.md` |
 | `overview`         | Architecture overview                | `docs/architecture/overview.md`              |
 | `api <module>`     | API / module documentation           | `docs/api/{module}-api.md`                   |
 | `ipc`              | IPC channel reference (Electron)     | `docs/api/ipc-channels.md`                   |
 | `entities`         | Database entity reference (Electron) | `docs/api/entities.md`                       |
 | `providers`        | Provider pattern reference (Library) | `docs/api/providers.md`                      |
-| `fix <issue>`      | Bug fix / troubleshooting record     | `docs/troubleshooting/fix-{issue-name}.md`   |
+| `guide <topic>`    | How-to / tutorial                    | `docs/guides/{topic}-guide.md`               |
+| `fix <issue>`      | Bug fix / troubleshooting record     | `docs/fix/{issue-name}.md`                   |
 | `changelog`        | Version changelog                    | `docs/changelog/CHANGELOG.md`                |
-| `plan <name>`      | Work / implementation plan           | `docs/plans/YYYYMMDD-{plan-name}.md`         |
 | `<file-path>`      | JSDoc for public APIs in file        | Inline in source file                        |
+
+### Step 2a: `onboarding` track structure (required)
+
+Target audience: **new developers joining the project**. Write sequentially — each file builds on the previous one.
+
+```
+docs/onboarding/
+├── README.md                    # Index + reading order
+├── 00-start-here.md             # Entry point, prerequisites, map
+├── 01-project-overview.md       # What the product does, who uses it
+├── 02-system-architecture.md    # High-level architecture (processes, layers)
+├── 03-project-structure.md      # Folder walkthrough
+├── 04-core-modules.md           # Key modules and responsibilities
+├── 05-main-workflows.md         # Critical runtime flows end-to-end
+├── 06-development-workflow.md   # Install, run, build, test, debug
+├── 07-how-to-add-feature.md     # Recipe for adding a new feature
+├── 08-how-to-modify-safely.md   # Impact analysis + safe-change rules
+├── 09-debugging-guide.md        # Common bugs, tools, logs
+└── 10-common-pitfalls.md        # Traps to avoid
+```
+
+Rules:
+- File names are **numbered `NN-kebab-case.md`** so reading order is explicit.
+- Every file links forward/backward (prev / next).
+- `README.md` is an index only — not narrative content.
+
+### Step 2b: `user-guide` track structure (required)
+
+Target audience: **end users of the product** (not developers). No code internals.
+
+```
+docs/user-guide/
+├── README.md                 # Index + what this guide covers
+├── 01-introduction.md        # What the product is and who it's for
+├── 02-getting-started.md     # Install, first launch, first success
+├── 03-<core-concept>.md      # Core domain concept (e.g. architecture from user view)
+├── 04-configuration.md       # Settings and options
+├── 05-<feature-area-1>.md    # Main feature area
+├── 06-<feature-area-2>.md    # ...
+├── ...                       # One file per feature area
+├── NN-error-handling.md      # How the product reports and recovers from errors
+└── NN-development-guide.md   # Optional: for power users / plugin authors
+```
+
+Rules:
+- File names are **numbered `NN-kebab-case.md`**.
+- Feature area file count adapts to the project — not a fixed number.
+- Screenshots / diagrams go next to the file that references them.
+- No source code paths or internal class names in user-facing copy.
+
+### Step 2c: `plan <name>` folder structure (when generating a plan)
+
+A plan is **never a single file**. Always generate the full folder:
+
+```
+docs/plans/YYYYMMDD-{plan-name}/
+├── overview.md                  # Executive summary, goals, scope, links to sub-docs
+├── business-tdd/
+│   ├── business.md              # Business requirements / user value / acceptance
+│   └── tdd.md                   # Test-driven design: test cases before code
+├── design/
+│   ├── architecture.md          # Target architecture / module layout
+│   ├── execution-plan.md        # Phased work breakdown (Phase 1..N, tasks, owners)
+│   ├── impact-analysis.md       # Blast radius, affected files, risks surface
+│   └── risks.md                 # Risks, mitigations, rollback strategy
+└── adr/
+    ├── ADR-001-{decision}.md    # One ADR per non-obvious decision in the plan
+    ├── ADR-002-{decision}.md
+    └── ...
+```
+
+Rules:
+- Folder name: `YYYYMMDD-{kebab-case-plan-name}` — date is the plan creation date.
+- `overview.md` is mandatory and links to every sub-document.
+- `business-tdd/` and `design/` are mandatory.
+- `adr/` is mandatory but may start with a single ADR; add more as decisions emerge.
+- Do **not** create `docs/plans/YYYYMMDD-{name}.md` (flat file) — always a folder.
+- ADRs inside a plan are scoped to that plan; project-wide ADRs still live in `docs/architecture/adr/`.
 
 ### Step 3: Detect Project Type
 
 > Project type detection: see `.claude/rules/project-detection.md`
 
-After detection, apply project-specific extra doc types:
+Regardless of project type, the following tracks are **always required** and must exist (create if missing):
 
-- **Electron**: `ipc`, `entities`, `guide`
+- `docs/onboarding/` — full numbered track per Step 2a
+- `docs/user-guide/` — full numbered track per Step 2b
+
+After detection, apply project-specific extra doc types on top:
+
+- **Electron**: `ipc`, `entities`, `guide`, `fix`
 - **Library**: `providers`, `api`
+- **Any**: `plan`, `adr`, `design`, `overview`, `changelog` as needed
+
+If the user runs `/generate-docs` without arguments, check whether `docs/onboarding/` and `docs/user-guide/` exist — if either is missing, surface it as a gap in Step 5 and offer to bootstrap.
 
 ### Step 4: Delegate to Agent
 
