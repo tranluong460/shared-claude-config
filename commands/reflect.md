@@ -19,18 +19,16 @@ Scope: $ARGUMENTS (default: "1 week", accepts: "today", "3 days", "1 week", "1 m
 
 ## Workflow
 
-### Step 1: Load Skills
+### Step 1: Load Skill
 
 Read and apply:
 
-- `.claude/skills/reflection/SKILL.md`
+- `.claude/skills/reflection/SKILL.md` (self-sufficient — contains the full reflection methodology, no agent delegation needed)
 - `.claude/skills/coding-standards/SKILL.md`
 
-### Step 2: Delegate to Agent
+> The former `reflection-analyzer` agent was migrated into the `reflection` skill in Phase 4 consolidation. Reflection is read-only analysis that benefits from the main session's context — no isolated agent context is required.
 
-Delegate to the `reflection-analyzer` agent for execution.
-
-### Step 3: Gather Evidence
+### Step 2: Gather Evidence
 
 1. **Git history** within scope:
 
@@ -70,7 +68,7 @@ Read .claude/memory/lessons.md
 
 Check: are previous lessons being followed? Any recurring issues that were already identified?
 
-### Step 4: Analyze Patterns
+### Step 3: Analyze Patterns
 
 For each finding, categorize:
 
@@ -78,7 +76,7 @@ For each finding, categorize:
 - **One-off** → note but don't over-react
 - **Positive** → reinforce (don't just focus on negatives)
 
-### Step 5: Propose Config Improvements
+### Step 4: Propose Config Improvements
 
 For each recurring issue, propose a specific change:
 
@@ -90,11 +88,11 @@ For each recurring issue, propose a specific change:
 | Build/test gap       | Add to CLAUDE.md or implementation rule |
 | Repeated manual step | Automate with hook                      |
 
-### Step 6: Report
+### Step 5: Report
 
 Present findings using the output format from the reflection skill.
 
-### Step 7: Apply (If Approved)
+### Step 6: Apply (If Approved)
 
 If the user approves changes:
 

@@ -69,7 +69,7 @@ Dispatch to the appropriate playbook below. Each playbook reuses the original co
 
 **Skills**: `architecture-patterns`, `documentation-standards`, `audit-config` (+ `contract-checks.md`)
 **Rules**: `no-unused-docs`, `documentation`
-**Agent**: `doc-auditor` (or merged `doc-manager` after Phase 4) — audit mode
+**Agent**: `doc-manager` — mode `audit`
 
 Run **three audit levels** (cumulative — L2 requires L1 pass, L3 requires L2 pass):
 
@@ -122,7 +122,7 @@ Run **three audit levels** (cumulative — L2 requires L1 pass, L3 requires L2 p
 
 **Skills**: `architecture-patterns`, `documentation-standards`
 **Rules**: `no-unused-docs`
-**Agent**: `doc-auditor` (or merged `doc-manager` after Phase 4) — repair mode
+**Agent**: `doc-manager` — mode `repair`
 **MUTATES files** — review changes before committing.
 
 1. Re-run inventory and classification.

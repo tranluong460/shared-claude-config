@@ -1,10 +1,12 @@
 ---
 name: impact-analysis
-description: Techniques for analyzing blast radius, dependency graphs, and protecting business logic when modifying code. Covers static analysis, test coverage mapping, co-change detection, and safe change strategies.
+description: Techniques for analyzing blast radius, dependency graphs, and protecting business logic when modifying code. Covers static analysis, test coverage mapping, co-change detection, safe change strategies, and BLOCK/WARN/APPROVE decision rules. Self-sufficient — no separate agent needed.
 layer: architecture
 ---
 
 # Impact Analysis & Business Logic Protection
+
+> **This skill replaces the former `impact-analyst` agent (Phase 4 consolidation).** It is self-sufficient — invoked directly when impact analysis is needed (via `/skill impact-analysis` or naturally when changing risky code). No isolated agent context required.
 
 ## Core Principle
 
@@ -278,6 +280,48 @@ Phase 4: CLEANUP (sau khi stable)
 1. [ ] <specific action>
 2. [ ] <specific action>
 ```
+
+## Decision Rules: BLOCK / WARN / APPROVE
+
+When using this skill to gate a proposed change, apply these rules and produce a clear verdict.
+
+### 🛑 BLOCK — do NOT proceed
+
+- Target is **Tier 1** business logic AND test coverage < 80%
+- Change affects **public API** AND no migration strategy
+- **DB schema change** AND no expand-contract plan
+- More than **10 direct callers** AND no incremental migration plan
+- Code has **DO NOT MODIFY** / WARNING comments AND no concrete reason to override
+
+### ⚠️ WARN — proceed with caution
+
+- Target is **Tier 2-3** AND test coverage < 50%
+- Change affects **5-10 files**
+- Co-change analysis reveals **unexpected dependencies** (files that always change together but no static import)
+- Public API change with simple migration
+
+### ✅ APPROVE — safe to proceed
+
+- Target is **Tier 3-4** AND test coverage > 80%
+- Change is **internal/unexported**
+- Blast radius **< 3 files**
+- All affected paths have tests
+
+## Documentation Impact (always include)
+
+When listing affected files, include documentation files that reference the changed modules:
+
+- Scan `docs/onboarding/**/*.md` for mentions of the changed module/file/class/API — any match counts as affected doc.
+- Scan `docs/user-guide/**/*.md` for mentions of user-visible behavior changed by the refactor.
+- Flag these in the "Affected files" section with a `doc` tag so the caller knows to queue `/docs` follow-up.
+
+## Project Type Awareness
+
+Project type detection: see `.claude/rules/project-detection.md`. Apply project-specific focus:
+
+- **Electron**: IPC boundary impact, cross-process dependencies, preload sync
+- **Library**: Public API surface, consumer impact, interface contract stability
+- **Server**: API contract, middleware chain, DB migration safety
 
 ## Anti-Patterns
 
