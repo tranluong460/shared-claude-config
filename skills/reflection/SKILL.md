@@ -1,6 +1,6 @@
 ---
 name: reflection
-description: Session analysis and self-improvement — review recent work patterns, identify recurring mistakes, and suggest config improvements.
+description: Session analysis and self-improvement — review recent work patterns, identify recurring mistakes, and suggest config improvements. Self-sufficient — invoked directly by /reflect, no subagent needed.
 layer: workflow
 ---
 
@@ -9,6 +9,15 @@ layer: workflow
 ## Purpose
 
 Analyze recent sessions to identify patterns, recurring mistakes, and opportunities to improve the `.claude` configuration. This closes the feedback loop: work → reflect → improve config → better work.
+
+> **This skill replaces the former `reflection-analyzer` agent (Phase 4 consolidation).** It is invoked directly by `/reflect` — no isolated agent context needed because the analysis is read-only and benefits from the main session's existing context.
+
+## Core Discipline
+
+- **Focus on patterns, not individual incidents.** A one-off issue is noise; a recurring issue is signal.
+- **Suggest config changes that prevent future mistakes.** "Add rule X to file Y" beats "should improve".
+- **Recurring (2+ times) → propose change. One-off → note and move on.**
+- **Reinforce positives.** Don't just focus on negatives.
 
 ## What to Analyze
 
@@ -116,5 +125,27 @@ Evaluate against these questions:
 
 ### Lessons Captured
 
-- <new lessons to add to tasks/lessons.md>
+- <new lessons to add to .claude/memory/lessons.md>
 ```
+
+## Quick Reference: Fix Type Mapping
+
+| Type | How to fix |
+|---|---|
+| Missing convention | Add rule in `.claude/rules/` |
+| Rule ignored | Strengthen wording or promote to hook |
+| Missing knowledge | Add to relevant skill |
+| Build/test gap | Add to project CLAUDE.md or implementation rule |
+| Repeated manual step | Automate with hook |
+
+## Direct Invocation Process
+
+When `/reflect` runs:
+
+1. Parse scope from `$ARGUMENTS` (default: 1 week)
+2. Run git evidence-gathering commands above
+3. Spot-check recently changed files for known violations
+4. Categorize findings: recurring vs one-off vs positive
+5. Propose specific config changes for recurring patterns only
+6. Append new lessons to `.claude/memory/lessons.md` (consolidate, don't duplicate)
+7. Output the report

@@ -6,7 +6,7 @@ layer: testing
 
 # Production Testing Methodology — Reference
 
-> This skill provides the knowledge framework for production-readiness testing. The `test-leader` agent uses this to direct multi-agent testing teams.
+> This skill provides the knowledge framework for production-readiness testing. The `test-manager` agent (mode: production) uses this to direct multi-agent testing teams.
 
 ## Core Philosophy
 

@@ -171,8 +171,8 @@ If the user runs `/docs` without arguments, check whether `docs/onboarding/` and
 
 ### Step 4: Delegate to Agent
 
-Delegate to the **doc-writer** agent with full context from Steps 1-3.
-The agent follows its complete process defined in `.claude/agents/doc-writer.md`:
+Delegate to the **doc-manager** agent in mode `write` with full context from Steps 1-3.
+The agent follows its complete process defined in `.claude/agents/doc-manager.md`:
 
 1. Analyze project (structure, metadata, existing docs)
 2. Generate documentation using skill templates

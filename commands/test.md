@@ -23,9 +23,9 @@ You are executing the `/test` command. Consolidates `/generate-tests` and `/test
 
 | Subcommand | Behavior | Delegates to | Mutates |
 |---|---|---|---|
-| `generate [target]` | Generate unit/integration tests; bootstrap infra if needed (default) | test-architect | **yes** |
-| `setup` | Bootstrap test framework only (vitest), then stop | test-architect | **yes** |
-| `system <target>` | Production readiness analysis — multi-agent risk assessment | test-leader | no |
+| `generate [target]` | Generate unit/integration tests; bootstrap infra if needed (default) | test-manager (mode: design) | **yes** |
+| `setup` | Bootstrap test framework only (vitest), then stop | test-manager (mode: design) | **yes** |
+| `system <target>` | Production readiness analysis — multi-agent risk assessment | test-manager (mode: production) | no |
 
 If `$ARGUMENTS` is empty or starts with a path/file, default to `generate`.
 
@@ -48,7 +48,7 @@ Parse the first token of `$ARGUMENTS`:
 
 **Skills**: `testing-strategy`, `coding-standards`, `naming-conventions`, `testing-methodology`, `project-context`
 **Rules auto-injected**: `testing.md`, `testing-methodology.md`
-**Agent**: `test-architect` (or merged `test-manager` mode `design` after Phase 4)
+**Agent**: `test-manager` — mode `design`
 
 1. **Detect test infrastructure**:
    - `package.json` → vitest/jest in deps?
@@ -83,7 +83,7 @@ Parse the first token of `$ARGUMENTS`:
 ## Playbook: `system` — Production readiness analysis
 
 **Skills**: `production-testing`, `coding-standards`, `architecture-patterns`, `testing-strategy`, `project-context`
-**Agent**: `test-leader` (or merged `test-manager` mode `production` after Phase 4)
+**Agent**: `test-manager` — mode `production`
 
 This command performs **analytical risk assessment** — it does NOT run automated tests.
 
