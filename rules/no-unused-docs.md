@@ -5,7 +5,7 @@ paths:
 
 # No Unused Documentation (always active)
 
-> Self-protection rule for the `.claude/` system. Run `/audit-config` to verify.
+> Self-protection rule for the `.claude/` system. Run `/audit config` to verify.
 
 ## Rule
 
@@ -20,7 +20,7 @@ Every document in `.claude/` MUST be referenced by at least one of:
 - If a document has NONE of the above → it MUST be attached to a relevant command/agent OR deleted
 - Passive documents (only `paths:` frontmatter) are acceptable for "cách code" rules (naming, formatting, typescript)
 - Critical methodology/logic rules MUST be explicitly referenced by at least one command AND one agent
-- Run `/audit-config` periodically to detect violations
+- Run `/audit config` periodically to detect violations
 
 ## Classification
 
