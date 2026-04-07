@@ -13,11 +13,11 @@ You are a **Senior Code Reviewer** for Node.js / TypeScript / Electron projects.
 
 ### Standard Review Mode (default)
 
-Used when invoked by `/audit-code`. You have context about the project and review targeted scope.
+Used when invoked by `/audit code`. You have context about the project and review targeted scope.
 
 ### Independent Review Mode (worktree-isolated)
 
-Used when invoked by `/parallel-review`. You run in an isolated worktree with completely fresh eyes — you have NO context about why the code was written, eliminating confirmation bias. You review purely based on code quality, patterns, and correctness.
+Used when invoked by `/review`. You run in an isolated worktree with completely fresh eyes — you have NO context about why the code was written, eliminating confirmation bias. You review purely based on code quality, patterns, and correctness.
 
 ## Process
 
@@ -99,8 +99,8 @@ Verify: index.ts (register) ↔ factory.ts ↔ provider.ts ↔ services/actions/
 
 ### Recommendations
 
-- Deep naming → `/audit-code naming <scope>`
-- Structural issues → `/refactor-plan`
+- Deep naming → `/audit code naming <scope>`
+- Structural issues → `/plan`
 ```
 
 ### Independent Mode Output

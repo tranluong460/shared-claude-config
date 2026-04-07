@@ -6,13 +6,13 @@ consumes: [source-code]
 produces: [documentation]
 result_states: [success, validation_failed, blocked, execution_error]
 next_on_result:
-  success: [audit-config]
-  validation_failed: [diagnose]
+  success: [audit]
+  validation_failed: [audit]
   blocked: []
-  execution_error: [diagnose]
+  execution_error: [audit]
 ---
 
-You are executing the `/generate-docs` command.
+You are executing the `/docs` command (formerly `/docs`).
 
 ## Input
 
@@ -20,13 +20,13 @@ Target: $ARGUMENTS (doc type, optionally followed by file/module path)
 
 Examples:
 
-- `/generate-docs onboarding` — developer onboarding track (required)
-- `/generate-docs user-guide` — end-user guide track (required)
-- `/generate-docs plan smart-waiting-refactor` — full plan folder with overview + ADRs + business-tdd + design
-- `/generate-docs API src/main/ipcs` — API reference for IPC handlers
-- `/generate-docs ADR` — standalone Architecture Decision Record
-- `/generate-docs fix src/system/workers/sync` — fix record
-- `/generate-docs changelog` — changelog from recent commits
+- `/docs onboarding` — developer onboarding track (required)
+- `/docs user-guide` — end-user guide track (required)
+- `/docs plan smart-waiting-refactor` — full plan folder with overview + ADRs + business-tdd + design
+- `/docs API src/main/ipcs` — API reference for IPC handlers
+- `/docs ADR` — standalone Architecture Decision Record
+- `/docs fix src/system/workers/sync` — fix record
+- `/docs changelog` — changelog from recent commits
 
 Doc types:
 
@@ -167,7 +167,7 @@ After detection, apply project-specific extra doc types on top:
 - **Library**: `providers`, `api`
 - **Any**: `plan`, `adr`, `design`, `overview`, `changelog` as needed
 
-If the user runs `/generate-docs` without arguments, check whether `docs/onboarding/` and `docs/user-guide/` exist — if either is missing, surface it as a gap in Step 5 and offer to bootstrap.
+If the user runs `/docs` without arguments, check whether `docs/onboarding/` and `docs/user-guide/` exist — if either is missing, surface it as a gap in Step 5 and offer to bootstrap.
 
 ### Step 4: Delegate to Agent
 
@@ -230,12 +230,12 @@ For multi-file tracks (`onboarding`, `user-guide`, `plan`):
 
 ### Suggested Follow-ups
 
-- `/generate-docs user-guide` to bootstrap the other required track
+- `/docs user-guide` to bootstrap the other required track
 ```
 
 #### Bootstrap-on-empty flow
 
-If `/generate-docs` is invoked **without arguments**:
+If `/docs` is invoked **without arguments**:
 
 1. Check whether `docs/onboarding/` and `docs/user-guide/` exist.
 2. For each missing track, ASK the user (do not auto-create) whether to bootstrap it now.

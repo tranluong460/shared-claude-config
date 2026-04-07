@@ -1,6 +1,6 @@
 ---
 name: audit-config
-description: Semantic auditing of .claude/ config — goes beyond path-grep to verify contracts between commands, agents, skills, rules, and hooks. Used by /audit-config.
+description: Semantic auditing of .claude/ config — goes beyond path-grep to verify contracts between commands, agents, skills, rules, and hooks. Used by /audit config.
 layer: core
 ---
 
@@ -36,7 +36,7 @@ Levels are cumulative — L2 requires L1 pass, L3 requires L2 pass. A "clean" ve
 
 ## Required output sections
 
-Every `/audit-config` run MUST include these sections, in this order:
+Every `/audit config` run MUST include these sections, in this order:
 
 1. **Inventory Summary** (counts table)
 2. **Issues Found** (table; empty if none)
@@ -63,4 +63,4 @@ Report which files were spot-read in the Audit Coverage Report.
 - `contract-checks.md` — enumerated semantic invariants (this skill's companion)
 - `.claude/rules/no-unused-docs.md` — the dead-doc rule
 - `.claude/rules/documentation.md` — Command ↔ Agent output contract invariant
-- `.claude/commands/audit-config.md` — the command that loads this skill
+- `.claude/commands/audit.md` — the unified audit command that loads this skill (subcommand `config`)

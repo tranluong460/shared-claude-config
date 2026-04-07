@@ -6,12 +6,12 @@ consumes: [git-diff]
 produces: [review-report]
 result_states: [approved, changes_requested, blocked]
 next_on_result:
-  approved: [generate-docs, reflect]
+  approved: [docs, reflect]
   changes_requested: [implement]
-  blocked: [diagnose]
+  blocked: [audit]
 ---
 
-You are executing the `/parallel-review` command.
+You are executing the `/review` command (formerly `/parallel-review`).
 
 ## Input
 

@@ -6,11 +6,11 @@ consumes: [plan, source-code]
 produces: [code-changes]
 result_states: [success, validation_failed, build_failed, blocked, execution_error]
 next_on_result:
-  success: [parallel-review]
-  validation_failed: [diagnose]
-  build_failed: [diagnose]
-  blocked: [refactor-plan]
-  execution_error: [diagnose]
+  success: [review]
+  validation_failed: [audit]
+  build_failed: [audit]
+  blocked: [plan]
+  execution_error: [audit]
 ---
 
 You are executing the `/implement` command.
@@ -128,7 +128,7 @@ yarn test  # if available
 
 ## Notes
 
-- For medium+ features (6+ files), follow up with `/generate-docs` to update required tracks:
+- For medium+ features (6+ files), follow up with `/docs` to update required tracks:
   - Update `docs/onboarding/04-core-modules.md` when module structure changes
   - Update / create `docs/user-guide/NN-{feature-area}.md` for user-visible features
   - Create a fix record at `docs/fix/{issue-name}.md` for complex bug fixes
