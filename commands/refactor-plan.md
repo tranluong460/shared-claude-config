@@ -46,7 +46,7 @@ The agent follows its complete refactoring plan process defined in `.claude/agen
 2. Determine refactoring scale (Surgical/Module/Architecture)
 3. Risk assessment (test coverage, public API change, rollback complexity)
 4. Design target state
-5. Create phased plan (Foundation -> Migration -> Cleanup -> Verify)
+5. Create phased plan (Foundation -> Migration -> Cleanup -> Quality Assurance)
 
 ### Step 4: Output Plan Folder
 

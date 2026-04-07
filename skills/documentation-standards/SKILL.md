@@ -791,7 +791,47 @@ Step-by-step, with screenshots.
 
 ---
 
-### 10. Changelog
+### 10. Reference Document
+
+**Purpose**: Capture internal reference material that does not fit onboarding (not narrative) or user-guide (not end-user facing) — e.g. constants tables, provider catalogs, browser detection matrices, lifecycle states.
+
+**Location**: `docs/reference/{topic}.md`
+
+**When to create**: You need a lookup table or catalog that's cited from multiple places (code comments, ADRs, other docs).
+
+**Template**:
+
+```markdown
+# Reference: <Topic>
+
+> Lookup / catalog document. Keep factual, minimize prose.
+
+## Overview
+
+One paragraph: what this reference covers and when to consult it.
+
+## <Catalog / Table>
+
+| Key | Value | Notes |
+| --- | ----- | ----- |
+| ... | ...   | ...   |
+
+## Related
+
+- Source of truth: `src/.../<file>.ts`
+- Consumers: `docs/onboarding/NN-...md`, `docs/api/...md`
+```
+
+**Rules**:
+
+- Reference docs must cite the source of truth in code (file path) so they can be verified.
+- Prefer tables over prose.
+- If the content is a how-to, it belongs in `guides/`, not `reference/`.
+- If the content is narrative onboarding, it belongs in `onboarding/`, not `reference/`.
+
+---
+
+### 11. Changelog
 
 **Purpose**: Track what changed per version for users and developers.
 

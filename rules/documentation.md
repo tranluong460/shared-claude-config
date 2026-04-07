@@ -57,3 +57,14 @@ docs/
 ## Per-file size rule
 
 Keep each individual `.md` file under ~3 pages. This applies **per file**, not per track — onboarding (11 files) and user-guide (10+ files) are large by design; the limit is on each file inside the track.
+
+## Command ↔ Agent output contract (invariant)
+
+When a command delegates to an agent (e.g. `/refactor-plan` → `architect`, `/generate-docs` → `doc-writer`, `/diagnose` → `debugger`):
+
+- The agent's `## Output Format` / `## Output Formats` section MUST match the command's output rule **verbatim** or transclude it via a section link.
+- If the command says "produce a folder", the agent MUST NOT show a template that emits a single file.
+- When changing a command's output rule, immediately cross-read every agent it delegates to and update their output sections in the same change.
+- `/audit-config` verifies this via `skills/audit-config/contract-checks.md` — but static auditing is necessary, not sufficient. Always spot-read after a sync.
+
+This invariant exists because it was violated in the 2026-04-07 session (`commands/refactor-plan.md` mandated folder output while `agents/architect.md` still showed a single-document template) and was only caught by manual review after `/audit-config` passed clean.

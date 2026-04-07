@@ -166,6 +166,8 @@ For each document type:
 
 ### 4. Electron-Specific Documentation
 
+> **Precheck required tracks first.** Before generating any Electron-specific docs (IPC reference, entity reference, window lifecycle), verify that `docs/onboarding/` and `docs/user-guide/` exist. If either is missing, surface the gap in the final report and recommend `/generate-docs onboarding` / `/generate-docs user-guide` before continuing with specialist docs.
+
 When documenting Electron projects:
 
 #### IPC Channel Reference
@@ -190,6 +192,8 @@ When documenting Electron projects:
 3. Document single-instance lock behavior
 
 ### 5. Library-Specific Documentation
+
+> **Precheck required tracks first** (same rule as §4): `docs/onboarding/` and `docs/user-guide/` must exist before library-specific docs. Flag the gap in the report if missing.
 
 When documenting module-based libraries:
 

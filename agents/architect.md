@@ -185,39 +185,44 @@ When reviewing a design or proposed change:
 | 1        | <issue> | ...      | S/M/L  | High/Med/Low |
 ```
 
-### Refactoring Plan
+### Refactoring Plan (Plan Folder)
 
-```markdown
-## Refactoring Plan: <title>
+A refactoring plan is **never a single document**. Produce the full plan folder skeleton defined in `.claude/skills/documentation-standards/SKILL.md` §7:
 
-### Problem
-
-<what's wrong>
-
-### Target State
-
-<what it should look like>
-
-### Approach
-
-- Strategy: <Strangler/Facade/Incremental>
-- Estimated effort: <S/M/L>
-- Risk: <Low/Medium/High>
-
-### Phases
-
-1. **Phase 1**: <description>
-   - Files: <list>
-   - Tests: <what to add/verify>
-   - Verification: <how to confirm success>
-
-2. **Phase 2**: <description>
-   ...
-
-### Rollback Plan
-
-<how to revert if needed>
 ```
+docs/plans/YYYYMMDD-{plan-name}/
+├── overview.md                  # Executive summary + links to sub-docs
+├── business-tdd/
+│   ├── business.md              # Problem, users, acceptance criteria
+│   └── tdd.md                   # Test cases written before code
+├── design/
+│   ├── architecture.md          # Current vs target structure
+│   ├── execution-plan.md        # Phased breakdown (refactor core)
+│   ├── impact-analysis.md       # Affected files, blast radius
+│   └── risks.md                 # Risks + rollback strategy
+└── adr/
+    └── ADR-001-{strategy}.md    # e.g. "Use Strangler pattern for X"
+```
+
+Content mapping — where each piece of the old single-document template now lives:
+
+| Legacy section | Target file                             |
+| -------------- | ---------------------------------------- |
+| Problem        | `business-tdd/business.md` (Problem section) |
+| Target State   | `design/architecture.md` (Target State)  |
+| Approach / Strategy | `adr/ADR-001-{strategy}.md`         |
+| Phases (Foundation → Migration → Cleanup → QA) | `design/execution-plan.md` |
+| Risk Assessment | `design/impact-analysis.md` + `design/risks.md` |
+| Rollback Plan  | `design/risks.md` (Rollback Strategy)    |
+
+The phased breakdown in `design/execution-plan.md` must include 4 phases with these exact names (keep consistent with `/refactor-plan` command):
+
+1. **Phase 1: Foundation** — preparatory changes, no behavior change
+2. **Phase 2: Migration** — core refactor, strangler / facade / incremental
+3. **Phase 3: Cleanup** — delete old code, update barrels
+4. **Phase 4: Quality Assurance** — lint, typecheck, tests, and **required-track doc updates** (`docs/onboarding/04-core-modules.md` if module layout changed; `docs/user-guide/NN-{feature-area}.md` if user-visible behavior changed)
+
+Do NOT emit a single `Refactoring Plan: <title>.md` document. That format is legacy.
 
 ## Principles
 

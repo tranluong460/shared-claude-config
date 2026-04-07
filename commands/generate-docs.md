@@ -69,6 +69,7 @@ Both tracks are **multi-file** — generate the full set, do not produce a singl
 | `entities`         | Database entity reference (Electron) | `docs/api/entities.md`                       |
 | `providers`        | Provider pattern reference (Library) | `docs/api/providers.md`                      |
 | `guide <topic>`    | How-to / tutorial                    | `docs/guides/{topic}-guide.md`               |
+| `reference <topic>`| Internal reference material          | `docs/reference/{topic}.md`                  |
 | `fix <issue>`      | Bug fix record                       | `docs/fix/{issue-name}.md`                   |
 | `changelog`        | Version changelog                    | `docs/changelog/CHANGELOG.md`                |
 | `<file-path>`      | JSDoc for public APIs in file        | Inline in source file                        |

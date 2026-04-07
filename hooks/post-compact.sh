@@ -44,6 +44,25 @@ if [[ -n "$BRANCH" ]]; then
   echo ""
 fi
 
+# --- Stale /reflect banner (before injecting lessons so it's prominent) ---
+if [[ -f ".claude/memory/lessons.md" ]]; then
+  # Portable mtime: try GNU stat then BSD stat. Default to "fresh" if both fail.
+  LESSONS_MTIME=$(stat -c '%Y' ".claude/memory/lessons.md" 2>/dev/null || stat -f '%m' ".claude/memory/lessons.md" 2>/dev/null || echo "")
+  if [[ -n "$LESSONS_MTIME" ]]; then
+    NOW=$(date +%s)
+    AGE_DAYS=$(( (NOW - LESSONS_MTIME) / 86400 ))
+    if [[ "$AGE_DAYS" -gt 7 ]]; then
+      echo "================================================"
+      echo "TIME TO RUN /reflect — lessons.md is $AGE_DAYS days old"
+      echo "Self-improvement loop is stale. Surface this to the user:"
+      echo "  → /reflect 1 week"
+      echo "Precedent: lessons.md 2026-03-31 'Self-improvement loop was broken'"
+      echo "================================================"
+      echo ""
+    fi
+  fi
+fi
+
 # --- Recent lessons (inject content directly, not just count) ---
 if [[ -f ".claude/memory/lessons.md" ]]; then
   LESSON_COUNT=$(grep -c '^### ' ".claude/memory/lessons.md" 2>/dev/null || echo "0")
