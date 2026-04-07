@@ -24,26 +24,24 @@ fi
 # Strip the leading / for matching
 CMD_NAME="${COMMAND#/}"
 
-# Only log known commands
-KNOWN_COMMANDS="audit-code audit-project audit-config diagnose refactor-plan generate-tests generate-docs implement impact-guard parallel-review test-system reflect repair-config"
+# Discover known commands dynamically from .claude/commands/*.md (DRY: no hardcoded list)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+COMMANDS_DIR="$SCRIPT_DIR/../commands"
 
-FOUND=false
-for known in $KNOWN_COMMANDS; do
-  if [[ "$CMD_NAME" == "$known" ]]; then
-    FOUND=true
-    break
-  fi
-done
+if [[ ! -d "$COMMANDS_DIR" ]]; then
+  exit 0
+fi
 
-if ! $FOUND; then
+# Match against any .md file (excluding .deprecated/.bak) in commands/
+COMMAND_FILE="$COMMANDS_DIR/$CMD_NAME.md"
+if [[ ! -f "$COMMAND_FILE" ]]; then
   exit 0
 fi
 
 # Extract arguments (everything after the command name)
 ARGS=$(echo "$PROMPT" | sed "s|^$COMMAND[[:space:]]*||")
 
-# Determine log file path
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Determine log file path (SCRIPT_DIR already set above)
 MEMORY_DIR="$SCRIPT_DIR/../memory"
 LOG_FILE="$MEMORY_DIR/command-history.jsonl"
 

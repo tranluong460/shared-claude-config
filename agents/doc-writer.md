@@ -166,7 +166,25 @@ For each document type:
 
 ### 4. Electron-Specific Documentation
 
-> **Precheck required tracks first.** Before generating any Electron-specific docs (IPC reference, entity reference, window lifecycle), verify that `docs/onboarding/` and `docs/user-guide/` exist. If either is missing, surface the gap in the final report and recommend `/generate-docs onboarding` / `/generate-docs user-guide` before continuing with specialist docs.
+> **Precheck required tracks first.** Before generating any Electron-specific docs (IPC reference, entity reference, window lifecycle), verify that `docs/onboarding/` and `docs/user-guide/` exist. If either is missing, **STOP specialist generation** and emit the Required Tracks Gap block defined below in the final report, then exit without writing specialist docs.
+>
+> **Required Tracks Gap output template** (use verbatim, fill in the blanks):
+>
+> ```markdown
+> ## ⚠️ Required Tracks Gap
+>
+> The following required documentation tracks are missing:
+>
+> - [ ] `docs/onboarding/` — <missing | partial: list missing files>
+> - [ ] `docs/user-guide/` — <missing | partial: list missing files>
+>
+> **Specialist docs were NOT generated** because required tracks must exist first.
+>
+> **Next steps**:
+> 1. Run `/docs onboarding` to bootstrap the onboarding track.
+> 2. Run `/docs user-guide` to bootstrap the user-guide track.
+> 3. Re-run the original command to generate the specialist docs.
+> ```
 
 When documenting Electron projects:
 
@@ -193,7 +211,7 @@ When documenting Electron projects:
 
 ### 5. Library-Specific Documentation
 
-> **Precheck required tracks first** (same rule as §4): `docs/onboarding/` and `docs/user-guide/` must exist before library-specific docs. Flag the gap in the report if missing.
+> **Precheck required tracks first** (same rule as §4): `docs/onboarding/` and `docs/user-guide/` must exist before library-specific docs. If missing, emit the **Required Tracks Gap** block from §4 and STOP — do not generate library-specific docs.
 
 When documenting module-based libraries:
 
