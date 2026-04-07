@@ -1,6 +1,6 @@
 # Semantic Contract Checks
 
-> Invariants that `/audit-config` MUST verify beyond static path-grep. Each invariant lists: what to check, how to check, and a real precedent (the bug this check would have caught).
+> Invariants that `/audit config` MUST verify beyond static path-grep. Each invariant lists: what to check, how to check, and a real precedent (the bug this check would have caught).
 
 ## Invariant 1 — Command ↔ Agent output format contract
 
@@ -73,17 +73,16 @@
 
 **Precedent**: None yet. Preventive against future command renames.
 
-## Invariant 7 — `KNOWN_COMMANDS` in `log-command.sh` ↔ actual commands
+## Invariant 7 — `log-command.sh` discovers commands dynamically (DRY)
 
-**Rule**: `hooks/log-command.sh` `KNOWN_COMMANDS` list MUST equal the set of `.claude/commands/*.md` basenames.
+**Rule**: `hooks/log-command.sh` MUST NOT contain a hardcoded `KNOWN_COMMANDS=` list. It must discover commands dynamically by checking for `commands/$CMD_NAME.md` existence.
 
 **How to check**:
-1. `ls .claude/commands/*.md | xargs -n1 basename -s .md` → actual set
-2. `grep KNOWN_COMMANDS= .claude/hooks/log-command.sh` → declared set
-3. Diff the two sets.
-4. Flag missing or extra.
+1. `grep -n 'KNOWN_COMMANDS=' .claude/hooks/log-command.sh` → must return 0 matches OR a comment-only line.
+2. Verify the script reads `.claude/commands/` to test command existence.
+3. Flag any reintroduction of a hardcoded list.
 
-**Precedent** (2026-04-07): Audit reported "14 commands, KNOWN_COMMANDS has 13 — possibly missing one". Truth: 13 commands exist, KNOWN_COMMANDS has 13 — audit miscounted. A proper check would have produced an exact diff instead of an approximate count.
+**Precedent** (2026-04-07): Original script had a hardcoded `KNOWN_COMMANDS="audit-code audit-project ..."` list with 13 names. After consolidation refactor (13 → 7), the list would have gone stale immediately. Replaced with dynamic file existence check. This invariant prevents regression.
 
 ## Invariant 8 — Agent `## Output Format` section presence
 
@@ -96,9 +95,9 @@
 
 **Precedent**: `impact-analyst.md` had a vague "Always produce a structured Impact Analysis Report following the template in the impact-analysis skill" instead of an explicit Output Format section. Hard to contract-check.
 
-## How to use this file from `/audit-config`
+## How to use this file from `/audit config`
 
-1. The command loads this skill via `Read: .claude/skills/audit-config/contract-checks.md`.
+1. The command loads this skill via `Read: .claude/skills/audit config/contract-checks.md`.
 2. For each invariant, run the check and emit a row in the "Semantic Contract Check" section of the audit report.
 3. In the "Audit Coverage Report" section, list which invariants were checked and which were skipped (with reason).
 4. Invariants that cannot be mechanically verified (require semantic judgment) should be explicitly listed as "spot-read required" rather than silently skipped.

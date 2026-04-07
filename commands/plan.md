@@ -6,12 +6,12 @@ consumes: [source-code]
 produces: [refactoring-plan]
 result_states: [plan_ready, needs_input, execution_error]
 next_on_result:
-  plan_ready: [generate-tests, implement]
+  plan_ready: [test, implement]
   needs_input: []
-  execution_error: [diagnose]
+  execution_error: [audit]
 ---
 
-You are executing the `/refactor-plan` command.
+You are executing the `/plan` command (formerly `/refactor-plan`).
 
 ## Input
 
@@ -52,7 +52,7 @@ The agent follows its complete refactoring plan process defined in `.claude/agen
 
 Write the plan as a **folder** under `docs/plans/YYYYMMDD-{plan-name}/` — never a flat `.md` file.
 
-Follow the full plan folder skeleton defined in `.claude/skills/documentation-standards/SKILL.md` §7 (and mirrored in `.claude/commands/generate-docs.md` Step 2c):
+Follow the full plan folder skeleton defined in `.claude/skills/documentation-standards/SKILL.md` §7 (and mirrored in `.claude/commands/docs.md` Step 2c):
 
 ```
 docs/plans/YYYYMMDD-{plan-name}/
