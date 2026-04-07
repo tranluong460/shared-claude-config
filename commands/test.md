@@ -60,7 +60,7 @@ Parse the first token of `$ARGUMENTS`:
    | No framework | Bootstrap vitest (see skill) |
    | Subcommand `setup` | Bootstrap only, stop |
 
-2. **Delegate to test-architect agent**. The agent runs:
+2. **Delegate to test-manager agent (mode: design)**. The agent runs:
    - Analyze target (public API, dependencies, edge cases)
    - Create test plan with mock strategy
    - Generate tests following AAA pattern

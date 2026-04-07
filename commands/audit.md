@@ -25,9 +25,9 @@ You are executing the `/audit` command. This is a **unified audit dispatcher** c
 |---|---|---|---|
 | `code [target]` | Code quality, naming, anti-patterns review (default if no subcommand) | reviewer | no |
 | `code naming <scope>` | Deep naming-only audit | reviewer | no |
-| `config [scope]` | `.claude/` consistency check (L1+L2+L3) | doc-auditor (audit mode) | no |
+| `config [scope]` | `.claude/` consistency check (L1+L2+L3) | doc-manager (mode: audit) | no |
 | `project [target]` | Full architecture audit | architect | no |
-| `repair [scope]` | Fix issues found by `/audit config` | doc-auditor (repair mode) | **yes** |
+| `repair [scope]` | Fix issues found by `/audit config` | doc-manager (mode: repair) | **yes** |
 | `diagnose <problem> [path]` | Root-cause investigation for bugs/errors | debugger | no |
 
 If `$ARGUMENTS` is empty or starts with a path/file, default to `code`.
@@ -61,7 +61,7 @@ Dispatch to the appropriate playbook below. Each playbook reuses the original co
 3. Delegate to **reviewer** agent. If args start with `naming`, switch reviewer to deep naming-only mode.
 4. Output: structured review report (Critical → Major → Minor) with file:line, fix per issue, and project-type-specific checks (IPC sync / provider pattern / etc).
 
-> Full playbook details preserved in `.claude/commands/_legacy/audit-code.md.deprecated`.
+> Full playbook details preserved in `.claude/commands/audit-code.md.deprecated`.
 
 ---
 
@@ -95,7 +95,7 @@ Run **three audit levels** (cumulative — L2 requires L1 pass, L3 requires L2 p
 
 **Output requirement**: Report MUST include Inventory Summary, L1 Issues, Pipeline Verification, L2 Semantic Contract Check, **Audit Coverage Report** (files scanned, invariants checked/skipped, spot-reads performed, confidence). Missing sections = incomplete audit, must NOT be reported as clean.
 
-> Full report template preserved in `.claude/commands/_legacy/audit-config.md.deprecated`.
+> Full report template preserved in `.claude/commands/audit-config.md.deprecated`.
 
 ---
 
@@ -114,7 +114,7 @@ Run **three audit levels** (cumulative — L2 requires L1 pass, L3 requires L2 p
    - General checklist
 4. Output: Health Score, Project Profile, Tech Stack, Architecture Summary, IPC/Provider inventory (where applicable), Strengths, Critical/Major Issues, Improvement Roadmap, Dependency Summary.
 
-> Full report template preserved in `.claude/commands/_legacy/audit-project.md.deprecated`.
+> Full report template preserved in `.claude/commands/audit-project.md.deprecated`.
 
 ---
 

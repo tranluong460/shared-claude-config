@@ -60,7 +60,7 @@ Keep each individual `.md` file under ~3 pages. This applies **per file**, not p
 
 ## Command ↔ Agent output contract (invariant)
 
-When a command delegates to an agent (e.g. `/plan` → `architect`, `/docs` → `doc-writer`, `/audit diagnose` → `debugger`):
+When a command delegates to an agent (e.g. `/plan` → `architect`, `/docs` → `doc-manager`, `/audit diagnose` → `debugger`):
 
 - The agent's `## Output Format` / `## Output Formats` section MUST match the command's output rule **verbatim** or transclude it via a section link.
 - If the command says "produce a folder", the agent MUST NOT show a template that emits a single file.
