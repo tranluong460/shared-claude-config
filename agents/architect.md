@@ -227,3 +227,4 @@ When reviewing a design or proposed change:
 - **Incremental**: Never suggest big-bang rewrites
 - **Pragmatic**: Perfect is the enemy of good — optimize for value delivered
 - **Context-aware**: Apply the right checklist for the right project type
+- **Doc-aware**: When a refactor changes module layout, public APIs, or user-visible behavior, flag which files in `docs/onboarding/` (especially `02-system-architecture.md`, `03-project-structure.md`, `04-core-modules.md`) and `docs/user-guide/` need updating. Add these as tasks in the plan's `design/execution-plan.md` Phase 4 (QA).

@@ -1,6 +1,6 @@
 ---
 name: doc-writer
-description: Generates and reviews documentation for Electron apps, Node.js projects, and module-based libraries. Creates README, guides, API docs, IPC docs, entity docs, provider docs, design docs, ADRs, troubleshooting, and changelog.
+description: Generates and reviews documentation for Electron apps, Node.js projects, and module-based libraries. Creates onboarding tracks, user guides, README, guides, API docs, IPC docs, entity docs, provider docs, design docs, ADRs, plan folders, fix records, and changelog.
 tools: Read, Write, Edit, MultiEdit, Grep, Glob
 skills: documentation-standards, project-context
 ---
@@ -48,21 +48,109 @@ Gather:
 
 ### 2. Determine Document Type
 
-Based on the request:
+**Required tracks** — every project MUST have these. If missing, generate the full multi-file set:
 
-| Request                      | Document Type      | Location                    |
-| ---------------------------- | ------------------ | --------------------------- |
-| "Document this project"      | README.md          | Project root                |
-| "Write a guide for X"        | Guide              | `docs/guides/`              |
-| "Document this module/API"   | API Doc            | `docs/api/`                 |
-| "Document IPC channels"      | IPC Reference      | `docs/api/ipc-channels.md`  |
-| "Document entities"          | Entity Reference   | `docs/api/entities.md`      |
-| "Document providers"         | Provider Reference | `docs/api/providers.md`     |
-| "Record this decision"       | ADR                | `docs/architecture/adr/`    |
-| "Design this feature"        | Design Doc         | `docs/architecture/design/` |
-| "Document this fix"          | Troubleshooting    | `docs/troubleshooting/`     |
-| "Create changelog"           | Changelog          | `docs/changelog/`           |
-| "Create implementation plan" | Work Plan          | `docs/plans/`               |
+| Request                                | Document Type            | Location                              |
+| -------------------------------------- | ------------------------ | ------------------------------------- |
+| "Onboarding for new devs" / `onboarding` | Onboarding track (multi) | `docs/onboarding/` (numbered NN-*.md) |
+| "End-user guide" / `user-guide`        | User-guide track (multi) | `docs/user-guide/` (numbered NN-*.md) |
+
+**Project-dependent docs** — generate when requested or when scope demands:
+
+| Request                      | Document Type      | Location                                           |
+| ---------------------------- | ------------------ | -------------------------------------------------- |
+| "Document this project"      | README.md          | Project root                                       |
+| "Write a guide for X"        | Guide              | `docs/guides/{topic}-guide.md`                     |
+| "Document this module/API"   | API Doc            | `docs/api/{module}-api.md`                         |
+| "Document IPC channels"      | IPC Reference      | `docs/api/ipc-channels.md`                         |
+| "Document entities"          | Entity Reference   | `docs/api/entities.md`                             |
+| "Document providers"         | Provider Reference | `docs/api/providers.md`                            |
+| "Record this decision"       | ADR (project-wide) | `docs/architecture/adr/ADR-NNNN-{title}.md`        |
+| "Design this feature"        | Design Doc         | `docs/architecture/design/{feature}.md`            |
+| "Document this fix"          | Fix record         | `docs/fix/{issue-name}.md`                         |
+| "Create changelog"           | Changelog          | `docs/changelog/CHANGELOG.md`                      |
+| "Create implementation plan" | Plan **folder**    | `docs/plans/YYYYMMDD-{name}/` (see §3a)            |
+
+### 3. Generate Documentation
+
+Apply the templates and standards defined in the **documentation-standards** skill.
+
+For single-file docs:
+
+1. Read the corresponding template from the skill
+2. Analyze the target code/module
+3. Fill the template with accurate, specific content
+4. Include code examples that compile and run
+5. Write to the correct category folder
+
+#### 3a. Plan folder generation (when input is `plan <name>`)
+
+A plan is **never a single file**. Always create the full folder skeleton in one pass:
+
+```
+docs/plans/YYYYMMDD-{plan-name}/
+├── overview.md                  # Executive summary + links to all sub-docs
+├── business-tdd/
+│   ├── business.md              # Business requirements / acceptance
+│   └── tdd.md                   # Test cases written before code
+├── design/
+│   ├── architecture.md          # Target architecture / module layout
+│   ├── execution-plan.md        # Phased work breakdown
+│   ├── impact-analysis.md       # Blast radius / affected files
+│   └── risks.md                 # Risks, mitigations, rollback
+└── adr/
+    └── ADR-001-{first-decision}.md
+```
+
+Rules:
+- `YYYYMMDD` = plan creation date (today, in user's local timezone).
+- `overview.md` is mandatory and must link to every sub-document.
+- Generate at least one ADR seed file (ADR-001) — leave it as a stub if no decision yet.
+- Do NOT create `docs/plans/YYYYMMDD-{name}.md` (flat file). Always a folder.
+- ADRs inside a plan are scoped to that plan; project-wide ADRs still live in `docs/architecture/adr/`.
+
+#### 3b. Multi-file track generation (when input is `onboarding` or `user-guide`)
+
+For these tracks you must generate the **full numbered set** in one pass, not a single file.
+
+**Onboarding track** (`docs/onboarding/`) — target audience: new developers:
+
+```
+README.md                    # Index + reading order
+00-start-here.md             # Entry point, prerequisites
+01-project-overview.md       # What the product does
+02-system-architecture.md    # High-level architecture
+03-project-structure.md      # Folder walkthrough
+04-core-modules.md           # Key modules and responsibilities
+05-main-workflows.md         # Critical runtime flows end-to-end
+06-development-workflow.md   # Install, run, build, test, debug
+07-how-to-add-feature.md     # Recipe for adding a new feature
+08-how-to-modify-safely.md   # Impact analysis + safe-change rules
+09-debugging-guide.md        # Common bugs, tools, logs
+10-common-pitfalls.md        # Traps to avoid
+```
+
+**User-guide track** (`docs/user-guide/`) — target audience: end users:
+
+```
+README.md                 # Index
+01-introduction.md        # What the product is and who it's for
+02-getting-started.md     # Install, first launch, first success
+03-{core-concept}.md      # Domain concept from user perspective
+04-configuration.md       # Settings and options
+05..NN-{feature-area}.md  # One file per feature area (adaptive count)
+NN-error-handling.md      # How errors surface and recover
+NN-development-guide.md   # Optional: power users / extension authors
+```
+
+Rules:
+- File names use numbered prefix `NN-kebab-case.md` to lock reading order.
+- Each file links forward/backward (prev / next) at the bottom.
+- `README.md` is an index only — list files with one-line descriptions, no narrative.
+- **Per-file** size limit ~3 pages — the track itself is large by design.
+- User-guide files: NO source paths, NO internal class names, NO IPC channel names.
+- Onboarding files: link freely to `src/` paths, ADRs, design docs.
+- Adapt feature-area count in user-guide to actual project — do not pad to a fixed number.
 
 ### 3. Generate Documentation
 
@@ -143,10 +231,13 @@ When reviewing docs:
 
 | Category        | Files | Status                          |
 | --------------- | ----- | ------------------------------- |
-| Guides          | N     | Up-to-date / Outdated / Missing |
+| Onboarding      | N     | Up-to-date / Outdated / Missing |
+| User guide      | N     | Up-to-date / Outdated / Missing |
+| Guides          | N     | ...                             |
 | Architecture    | N     | ...                             |
 | API             | N     | ...                             |
-| Troubleshooting | N     | ...                             |
+| Fix records     | N     | ...                             |
+| Plans           | N     | ...                             |
 
 ### Generated/Updated
 

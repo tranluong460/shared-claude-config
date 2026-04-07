@@ -41,8 +41,17 @@ if echo "$PROMPT" | grep -qiE '\b(test|spec|coverage|mock|assert)\b'; then
 fi
 
 # Doc keywords
-if echo "$PROMPT" | grep -qiE '\b(doc|readme|adr|changelog|document)\b'; then
+if echo "$PROMPT" | grep -qiE '\b(doc|readme|adr|changelog|document|plan|fix record|troubleshoot)\b'; then
   SUGGESTIONS="$SUGGESTIONS\n  → /generate-docs <type> — create documentation"
+fi
+
+# Onboarding / user-guide (required tracks)
+if echo "$PROMPT" | grep -qiE '\b(onboarding|onboard|new dev|new developer|first day|how to join)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /generate-docs onboarding — bootstrap developer onboarding track"
+fi
+
+if echo "$PROMPT" | grep -qiE '\b(user guide|user-guide|end user|end-user|user manual|user docs)\b'; then
+  SUGGESTIONS="$SUGGESTIONS\n  → /generate-docs user-guide — bootstrap end-user guide track"
 fi
 
 # Naming keywords

@@ -48,22 +48,41 @@ The agent follows its complete refactoring plan process defined in `.claude/agen
 4. Design target state
 5. Create phased plan (Foundation -> Migration -> Cleanup -> Verify)
 
-### Step 4: Output Plan
+### Step 4: Output Plan Folder
 
-Write the plan to `docs/plans/YYYYMMDD-{plan-name}.md`:
+Write the plan as a **folder** under `docs/plans/YYYYMMDD-{plan-name}/` — never a flat `.md` file.
+
+Follow the full plan folder skeleton defined in `.claude/skills/documentation-standards/SKILL.md` §7 (and mirrored in `.claude/commands/generate-docs.md` Step 2c):
+
+```
+docs/plans/YYYYMMDD-{plan-name}/
+├── overview.md                  # Executive summary (use template below)
+├── business-tdd/
+│   ├── business.md              # Business problem, users, acceptance criteria
+│   └── tdd.md                   # Test cases before code (regression guards!)
+├── design/
+│   ├── architecture.md          # Current vs target structure (mermaid diagram)
+│   ├── execution-plan.md        # Phased breakdown — this is the refactor core
+│   ├── impact-analysis.md       # Affected files, blast radius, co-change risks
+│   └── risks.md                 # Risks + rollback plan
+└── adr/
+    └── ADR-001-{strategy}.md    # e.g. "Use Strangler pattern for X"
+```
+
+For refactor plans, the phased breakdown lives in `design/execution-plan.md`. Use this template:
 
 ```markdown
-## Refactoring Plan: <title>
+# Execution Plan
 
-### Problem
+## Problem
 
 <What's wrong and why it matters>
 
-### Target State
+## Target State
 
-<What it should look like>
+<What it should look like after the refactor>
 
-### Risk Assessment
+## Risk Assessment
 
 | Factor              | Level               | Details             |
 | ------------------- | ------------------- | ------------------- |
@@ -72,32 +91,37 @@ Write the plan to `docs/plans/YYYYMMDD-{plan-name}.md`:
 | Public API change   | <Yes/No>            | <what changes>      |
 | Rollback complexity | <Low/Med/High>      | <why>               |
 
-### Phase 1: <Foundation>
+## Phase 1: Foundation
 
-- [ ] Task 1: <specific file change>
+- [ ] Task 1.1: <specific file change>
 
 **Verification**: `npm run flint && npm run typecheck`
 
-### Phase 2: <Migration>
+## Phase 2: Migration
 
-- [ ] Task 2: <specific file change>
+- [ ] Task 2.1: <specific file change>
 
-### Phase 3: <Cleanup>
+## Phase 3: Cleanup
 
-- [ ] Task 3: Delete old files, update barrel exports
+- [ ] Task 3.1: Delete old files, update barrel exports
 
-### Rollback Plan
+## Phase 4: Quality Assurance
 
-<How to revert>
+- [ ] Lint + typecheck
+- [ ] Full test suite
+- [ ] Update `docs/onboarding/04-core-modules.md` if module layout changed
+- [ ] Update `docs/user-guide/` feature-area files if user-visible behavior changed
 
-### Next Steps
+## Next Steps
 
-After approval, execute with: `/implement docs/plans/YYYYMMDD-{plan-name}.md`
+After approval, execute with: `/implement docs/plans/YYYYMMDD-{plan-name}/`
 ```
+
+`design/risks.md` must contain the rollback plan. `design/impact-analysis.md` must list every affected file with risk level.
 
 ### Step 5: Present for Approval
 
-Present the plan summary and wait for user feedback before any implementation.
+Present the `overview.md` summary and the `execution-plan.md` phase list. Wait for user feedback before any implementation.
 
 ## Notes
 
@@ -107,4 +131,5 @@ Present the plan summary and wait for user feedback before any implementation.
 - For Electron: always verify IPC handler <-> preload proxy consistency
 - For Library: always run `yarn test` after changes
 - Do NOT include time estimates
-- Save plan to `docs/plans/` for tracking
+- Save plan as a **folder** under `docs/plans/YYYYMMDD-{name}/` — never a flat `.md` file
+- If the refactor changes public modules or user-visible behavior, queue follow-up updates to `docs/onboarding/04-core-modules.md` and the relevant `docs/user-guide/NN-{feature-area}.md` files (add them as tasks in Phase 4)

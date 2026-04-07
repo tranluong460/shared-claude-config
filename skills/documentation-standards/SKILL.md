@@ -1,6 +1,6 @@
 ---
 name: documentation-standards
-description: Documentation types, quality criteria, folder structure, and templates for Node.js / Electron / library projects. Covers README, ADR, Design Doc, API docs, guides, troubleshooting, and changelog.
+description: Documentation types, quality criteria, folder structure, and templates for Node.js / Electron / library projects. Covers required onboarding + user-guide tracks, README, ADR, Design Doc, API docs, guides, plan folders, fix records, and changelog.
 layer: core
 ---
 
@@ -8,34 +8,70 @@ layer: core
 
 ## Documentation Folder Structure
 
-All documentation lives in `docs/` with category-based organization:
+All documentation lives in `docs/` with category-based organization. Two tracks are **required** on every project; the rest are project-dependent.
 
 ```
 docs/
-├── guides/                  # How-to, tutorials, onboarding, coding rules
-│   ├── getting-started.md
-│   ├── frontend-coding-rules.md
+├── onboarding/              # REQUIRED — developer onboarding track (multi-file)
+│   ├── README.md            # Index + reading order
+│   ├── 00-start-here.md
+│   ├── 01-project-overview.md
+│   ├── 02-system-architecture.md
+│   ├── 03-project-structure.md
+│   ├── 04-core-modules.md
+│   ├── 05-main-workflows.md
+│   ├── 06-development-workflow.md
+│   ├── 07-how-to-add-feature.md
+│   ├── 08-how-to-modify-safely.md
+│   ├── 09-debugging-guide.md
+│   └── 10-common-pitfalls.md
+│
+├── user-guide/              # REQUIRED — end-user guide track (multi-file)
+│   ├── README.md            # Index
+│   ├── 01-introduction.md
+│   ├── 02-getting-started.md
+│   ├── 03-{core-concept}.md
+│   ├── 04-configuration.md
+│   ├── 05..NN-{feature-area}.md   # Adaptive feature-area files
+│   ├── NN-error-handling.md
+│   └── NN-development-guide.md    # Optional: power users / extension authors
+│
+├── guides/                  # Project-dependent — how-to, tutorials, coding rules
 │   └── {topic}-guide.md
 │
-├── architecture/            # System design, decisions, patterns
-│   ├── overview.md          # Architecture overview
-│   ├── adr/                 # Architecture Decision Records
+├── architecture/            # Project-wide system design, decisions, patterns
+│   ├── overview.md
+│   ├── adr/                 # Project-wide ADRs
 │   │   └── ADR-NNNN-{title}.md
 │   └── design/              # Feature design documents
 │       └── {feature-name}.md
 │
-├── api/                     # API docs, IPC contracts, interfaces, entities
+├── api/                     # API docs, IPC contracts, entity/provider schemas
 │   ├── ipc-channels.md      # IPC channel inventory (Electron)
 │   ├── entities.md          # Database entity documentation
 │   ├── providers.md         # Provider pattern documentation (Library)
 │   └── {module}-api.md      # Module API documentation
 │
-├── troubleshooting/         # Bug fixes, known issues, debugging guides
-│   ├── known-issues.md      # Known issues and workarounds
-│   └── fix-{issue-name}.md  # Specific bug fix documentation
+├── fix/                     # Bug fix records
+│   ├── README.md            # Index of known issues
+│   └── {issue-name}.md      # Specific fix record
 │
-├── plans/                   # Work plans, roadmaps, release plans
-│   └── YYYYMMDD-{plan-name}.md
+├── plans/                   # Work plans — FOLDER per plan, not flat file
+│   ├── README.md            # Plan index
+│   └── YYYYMMDD-{plan-name}/
+│       ├── overview.md
+│       ├── business-tdd/
+│       │   ├── business.md
+│       │   └── tdd.md
+│       ├── design/
+│       │   ├── architecture.md
+│       │   ├── execution-plan.md
+│       │   ├── impact-analysis.md
+│       │   └── risks.md
+│       └── adr/
+│           └── ADR-NNN-{decision}.md
+│
+├── reference/               # Optional — internal reference material
 │
 └── changelog/               # Release notes, version history
     └── CHANGELOG.md
@@ -43,41 +79,51 @@ docs/
 
 ### Folder Purposes
 
-| Folder                 | What goes here                                          | Example                                          |
-| ---------------------- | ------------------------------------------------------- | ------------------------------------------------ |
-| `guides/`              | How to do X, onboarding, coding standards, tutorials    | `frontend-coding-rules.md`, `getting-started.md` |
-| `architecture/`        | System design, ADRs, architecture overview, patterns    | `ADR-0001-use-typeorm.md`, `overview.md`         |
-| `architecture/design/` | Feature-level technical design before implementation    | `browser-automation.md`                          |
-| `api/`                 | IPC contracts, entity schemas, provider docs, REST APIs | `ipc-channels.md`, `entities.md`                 |
-| `troubleshooting/`     | Bug fix records, known issues, debugging steps          | `fix-sqlite-wal-lock.md`, `known-issues.md`      |
-| `plans/`               | Implementation plans, release plans, migration plans    | `20260318-auth-refactor.md`                      |
-| `changelog/`           | Version history, what changed per release               | `CHANGELOG.md`                                   |
+| Folder                 | Required? | What goes here                                          | Example                                   |
+| ---------------------- | --------- | ------------------------------------------------------- | ----------------------------------------- |
+| `onboarding/`          | **Yes**   | Developer onboarding track — numbered sequential files  | `00-start-here.md`, `07-how-to-add-feature.md` |
+| `user-guide/`          | **Yes**   | End-user guide track — no source paths or class names   | `02-getting-started.md`, `05-smart-actions.md` |
+| `guides/`              | No        | How-to recipes, coding standards, tutorials             | `frontend-coding-rules.md`                |
+| `architecture/`        | No        | System design, architecture overview                    | `overview.md`                             |
+| `architecture/adr/`    | No        | Project-wide ADRs                                       | `ADR-0001-use-typeorm.md`                 |
+| `architecture/design/` | No        | Feature-level technical design before implementation    | `browser-automation.md`                   |
+| `api/`                 | No        | IPC contracts, entity schemas, provider docs, REST APIs | `ipc-channels.md`, `entities.md`          |
+| `fix/`                 | No        | Bug fix records, known issues, debugging steps          | `socks5-proxy-auth-fix-report.md`         |
+| `plans/`               | No        | Implementation plans — one **folder** per plan          | `20260320-smart-waiting-mechanism-refactor/` |
+| `reference/`            | No        | Internal reference material (downloads, constants, ...) | `download.md`, `lifecycle.md`             |
+| `changelog/`           | No        | Version history, what changed per release               | `CHANGELOG.md`                            |
 
 ### File Naming Rules
 
 - All files: `kebab-case.md`
-- ADRs: `ADR-NNNN-{descriptive-title}.md` (numbered sequentially)
-- Plans: `YYYYMMDD-{plan-name}.md` (date-prefixed)
-- Fix docs: `fix-{issue-name}.md`
+- Onboarding / user-guide files: `NN-{kebab-case}.md` — numbered prefix locks reading order
+- ADRs (project-wide): `ADR-NNNN-{descriptive-title}.md`
+- ADRs (inside a plan): `ADR-NNN-{title}.md` (scoped to plan)
+- Plans: `YYYYMMDD-{plan-name}/` — **folder**, never a flat `.md` file
+- Fix records: `{issue-name}.md` inside `docs/fix/`
 - No spaces in file names
 - No special characters or non-ASCII
+- **Per-file size rule**: keep each individual file under ~3 pages. This applies per file, not per track — `onboarding/` and `user-guide/` are large by design.
 
 ---
 
 ## When to Create Documentation
 
-| Change scope          | Files | Documents needed                        |
-| --------------------- | ----- | --------------------------------------- |
-| Trivial               | 1-2   | None — code is self-documenting         |
-| Small feature         | 3-5   | Design Doc (recommended)                |
-| Medium feature        | 6-10  | Design Doc + Work Plan (required)       |
-| Large feature         | 10+   | PRD + Design Doc + Work Plan (required) |
-| Architecture change   | Any   | ADR (required)                          |
-| New library/framework | Any   | ADR (required)                          |
-| Bug fix (complex)     | Any   | Troubleshooting doc (recommended)       |
-| New IPC channel       | Any   | Update `api/ipc-channels.md`            |
-| New entity            | Any   | Update `api/entities.md`                |
-| New provider          | Any   | Update `api/providers.md`               |
+| Change scope                | Files | Documents needed                                    |
+| --------------------------- | ----- | --------------------------------------------------- |
+| **Project bootstrap**       | —     | `onboarding/` + `user-guide/` tracks (**required**) |
+| Trivial                     | 1-2   | None — code is self-documenting                     |
+| Small feature               | 3-5   | Design Doc (recommended)                            |
+| Medium feature              | 6-10  | Plan **folder** under `docs/plans/` (required)      |
+| Large feature               | 10+   | Plan folder + project-wide ADR (required)           |
+| Architecture change         | Any   | ADR (required)                                      |
+| New library/framework       | Any   | ADR (required)                                      |
+| Bug fix (complex)           | Any   | Fix record under `docs/fix/` (recommended)          |
+| New IPC channel             | Any   | Update `api/ipc-channels.md`                        |
+| New entity                  | Any   | Update `api/entities.md`                            |
+| New provider                | Any   | Update `api/providers.md`                           |
+| New user-visible feature    | Any   | Add a file under `user-guide/`                      |
+| New developer-facing module | Any   | Update `onboarding/04-core-modules.md`              |
 
 ---
 
@@ -370,11 +416,11 @@ await provider.start()
 
 ---
 
-### 6. Troubleshooting Document
+### 6. Fix Record
 
 **Purpose**: Record how a bug was found, what caused it, and how it was fixed. Prevents repeat debugging.
 
-**Location**: `docs/troubleshooting/fix-{issue-name}.md`
+**Location**: `docs/fix/{issue-name}.md`
 
 **When to create**: Complex bugs that took significant effort to diagnose.
 
@@ -409,55 +455,343 @@ How to prevent this from happening again.
 - Commit: <hash>
 ```
 
-#### Known Issues Document
+#### Fix Index
 
-**Location**: `docs/troubleshooting/known-issues.md`
+**Location**: `docs/fix/README.md`
 
 ```markdown
-# Known Issues
+# Fix Records
 
-| Issue           | Symptom                         | Workaround  | Status        |
-| --------------- | ------------------------------- | ----------- | ------------- |
-| SQLite WAL lock | DB writes fail under heavy load | Restart app | Investigating |
-| ...             | ...                             | ...         | ...           |
+| File                         | Symptom                     | Status   |
+| ---------------------------- | --------------------------- | -------- |
+| `socks5-proxy-auth-fix-report.md` | SOCKS5 auth failing    | Resolved |
+| ...                          | ...                         | ...      |
 ```
 
 ---
 
-### 7. Work Plan
+### 7. Plan Folder
 
-**Purpose**: Break implementation into trackable phases.
+**Purpose**: Break a non-trivial implementation into business requirements, tests, architecture, execution phases, impact, risks, and scoped decisions. Plans are **folders**, never a single file.
 
-**Location**: `docs/plans/YYYYMMDD-{plan-name}.md`
+**Location**: `docs/plans/YYYYMMDD-{plan-name}/`
 
-**Template**:
+**When to create**: Medium+ feature (6+ files affected), refactor, migration.
+
+**Folder skeleton**:
+
+```
+docs/plans/YYYYMMDD-{plan-name}/
+├── overview.md
+├── business-tdd/
+│   ├── business.md
+│   └── tdd.md
+├── design/
+│   ├── architecture.md
+│   ├── execution-plan.md
+│   ├── impact-analysis.md
+│   └── risks.md
+└── adr/
+    └── ADR-001-{first-decision}.md
+```
+
+#### 7.1 `overview.md` template
 
 ```markdown
-# Work Plan: <Feature>
+# Plan: <Plan Name>
+
+> Date: YYYY-MM-DD · Owner: <name> · Status: Draft | Active | Done
+
+## Summary
+
+One paragraph: what, why, for whom.
+
+## Goals
+
+- Goal 1
+- Goal 2
+
+## Non-goals
+
+- What this plan explicitly does NOT cover.
+
+## Sub-documents
+
+- [Business](./business-tdd/business.md) — requirements, acceptance
+- [TDD](./business-tdd/tdd.md) — test cases before code
+- [Architecture](./design/architecture.md) — target module layout
+- [Execution Plan](./design/execution-plan.md) — phased breakdown
+- [Impact Analysis](./design/impact-analysis.md) — blast radius
+- [Risks](./design/risks.md) — risks + rollback
+- [ADRs](./adr/) — scoped decisions
+```
+
+#### 7.2 `business-tdd/business.md` template
+
+```markdown
+# Business Requirements
+
+## Problem
+
+What user / business pain does this solve?
+
+## Users
+
+Who is affected, in what context.
+
+## Acceptance Criteria
+
+- [ ] AC1: <measurable>
+- [ ] AC2: ...
+
+## Out of Scope
+
+- Things intentionally excluded
+```
+
+#### 7.3 `business-tdd/tdd.md` template
+
+```markdown
+# Test-Driven Design
+
+Test cases written **before** code. Each case must be executable or reviewable.
+
+## Happy Path
+
+- `test_<case>`: given <X>, when <Y>, then <Z>
+
+## Edge Cases
+
+- `test_<edge>`: ...
+
+## Failure Modes
+
+- `test_<error>`: given <bad input>, should <error response>
+
+## Regression Guards
+
+- Existing behavior that must keep working
+```
+
+#### 7.4 `design/architecture.md` template
+
+```markdown
+# Target Architecture
+
+## Current State
+
+Brief summary of what exists today (link to `docs/architecture/overview.md` if present).
+
+## Target State
+
+Modules, classes, interfaces after this plan lands.
+
+## Diagram
+
+\`\`\`mermaid
+graph TD
+  A[Caller] --> B[New Facade]
+  B --> C[Existing Service]
+\`\`\`
+
+## Key Interfaces
+
+\`\`\`typescript
+interface NewThing {
+  doIt(input: Input): Promise<Output>
+}
+\`\`\`
+```
+
+#### 7.5 `design/execution-plan.md` template
+
+```markdown
+# Execution Plan
 
 ## Phase 1: Foundation
 
-- [ ] Task 1: <description>
-- [ ] Task 2: <description>
+- [ ] Task 1.1: <description>
+- [ ] Task 1.2: <description>
 
 ## Phase 2: Core Implementation
 
-- [ ] Task 3: <description>
+- [ ] Task 2.1: <description>
 
 ## Phase 3: Integration
 
-- [ ] Task 4: <description>
+- [ ] Task 3.1: <description>
 
 ## Phase 4: Quality Assurance
 
 - [ ] Lint + type check
-- [ ] Test coverage
-- [ ] Documentation updated
+- [ ] Test coverage ≥ target
+- [ ] Docs updated (`onboarding/`, `user-guide/`, changelog)
 ```
+
+#### 7.6 `design/impact-analysis.md` template
+
+```markdown
+# Impact Analysis
+
+## Affected Files
+
+| File | Change Type | Risk |
+| ---- | ----------- | ---- |
+| `src/...` | Modify | Low/Med/High |
+
+## Blast Radius
+
+- Modules directly touched: ...
+- Modules indirectly affected (imports, IPC, events): ...
+
+## Business Logic at Risk
+
+- <critical flow> → protected by <test / guard>
+```
+
+#### 7.7 `design/risks.md` template
+
+```markdown
+# Risks & Mitigation
+
+| Risk | Likelihood | Impact | Mitigation |
+| ---- | ---------- | ------ | ---------- |
+| ...  | Low/Med/High | Low/Med/High | ... |
+
+## Rollback Strategy
+
+How to revert this plan if it fails in production.
+```
+
+#### 7.8 `adr/ADR-NNN-{decision}.md` template
+
+Plan-scoped ADRs follow the same template as project-wide ADRs (see §3) but numbered locally (ADR-001, ADR-002, ...) and scoped to the plan. Project-wide decisions still live in `docs/architecture/adr/`.
 
 ---
 
-### 8. Changelog
+### 8. Onboarding Track (REQUIRED)
+
+**Purpose**: Teach new developers the project end-to-end, in reading order.
+
+**Location**: `docs/onboarding/`
+
+**File list** (all required):
+
+| File                         | Purpose                                          |
+| ---------------------------- | ------------------------------------------------ |
+| `README.md`                  | Index + reading order (not narrative)            |
+| `00-start-here.md`           | Entry point, prerequisites, how to use the track |
+| `01-project-overview.md`     | What the product does, who uses it, why          |
+| `02-system-architecture.md`  | High-level architecture: processes, layers, flow |
+| `03-project-structure.md`    | Folder walkthrough with purposes                 |
+| `04-core-modules.md`         | Key modules and responsibilities                 |
+| `05-main-workflows.md`       | Critical runtime flows end-to-end                |
+| `06-development-workflow.md` | Install, run, build, test, debug                 |
+| `07-how-to-add-feature.md`   | Recipe for adding a new feature                  |
+| `08-how-to-modify-safely.md` | Impact analysis + safe-change rules              |
+| `09-debugging-guide.md`      | Common bugs, tools, logs                         |
+| `10-common-pitfalls.md`      | Traps to avoid                                   |
+
+**Per-file skeleton**:
+
+```markdown
+# <NN>. <Title>
+
+> Prev: [<prev file>](./NN-prev.md) · Next: [<next file>](./NN-next.md)
+
+## What you will learn
+
+- Bullet 1
+- Bullet 2
+
+## <Main content sections>
+
+...
+
+## Try it
+
+A small hands-on exercise the reader can run in 5 minutes.
+
+## Key takeaways
+
+- ...
+
+---
+
+Next up: [<next title>](./NN-next.md)
+```
+
+**Rules**:
+
+- Files are numbered `NN-kebab-case.md` — reading order is explicit.
+- Every file has prev/next links at top AND bottom.
+- Free to link to `src/` paths, ADRs, design docs.
+- Keep each file under ~3 pages.
+
+---
+
+### 9. User Guide Track (REQUIRED)
+
+**Purpose**: Teach end users how to use the product. Not developers.
+
+**Location**: `docs/user-guide/`
+
+**File list** (first 4 fixed, feature-area files adaptive):
+
+| File                         | Purpose                                 | Required?            |
+| ---------------------------- | --------------------------------------- | -------------------- |
+| `README.md`                  | Index                                   | Yes                  |
+| `01-introduction.md`         | What the product is, who it's for       | Yes                  |
+| `02-getting-started.md`      | Install, first launch, first success    | Yes                  |
+| `03-{core-concept}.md`       | Core domain concept from user view      | Yes                  |
+| `04-configuration.md`        | Settings and options                    | Yes                  |
+| `05..NN-{feature-area}.md`   | One per feature area (adaptive count)   | One per feature area |
+| `NN-error-handling.md`       | How errors surface and recover          | Yes                  |
+| `NN-development-guide.md`    | Power users / extension authors         | Optional             |
+
+**Per-file skeleton**:
+
+```markdown
+# <Feature / Section>
+
+> For: <who should read this>
+
+## What this does
+
+Plain-language description.
+
+## How to use it
+
+Step-by-step, with screenshots.
+
+1. Step one
+2. Step two
+
+## Options
+
+| Option | Default | Effect |
+| ------ | ------- | ------ |
+| ...    | ...     | ...    |
+
+## Troubleshooting
+
+- **Problem**: <symptom> → **Fix**: <what user should do>
+
+## See also
+
+- [<related user-guide file>](./NN-related.md)
+```
+
+**Rules**:
+
+- NO source file paths (`src/...`), NO internal class names, NO IPC channel names.
+- Screenshots live next to the file that references them.
+- Feature-area count adapts to the project — do not pad to a fixed number.
+- Keep each file under ~3 pages.
+
+---
+
+### 10. Changelog
 
 **Purpose**: Track what changed per version for users and developers.
 

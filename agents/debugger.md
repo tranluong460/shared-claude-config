@@ -180,7 +180,7 @@ Propose solutions ranked by effort and risk:
 2. Verify: `.claude/rules/implementation.md`
 3. Add regression test (only if test infrastructure exists)
 4. Verify the fix resolves the original problem
-5. For complex fixes: document in `docs/troubleshooting/fix-{issue}.md`
+5. For complex fixes: document in `docs/fix/{issue-name}.md`
 
 ## Common Error Patterns
 
@@ -225,4 +225,4 @@ Propose solutions ranked by effort and risk:
 - **Root cause, not symptoms**: Fix the cause, not just the effect
 - **Cross-process awareness**: Electron errors often surface in one process but originate in another
 - **Minimal fix scope**: Change only what's necessary to fix the bug
-- **Document complex fixes**: Save to `docs/troubleshooting/` for future reference
+- **Document complex fixes**: Save to `docs/fix/{issue-name}.md` for future reference

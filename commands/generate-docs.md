@@ -1,5 +1,5 @@
 ---
-description: Generate documentation for specified code — README, guides, API docs, design docs, ADRs, troubleshooting, or changelog
+description: Generate documentation for specified code — onboarding + user-guide tracks, plan folders, README, guides, API docs, design docs, ADRs, fix records, or changelog
 category: execute
 mutates: true
 consumes: [source-code]
@@ -25,7 +25,7 @@ Examples:
 - `/generate-docs plan smart-waiting-refactor` — full plan folder with overview + ADRs + business-tdd + design
 - `/generate-docs API src/main/ipcs` — API reference for IPC handlers
 - `/generate-docs ADR` — standalone Architecture Decision Record
-- `/generate-docs fix src/system/workers/sync` — troubleshooting fix record
+- `/generate-docs fix src/system/workers/sync` — fix record
 - `/generate-docs changelog` — changelog from recent commits
 
 Doc types:
@@ -69,7 +69,7 @@ Both tracks are **multi-file** — generate the full set, do not produce a singl
 | `entities`         | Database entity reference (Electron) | `docs/api/entities.md`                       |
 | `providers`        | Provider pattern reference (Library) | `docs/api/providers.md`                      |
 | `guide <topic>`    | How-to / tutorial                    | `docs/guides/{topic}-guide.md`               |
-| `fix <issue>`      | Bug fix / troubleshooting record     | `docs/fix/{issue-name}.md`                   |
+| `fix <issue>`      | Bug fix record                       | `docs/fix/{issue-name}.md`                   |
 | `changelog`        | Version changelog                    | `docs/changelog/CHANGELOG.md`                |
 | `<file-path>`      | JSDoc for public APIs in file        | Inline in source file                        |
 
@@ -179,14 +179,21 @@ The agent follows its complete process defined in `.claude/agents/doc-writer.md`
 
 ### Step 5: Report
 
+For single-file outputs:
+
 ```markdown
 ## Documentation Generated
 
 ### Files Created/Updated
 
-| File                    | Type  | Status  |
-| ----------------------- | ----- | ------- |
-| `docs/guides/{name}.md` | Guide | Created |
+| File                          | Type  | Status  |
+| ----------------------------- | ----- | ------- |
+| `docs/guides/{name}-guide.md` | Guide | Created |
+
+### Required-tracks check
+
+- `docs/onboarding/` — present / **missing — bootstrap recommended**
+- `docs/user-guide/` — present / **missing — bootstrap recommended**
 
 ### Remaining Gaps
 
@@ -197,10 +204,49 @@ The agent follows its complete process defined in `.claude/agents/doc-writer.md`
 - <related docs that should be created>
 ```
 
+For multi-file tracks (`onboarding`, `user-guide`, `plan`):
+
+```markdown
+## Documentation Generated
+
+### {Track name} ({N} files)
+
+| File                                | Status  |
+| ----------------------------------- | ------- |
+| `docs/onboarding/README.md`         | Created |
+| `docs/onboarding/00-start-here.md`  | Created |
+| `docs/onboarding/01-project-overview.md` | Created |
+| ...                                 | ...     |
+
+### Required-tracks check
+
+- `docs/onboarding/` — **just generated** ✓
+- `docs/user-guide/` — present / **still missing**
+
+### Remaining Gaps
+
+- <e.g. user-guide track still missing>
+
+### Suggested Follow-ups
+
+- `/generate-docs user-guide` to bootstrap the other required track
+```
+
+#### Bootstrap-on-empty flow
+
+If `/generate-docs` is invoked **without arguments**:
+
+1. Check whether `docs/onboarding/` and `docs/user-guide/` exist.
+2. For each missing track, ASK the user (do not auto-create) whether to bootstrap it now.
+3. If user confirms, generate the full track per Step 2a / 2b.
+4. If user declines, list the gap in the report so it stays visible.
+
 ## Notes
 
 - Always check existing docs before generating — update, don't duplicate
-- Keep docs under 3 pages — split large docs into multiple files
+- **Per-file** size limit ~3 pages. Multi-file tracks (`onboarding/`, `user-guide/`, plan folders) are large by design — the limit is on each file, not the total.
 - Focus on "why" and "how", not "what"
 - Include working code examples that compile
 - No secrets or credentials in documentation
+- Plans are **folders**, never flat files. If you find an old `docs/plans/YYYYMMDD-{name}.md`, treat it as legacy and convert to folder structure when next touched.
+- Fix records live in `docs/fix/{issue-name}.md`, not `docs/troubleshooting/`.

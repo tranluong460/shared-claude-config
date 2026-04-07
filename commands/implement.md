@@ -118,4 +118,17 @@ yarn test  # if available
 | flint     | ✅/❌     |
 | typecheck | ✅/❌     |
 | test      | ✅/❌/N/A |
+
+### Doc Follow-ups
+
+- [ ] `docs/onboarding/04-core-modules.md` — if a new module was added or an existing one changed shape
+- [ ] `docs/user-guide/NN-{feature-area}.md` — if user-visible behavior changed
+- [ ] `docs/changelog/CHANGELOG.md` — if shipping
 ```
+
+## Notes
+
+- For medium+ features (6+ files), follow up with `/generate-docs` to update required tracks:
+  - Update `docs/onboarding/04-core-modules.md` when module structure changes
+  - Update / create `docs/user-guide/NN-{feature-area}.md` for user-visible features
+  - Create a fix record at `docs/fix/{issue-name}.md` for complex bug fixes

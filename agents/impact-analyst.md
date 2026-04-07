@@ -137,6 +137,12 @@ Based on all gathered data, produce:
 
 Always produce a structured Impact Analysis Report following the template in the impact-analysis skill.
 
+When listing affected files, include documentation files that reference the changed modules:
+
+- Scan `docs/onboarding/**/*.md` for mentions of the changed module/file/class/API — any match counts as affected doc.
+- Scan `docs/user-guide/**/*.md` for mentions of user-visible behavior changed by the refactor.
+- Flag these in the "Affected files" section with a `doc` tag so the caller knows to queue `/generate-docs` follow-up.
+
 ## Decision Rules
 
 ### When to BLOCK a change
