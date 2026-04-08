@@ -40,6 +40,7 @@ docs/
 ## Required tracks
 
 `docs/onboarding/` and `docs/user-guide/` MUST exist on every project.
+
 - `onboarding/` is multi-file, sequentially numbered, each file links prev/next.
 - `user-guide/` is multi-file, sequentially numbered, no internal class names or source paths.
 - `README.md` inside each track is an index only — not narrative content.

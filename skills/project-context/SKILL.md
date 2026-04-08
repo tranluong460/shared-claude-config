@@ -15,11 +15,11 @@ layer: project
 
 ## Why the move
 
-| Reason | Detail |
-|---|---|
-| Always-relevant content | Project context is needed every session — auto-load > on-demand load |
-| Fewer hops | Skill loading adds metadata scan + read overhead. CLAUDE.md is in the entry context. |
-| Edit ergonomics | CLAUDE.md is the standard "house rules" location per community 2026 best practice |
+| Reason                  | Detail                                                                               |
+| ----------------------- | ------------------------------------------------------------------------------------ |
+| Always-relevant content | Project context is needed every session — auto-load > on-demand load                 |
+| Fewer hops              | Skill loading adds metadata scan + read overhead. CLAUDE.md is in the entry context. |
+| Edit ergonomics         | CLAUDE.md is the standard "house rules" location per community 2026 best practice    |
 
 ## Skeleton (fallback only — keep CLAUDE.md as source of truth)
 
@@ -29,31 +29,39 @@ If you need to bootstrap a new CLAUDE.md, use this minimum structure (~80-120 li
 # <Project Name> — Project Entry Context
 
 ## What
+
 <1-line description, package name, version>
 
 ## Stack
+
 | Layer | Technology |
 
 ## Build & Dev Commands
+
 | Action | Command |
 
 ## Architecture (high-level)
+
 \`\`\`
 src/
 ├── ...
 \`\`\`
 
 ## Critical Conventions (do not skip)
+
 - <link to .claude/rules/*.md for each>
 
 ## Known Gotchas
+
 - <traps that wasted time before>
 
 ## Self-Improvement Loop
+
 - Lessons: .claude/memory/lessons.md
 - Plans: docs/plans/YYYYMMDD-{name}/
 
 ## Workflow Commands
+
 - /audit, /plan, /implement, /test, /docs, /review, /reflect
 ```
 

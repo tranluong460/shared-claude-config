@@ -79,19 +79,19 @@ docs/
 
 ### Folder Purposes
 
-| Folder                 | Required? | What goes here                                          | Example                                   |
-| ---------------------- | --------- | ------------------------------------------------------- | ----------------------------------------- |
+| Folder                 | Required? | What goes here                                          | Example                                        |
+| ---------------------- | --------- | ------------------------------------------------------- | ---------------------------------------------- |
 | `onboarding/`          | **Yes**   | Developer onboarding track — numbered sequential files  | `00-start-here.md`, `07-how-to-add-feature.md` |
 | `user-guide/`          | **Yes**   | End-user guide track — no source paths or class names   | `02-getting-started.md`, `05-smart-actions.md` |
-| `guides/`              | No        | How-to recipes, coding standards, tutorials             | `frontend-coding-rules.md`                |
-| `architecture/`        | No        | System design, architecture overview                    | `overview.md`                             |
-| `architecture/adr/`    | No        | Project-wide ADRs                                       | `ADR-0001-use-typeorm.md`                 |
-| `architecture/design/` | No        | Feature-level technical design before implementation    | `browser-automation.md`                   |
-| `api/`                 | No        | IPC contracts, entity schemas, provider docs, REST APIs | `ipc-channels.md`, `entities.md`          |
-| `fix/`                 | No        | Bug fix records, known issues, debugging steps          | `socks5-proxy-auth-fix-report.md`         |
-| `plans/`               | No        | Implementation plans — one **folder** per plan          | `20260320-smart-waiting-mechanism-refactor/` |
-| `reference/`            | No        | Internal reference material (downloads, constants, ...) | `download.md`, `lifecycle.md`             |
-| `changelog/`           | No        | Version history, what changed per release               | `CHANGELOG.md`                            |
+| `guides/`              | No        | How-to recipes, coding standards, tutorials             | `frontend-coding-rules.md`                     |
+| `architecture/`        | No        | System design, architecture overview                    | `overview.md`                                  |
+| `architecture/adr/`    | No        | Project-wide ADRs                                       | `ADR-0001-use-typeorm.md`                      |
+| `architecture/design/` | No        | Feature-level technical design before implementation    | `browser-automation.md`                        |
+| `api/`                 | No        | IPC contracts, entity schemas, provider docs, REST APIs | `ipc-channels.md`, `entities.md`               |
+| `fix/`                 | No        | Bug fix records, known issues, debugging steps          | `socks5-proxy-auth-fix-report.md`              |
+| `plans/`               | No        | Implementation plans — one **folder** per plan          | `20260320-smart-waiting-mechanism-refactor/`   |
+| `reference/`           | No        | Internal reference material (downloads, constants, ...) | `download.md`, `lifecycle.md`                  |
+| `changelog/`           | No        | Version history, what changed per release               | `CHANGELOG.md`                                 |
 
 ### File Naming Rules
 
@@ -462,10 +462,10 @@ How to prevent this from happening again.
 ```markdown
 # Fix Records
 
-| File                         | Symptom                     | Status   |
-| ---------------------------- | --------------------------- | -------- |
-| `socks5-proxy-auth-fix-report.md` | SOCKS5 auth failing    | Resolved |
-| ...                          | ...                         | ...      |
+| File                              | Symptom             | Status   |
+| --------------------------------- | ------------------- | -------- |
+| `socks5-proxy-auth-fix-report.md` | SOCKS5 auth failing | Resolved |
+| ...                               | ...                 | ...      |
 ```
 
 ---
@@ -590,15 +590,15 @@ Modules, classes, interfaces after this plan lands.
 
 \`\`\`mermaid
 graph TD
-  A[Caller] --> B[New Facade]
-  B --> C[Existing Service]
+A[Caller] --> B[New Facade]
+B --> C[Existing Service]
 \`\`\`
 
 ## Key Interfaces
 
 \`\`\`typescript
 interface NewThing {
-  doIt(input: Input): Promise<Output>
+doIt(input: Input): Promise<Output>
 }
 \`\`\`
 ```
@@ -635,9 +635,9 @@ interface NewThing {
 
 ## Affected Files
 
-| File | Change Type | Risk |
-| ---- | ----------- | ---- |
-| `src/...` | Modify | Low/Med/High |
+| File      | Change Type | Risk         |
+| --------- | ----------- | ------------ |
+| `src/...` | Modify      | Low/Med/High |
 
 ## Blast Radius
 
@@ -654,9 +654,9 @@ interface NewThing {
 ```markdown
 # Risks & Mitigation
 
-| Risk | Likelihood | Impact | Mitigation |
-| ---- | ---------- | ------ | ---------- |
-| ...  | Low/Med/High | Low/Med/High | ... |
+| Risk | Likelihood   | Impact       | Mitigation |
+| ---- | ------------ | ------------ | ---------- |
+| ...  | Low/Med/High | Low/Med/High | ...        |
 
 ## Rollback Strategy
 
@@ -738,16 +738,16 @@ Next up: [<next title>](./NN-next.md)
 
 **File list** (first 4 fixed, feature-area files adaptive):
 
-| File                         | Purpose                                 | Required?            |
-| ---------------------------- | --------------------------------------- | -------------------- |
-| `README.md`                  | Index                                   | Yes                  |
-| `01-introduction.md`         | What the product is, who it's for       | Yes                  |
-| `02-getting-started.md`      | Install, first launch, first success    | Yes                  |
-| `03-{core-concept}.md`       | Core domain concept from user view      | Yes                  |
-| `04-configuration.md`        | Settings and options                    | Yes                  |
-| `05..NN-{feature-area}.md`   | One per feature area (adaptive count)   | One per feature area |
-| `NN-error-handling.md`       | How errors surface and recover          | Yes                  |
-| `NN-development-guide.md`    | Power users / extension authors         | Optional             |
+| File                       | Purpose                               | Required?            |
+| -------------------------- | ------------------------------------- | -------------------- |
+| `README.md`                | Index                                 | Yes                  |
+| `01-introduction.md`       | What the product is, who it's for     | Yes                  |
+| `02-getting-started.md`    | Install, first launch, first success  | Yes                  |
+| `03-{core-concept}.md`     | Core domain concept from user view    | Yes                  |
+| `04-configuration.md`      | Settings and options                  | Yes                  |
+| `05..NN-{feature-area}.md` | One per feature area (adaptive count) | One per feature area |
+| `NN-error-handling.md`     | How errors surface and recover        | Yes                  |
+| `NN-development-guide.md`  | Power users / extension authors       | Optional             |
 
 **Per-file skeleton**:
 

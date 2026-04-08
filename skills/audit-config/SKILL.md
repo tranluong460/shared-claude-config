@@ -26,11 +26,11 @@ layer: core
 
 ## Audit levels
 
-| Level | What it checks | When to use |
-|---|---|---|
-| **L1 Static** | File existence, path references, dead docs, unused integrations | Every run — cheap |
-| **L2 Semantic** | Command ↔ agent output contracts, skill templates vs rules, hook regex coverage | Every run — delegate to checks in `contract-checks.md` |
-| **L3 Spot-read** | Manually read `## Output Format` of every agent invoked by a command changed in the last commit | On-demand after sync cycles |
+| Level            | What it checks                                                                                  | When to use                                            |
+| ---------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| **L1 Static**    | File existence, path references, dead docs, unused integrations                                 | Every run — cheap                                      |
+| **L2 Semantic**  | Command ↔ agent output contracts, skill templates vs rules, hook regex coverage                 | Every run — delegate to checks in `contract-checks.md` |
+| **L3 Spot-read** | Manually read `## Output Format` of every agent invoked by a command changed in the last commit | On-demand after sync cycles                            |
 
 Levels are cumulative — L2 requires L1 pass, L3 requires L2 pass. A "clean" verdict requires all three to have been attempted and reported.
 

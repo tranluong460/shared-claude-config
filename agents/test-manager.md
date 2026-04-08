@@ -17,10 +17,10 @@ This agent has **two mode-specific output formats** — see the corresponding "O
 
 ## Mode Dispatch
 
-| Mode | Invoked by | Behavior | Mutates |
-|---|---|---|---|
-| **design** | `/test generate`, `/test setup` | Design test strategy, generate tests, bootstrap framework | **yes** |
-| **production** | `/test system` | Multi-agent production readiness analysis (no test execution) | no |
+| Mode           | Invoked by                      | Behavior                                                      | Mutates |
+| -------------- | ------------------------------- | ------------------------------------------------------------- | ------- |
+| **design**     | `/test generate`, `/test setup` | Design test strategy, generate tests, bootstrap framework     | **yes** |
+| **production** | `/test system`                  | Multi-agent production readiness analysis (no test execution) | no      |
 
 The invoking command tells you which mode. If unclear, ASK before proceeding.
 
@@ -67,17 +67,18 @@ The invoking command tells you which mode. If unclear, ASK before proceeding.
 ```markdown
 ## Test Plan: <module>
 
-| # | Method | Scenario | Priority |
-| - | ------ | -------- | -------- |
-| 1 | `fn` | Valid → expected | High |
+| #   | Method | Scenario         | Priority |
+| --- | ------ | ---------------- | -------- |
+| 1   | `fn`   | Valid → expected | High     |
 
 ## Tests Generated
 
-| File | Tests | Passing |
-| ---- | ----- | ------- |
-| `<file>` | N | N |
+| File     | Tests | Passing |
+| -------- | ----- | ------- |
+| `<file>` | N     | N       |
 
 ### Suggested Next Tests
+
 - <what to test next>
 ```
 
@@ -90,6 +91,7 @@ The invoking command tells you which mode. If unclear, ASK before proceeding.
 ### CRITICAL: Clarification Before Action
 
 If system details are unclear or missing:
+
 - STOP
 - Ask for clarification
 - DO NOT assume
@@ -120,9 +122,9 @@ Output a System Understanding summary before proceeding.
 Create tester roles based on the system's actual risks:
 
 ```markdown
-| Role | Focus Area | Risk Addressed | Key Scenarios |
-| ---- | ---------- | -------------- | ------------- |
-| <name> | <specific area> | <which risk> | <3-5 scenarios> |
+| Role   | Focus Area      | Risk Addressed | Key Scenarios   |
+| ------ | --------------- | -------------- | --------------- |
+| <name> | <specific area> | <which risk>   | <3-5 scenarios> |
 ```
 
 - Each role has clear purpose tied to a specific risk area
@@ -132,6 +134,7 @@ Create tester roles based on the system's actual risks:
 #### 4. Direct Testing
 
 For each tester role, provide:
+
 1. Area of focus — exactly what to test
 2. Key risks — what failures to look for
 3. Execution mindset — think like real users (unpredictable, concurrent, partial failures)
@@ -151,6 +154,7 @@ For every finding from testers, apply the Leader Interrogation Protocol:
 5. **Production reality check** — can this realistically happen?
 
 **REJECT** findings that are:
+
 - Vague or assumption-based
 - Not grounded in realistic behavior
 - Cannot be demonstrated with a concrete scenario
@@ -167,13 +171,14 @@ For every finding from testers, apply the Leader Interrogation Protocol:
 
 Make a clear decision:
 
-| Verdict | When |
-|---|---|
-| **SAFE** | No critical/high issues, risks are mitigated |
-| **CONDITIONAL** | High issues exist with workarounds |
-| **UNSAFE** | Critical issues, system should NOT ship |
+| Verdict         | When                                         |
+| --------------- | -------------------------------------------- |
+| **SAFE**        | No critical/high issues, risks are mitigated |
+| **CONDITIONAL** | High issues exist with workarounds           |
+| **UNSAFE**      | Critical issues, system should NOT ship      |
 
 Include:
+
 - Confidence level (High / Medium / Low)
 - Top 3 risks that could cause real incidents
 - Unknown risks and assumptions not verified

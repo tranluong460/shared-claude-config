@@ -48,31 +48,31 @@ Parse the input to decide what to generate:
 
 #### Required doc tracks (every project must have these)
 
-| Input         | Doc Type                     | Output Location     |
-| ------------- | ---------------------------- | ------------------- |
-| `onboarding`  | Developer onboarding track   | `docs/onboarding/`  |
-| `user-guide`  | End-user usage guide track   | `docs/user-guide/`  |
+| Input        | Doc Type                   | Output Location    |
+| ------------ | -------------------------- | ------------------ |
+| `onboarding` | Developer onboarding track | `docs/onboarding/` |
+| `user-guide` | End-user usage guide track | `docs/user-guide/` |
 
 Both tracks are **multi-file** — generate the full set, do not produce a single README. See Step 2a/2b for required file lists.
 
 #### Project-dependent docs (generate only when requested / needed)
 
-| Input              | Doc Type                             | Output Location                              |
-| ------------------ | ------------------------------------ | -------------------------------------------- |
-| `readme`           | Project README                       | Project root `README.md`                     |
-| `plan <name>`      | Work / implementation plan (folder)  | `docs/plans/YYYYMMDD-{plan-name}/` (see 2c)  |
-| `adr <decision>`   | Standalone ADR                       | `docs/architecture/adr/ADR-NNNN-{title}.md`  |
-| `design <feature>` | Feature design document              | `docs/architecture/design/{feature-name}.md` |
-| `overview`         | Architecture overview                | `docs/architecture/overview.md`              |
-| `api <module>`     | API / module documentation           | `docs/api/{module}-api.md`                   |
-| `ipc`              | IPC channel reference (Electron)     | `docs/api/ipc-channels.md`                   |
-| `entities`         | Database entity reference (Electron) | `docs/api/entities.md`                       |
-| `providers`        | Provider pattern reference (Library) | `docs/api/providers.md`                      |
-| `guide <topic>`    | How-to / tutorial                    | `docs/guides/{topic}-guide.md`               |
-| `reference <topic>`| Internal reference material          | `docs/reference/{topic}.md`                  |
-| `fix <issue>`      | Bug fix record                       | `docs/fix/{issue-name}.md`                   |
-| `changelog`        | Version changelog                    | `docs/changelog/CHANGELOG.md`                |
-| `<file-path>`      | JSDoc for public APIs in file        | Inline in source file                        |
+| Input               | Doc Type                             | Output Location                              |
+| ------------------- | ------------------------------------ | -------------------------------------------- |
+| `readme`            | Project README                       | Project root `README.md`                     |
+| `plan <name>`       | Work / implementation plan (folder)  | `docs/plans/YYYYMMDD-{plan-name}/` (see 2c)  |
+| `adr <decision>`    | Standalone ADR                       | `docs/architecture/adr/ADR-NNNN-{title}.md`  |
+| `design <feature>`  | Feature design document              | `docs/architecture/design/{feature-name}.md` |
+| `overview`          | Architecture overview                | `docs/architecture/overview.md`              |
+| `api <module>`      | API / module documentation           | `docs/api/{module}-api.md`                   |
+| `ipc`               | IPC channel reference (Electron)     | `docs/api/ipc-channels.md`                   |
+| `entities`          | Database entity reference (Electron) | `docs/api/entities.md`                       |
+| `providers`         | Provider pattern reference (Library) | `docs/api/providers.md`                      |
+| `guide <topic>`     | How-to / tutorial                    | `docs/guides/{topic}-guide.md`               |
+| `reference <topic>` | Internal reference material          | `docs/reference/{topic}.md`                  |
+| `fix <issue>`       | Bug fix record                       | `docs/fix/{issue-name}.md`                   |
+| `changelog`         | Version changelog                    | `docs/changelog/CHANGELOG.md`                |
+| `<file-path>`       | JSDoc for public APIs in file        | Inline in source file                        |
 
 ### Step 2a: `onboarding` track structure (required)
 
@@ -95,6 +95,7 @@ docs/onboarding/
 ```
 
 Rules:
+
 - File names are **numbered `NN-kebab-case.md`** so reading order is explicit.
 - Every file links forward/backward (prev / next).
 - `README.md` is an index only — not narrative content.
@@ -118,6 +119,7 @@ docs/user-guide/
 ```
 
 Rules:
+
 - File names are **numbered `NN-kebab-case.md`**.
 - Feature area file count adapts to the project — not a fixed number.
 - Screenshots / diagrams go next to the file that references them.
@@ -145,6 +147,7 @@ docs/plans/YYYYMMDD-{plan-name}/
 ```
 
 Rules:
+
 - Folder name: `YYYYMMDD-{kebab-case-plan-name}` — date is the plan creation date.
 - `overview.md` is mandatory and links to every sub-document.
 - `business-tdd/` and `design/` are mandatory.
@@ -212,12 +215,12 @@ For multi-file tracks (`onboarding`, `user-guide`, `plan`):
 
 ### {Track name} ({N} files)
 
-| File                                | Status  |
-| ----------------------------------- | ------- |
-| `docs/onboarding/README.md`         | Created |
-| `docs/onboarding/00-start-here.md`  | Created |
+| File                                     | Status  |
+| ---------------------------------------- | ------- |
+| `docs/onboarding/README.md`              | Created |
+| `docs/onboarding/00-start-here.md`       | Created |
 | `docs/onboarding/01-project-overview.md` | Created |
-| ...                                 | ...     |
+| ...                                      | ...     |
 
 ### Required-tracks check
 

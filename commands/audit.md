@@ -21,14 +21,14 @@ You are executing the `/audit` command. This is a **unified audit dispatcher** c
 /audit <subcommand> [target...]
 ```
 
-| Subcommand | Behavior | Delegates to | Mutates |
-|---|---|---|---|
-| `code [target]` | Code quality, naming, anti-patterns review (default if no subcommand) | reviewer | no |
-| `code naming <scope>` | Deep naming-only audit | reviewer | no |
-| `config [scope]` | `.claude/` consistency check (L1+L2+L3) | doc-manager (mode: audit) | no |
-| `project [target]` | Full architecture audit | architect | no |
-| `repair [scope]` | Fix issues found by `/audit config` | doc-manager (mode: repair) | **yes** |
-| `diagnose <problem> [path]` | Root-cause investigation for bugs/errors | debugger | no |
+| Subcommand                  | Behavior                                                              | Delegates to               | Mutates |
+| --------------------------- | --------------------------------------------------------------------- | -------------------------- | ------- |
+| `code [target]`             | Code quality, naming, anti-patterns review (default if no subcommand) | reviewer                   | no      |
+| `code naming <scope>`       | Deep naming-only audit                                                | reviewer                   | no      |
+| `config [scope]`            | `.claude/` consistency check (L1+L2+L3)                               | doc-manager (mode: audit)  | no      |
+| `project [target]`          | Full architecture audit                                               | architect                  | no      |
+| `repair [scope]`            | Fix issues found by `/audit config`                                   | doc-manager (mode: repair) | **yes** |
+| `diagnose <problem> [path]` | Root-cause investigation for bugs/errors                              | debugger                   | no      |
 
 If `$ARGUMENTS` is empty or starts with a path/file, default to `code`.
 
@@ -37,6 +37,7 @@ If `$ARGUMENTS` is empty or starts with a path/file, default to `code`.
 ### Step 1: Parse subcommand
 
 Parse the first token of `$ARGUMENTS`:
+
 - Recognized subcommands: `code`, `config`, `project`, `repair`, `diagnose`
 - Anything else → treat full `$ARGUMENTS` as `code <args>`
 - Strip the subcommand from args; remainder is the target/scope/problem.
@@ -74,6 +75,7 @@ Dispatch to the appropriate playbook below. Each playbook reuses the original co
 Run **three audit levels** (cumulative — L2 requires L1 pass, L3 requires L2 pass):
 
 **L1 — Static checks** (always run):
+
 1. Inventory all documents (rules, commands, agents, skills, hooks, settings).
 2. Map references between components.
 3. Classify each document (Active / Passive / Dead).
@@ -81,6 +83,7 @@ Run **three audit levels** (cumulative — L2 requires L1 pass, L3 requires L2 p
 5. Verify pipeline integrity: User → Hook → Command → Agent → Skill/Rule → Output.
 
 **L2 — Semantic contract checks** (per `skills/audit-config/contract-checks.md`):
+
 1. Command ↔ Agent output format contract
 2. Command ↔ Skill template alignment
 3. Rule path ↔ actual folder convention (legacy aliases)
@@ -91,6 +94,7 @@ Run **three audit levels** (cumulative — L2 requires L1 pass, L3 requires L2 p
 8. Agent `## Output Format` section presence
 
 **L3 — Spot-read** (mandatory after recent sync cycles):
+
 - For every command file changed in the last commit, manually read the output-writing step and cross-reference the delegated agent's `## Output Format` section. Report which files were spot-read.
 
 **Output requirement**: Report MUST include Inventory Summary, L1 Issues, Pipeline Verification, L2 Semantic Contract Check, **Audit Coverage Report** (files scanned, invariants checked/skipped, spot-reads performed, confidence). Missing sections = incomplete audit, must NOT be reported as clean.
@@ -142,6 +146,7 @@ Run **three audit levels** (cumulative — L2 requires L1 pass, L3 requires L2 p
 **Agent**: `debugger`
 
 Examples:
+
 - `/audit diagnose "sync fails after 100 records" src/system/workers/sync`
 - `/audit diagnose "scheduler jobs not recovering" src/main/helpers/scheduler`
 - `/audit diagnose "IPC timeout on account_create"`
@@ -159,6 +164,7 @@ Examples:
 5. If solution approved → execute via `/implement` and verify with `npm run flint && npm run typecheck`.
 
 **Notes**:
+
 - For Electron, trace ALL layers (renderer → preload → main → DB).
 - If error message is `SOMETHING_WENT_WRONG`, the real error was caught by `custom-ipc.ts` — check inside the handler.
 - Check git history for recent changes to affected files.

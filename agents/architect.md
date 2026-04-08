@@ -207,14 +207,14 @@ docs/plans/YYYYMMDD-{plan-name}/
 
 Content mapping — where each piece of the old single-document template now lives:
 
-| Legacy section | Target file                             |
-| -------------- | ---------------------------------------- |
-| Problem        | `business-tdd/business.md` (Problem section) |
-| Target State   | `design/architecture.md` (Target State)  |
-| Approach / Strategy | `adr/ADR-001-{strategy}.md`         |
-| Phases (Foundation → Migration → Cleanup → QA) | `design/execution-plan.md` |
-| Risk Assessment | `design/impact-analysis.md` + `design/risks.md` |
-| Rollback Plan  | `design/risks.md` (Rollback Strategy)    |
+| Legacy section                                 | Target file                                     |
+| ---------------------------------------------- | ----------------------------------------------- |
+| Problem                                        | `business-tdd/business.md` (Problem section)    |
+| Target State                                   | `design/architecture.md` (Target State)         |
+| Approach / Strategy                            | `adr/ADR-001-{strategy}.md`                     |
+| Phases (Foundation → Migration → Cleanup → QA) | `design/execution-plan.md`                      |
+| Risk Assessment                                | `design/impact-analysis.md` + `design/risks.md` |
+| Rollback Plan                                  | `design/risks.md` (Rollback Strategy)           |
 
 The phased breakdown in `design/execution-plan.md` must include 4 phases with these exact names (keep consistent with `/plan` command):
 

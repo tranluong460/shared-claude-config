@@ -21,11 +21,11 @@ You are executing the `/test` command. Consolidates `/generate-tests` and `/test
 /test <subcommand> [target...]
 ```
 
-| Subcommand | Behavior | Delegates to | Mutates |
-|---|---|---|---|
-| `generate [target]` | Generate unit/integration tests; bootstrap infra if needed (default) | test-manager (mode: design) | **yes** |
-| `setup` | Bootstrap test framework only (vitest), then stop | test-manager (mode: design) | **yes** |
-| `system <target>` | Production readiness analysis — multi-agent risk assessment | test-manager (mode: production) | no |
+| Subcommand          | Behavior                                                             | Delegates to                    | Mutates |
+| ------------------- | -------------------------------------------------------------------- | ------------------------------- | ------- |
+| `generate [target]` | Generate unit/integration tests; bootstrap infra if needed (default) | test-manager (mode: design)     | **yes** |
+| `setup`             | Bootstrap test framework only (vitest), then stop                    | test-manager (mode: design)     | **yes** |
+| `system <target>`   | Production readiness analysis — multi-agent risk assessment          | test-manager (mode: production) | no      |
 
 If `$ARGUMENTS` is empty or starts with a path/file, default to `generate`.
 
@@ -36,6 +36,7 @@ If `$ARGUMENTS` is empty or starts with a path/file, default to `generate`.
 ### Step 1: Parse subcommand
 
 Parse the first token of `$ARGUMENTS`:
+
 - Recognized: `generate`, `setup`, `system`
 - Anything else → treat as `generate <args>`
 - Strip subcommand from args; remainder is target.
@@ -54,11 +55,11 @@ Parse the first token of `$ARGUMENTS`:
    - `package.json` → vitest/jest in deps?
    - Glob: `vitest.config.*`, `jest.config.*`, `**/*.test.ts`, `test/**/*.ts`
 
-   | Scenario | Action |
-   |---|---|
-   | Framework exists | Use it, match existing patterns |
-   | No framework | Bootstrap vitest (see skill) |
-   | Subcommand `setup` | Bootstrap only, stop |
+   | Scenario           | Action                          |
+   | ------------------ | ------------------------------- |
+   | Framework exists   | Use it, match existing patterns |
+   | No framework       | Bootstrap vitest (see skill)    |
+   | Subcommand `setup` | Bootstrap only, stop            |
 
 2. **Delegate to test-manager agent (mode: design)**. The agent runs:
    - Analyze target (public API, dependencies, edge cases)
@@ -67,14 +68,16 @@ Parse the first token of `$ARGUMENTS`:
    - Run and verify
 
 3. **Output**:
+
    ```markdown
    ## Tests Generated: <target>
 
-   | File | Tests | Passing |
-   |---|---|---|
-   | `<test-file>` | N | N |
+   | File          | Tests | Passing |
+   | ------------- | ----- | ------- |
+   | `<test-file>` | N     | N       |
 
    ### Suggested Next Tests
+
    - <what to test next>
    ```
 
@@ -109,6 +112,7 @@ This command performs **analytical risk assessment** — it does NOT run automat
 6. **Output**: Production Testing Report with System Understanding, Team Composition, Risk Areas, Critical Findings (with Evidence/Impact/Cascade/Recommendation), What Matters vs Doesn't, Unknown Risks, **Final Judgment** (SAFE / CONDITIONAL / UNSAFE), Confidence, Top risks, Next steps.
 
 **Notes**:
+
 - Depth over breadth: 5 deep findings beat 50 shallow ones.
 - Every finding needs concrete evidence (code reference, scenario, chain of events).
 - Test leader makes the final call — no neutral or vague conclusions.

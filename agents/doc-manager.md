@@ -18,11 +18,11 @@ This agent has **three mode-specific output formats** — see the corresponding 
 
 ## Mode Dispatch
 
-| Mode | Invoked by | Behavior | Mutates |
-|---|---|---|---|
-| **audit** | `/audit config` | Read-only `.claude/` consistency check (L1 + L2 + L3) | no |
-| **repair** | `/audit repair` | Apply fixes from a prior audit; re-verify | **yes** |
-| **write** | `/docs` | Generate / update project documentation in `docs/` | **yes** |
+| Mode       | Invoked by      | Behavior                                              | Mutates |
+| ---------- | --------------- | ----------------------------------------------------- | ------- |
+| **audit**  | `/audit config` | Read-only `.claude/` consistency check (L1 + L2 + L3) | no      |
+| **repair** | `/audit repair` | Apply fixes from a prior audit; re-verify             | **yes** |
+| **write**  | `/docs`         | Generate / update project documentation in `docs/`    | **yes** |
 
 The invoking command tells you which mode to use. Never switch modes mid-run. If unclear, ASK before proceeding.
 
@@ -50,11 +50,11 @@ The invoking command tells you which mode to use. Never switch modes mid-run. If
    - Commands: hook suggestions in `suggest-commands.sh`
 3. **Classify**:
 
-   | Classification | Criteria |
-   |---|---|
-   | **Active** | Referenced by command/agent AND has path-scoped frontmatter (for rules) |
-   | **Passive** | Has `paths:` frontmatter but NOT explicitly referenced — OK for code-style rules |
-   | **Dead** | Not referenced anywhere AND no `paths:` frontmatter — must be attached or deleted |
+   | Classification | Criteria                                                                          |
+   | -------------- | --------------------------------------------------------------------------------- |
+   | **Active**     | Referenced by command/agent AND has path-scoped frontmatter (for rules)           |
+   | **Passive**    | Has `paths:` frontmatter but NOT explicitly referenced — OK for code-style rules  |
+   | **Dead**       | Not referenced anywhere AND no `paths:` frontmatter — must be attached or deleted |
 
 4. **L2 Semantic checks** — per `skills/audit-config/contract-checks.md` (8 invariants).
 5. **L3 Spot-read** — for every command file changed in last commit, manually read agent `## Output Format` against command's output rule.
@@ -66,35 +66,40 @@ The invoking command tells you which mode to use. Never switch modes mid-run. If
 ## Documentation Audit: .claude/
 
 ### Inventory Summary
-| Type | Count | Active | Passive | Dead |
-| ---- | ----- | ------ | ------- | ---- |
-| Rules    | N | N | N | N |
-| Commands | N | N | - | - |
-| Agents   | N | N | - | N |
-| Skills   | N | N | - | N |
-| Hooks    | N | N | - | N |
+
+| Type     | Count | Active | Passive | Dead |
+| -------- | ----- | ------ | ------- | ---- |
+| Rules    | N     | N      | N       | N    |
+| Commands | N     | N      | -       | -    |
+| Agents   | N     | N      | -       | N    |
+| Skills   | N     | N      | -       | N    |
+| Hooks    | N     | N      | -       | N    |
 
 ### Issues Found (L1 static)
+
 | File | Classification | Issue | Recommendation |
 | ---- | -------------- | ----- | -------------- |
 
 ### Pipeline Verification
+
 | Command | Hook Suggested | Agent | Skills Loaded | Status |
 | ------- | -------------- | ----- | ------------- | ------ |
 
 ### Semantic Contract Check (L2)
-| # | Invariant | Result | Details |
-| - | --------- | ------ | ------- |
-| 1 | Command ↔ Agent output format | ✓/✗ | ... |
-| 2 | Command ↔ Skill template | ✓/✗ | ... |
-| 3 | Rule path ↔ folder convention | ✓/✗ | ... |
-| 4 | Hook regex ↔ command keywords | ✓/✗ | ... |
-| 5 | Agent skills: ↔ skill folders | ✓/✗ | ... |
-| 6 | next_on_result ↔ command files | ✓/✗ | ... |
-| 7 | log-command.sh dynamic discovery (no hardcoded list) | ✓/✗ | ... |
-| 8 | Agent Output Format presence | ✓/✗ | ... |
+
+| #   | Invariant                                            | Result | Details |
+| --- | ---------------------------------------------------- | ------ | ------- |
+| 1   | Command ↔ Agent output format                        | ✓/✗    | ...     |
+| 2   | Command ↔ Skill template                             | ✓/✗    | ...     |
+| 3   | Rule path ↔ folder convention                        | ✓/✗    | ...     |
+| 4   | Hook regex ↔ command keywords                        | ✓/✗    | ...     |
+| 5   | Agent skills: ↔ skill folders                        | ✓/✗    | ...     |
+| 6   | next_on_result ↔ command files                       | ✓/✗    | ...     |
+| 7   | log-command.sh dynamic discovery (no hardcoded list) | ✓/✗    | ...     |
+| 8   | Agent Output Format presence                         | ✓/✗    | ...     |
 
 ### Audit Coverage Report (REQUIRED)
+
 - Files scanned: <count>
 - Invariants checked: <list>
 - Invariants NOT checked: <list with reason>
@@ -102,6 +107,7 @@ The invoking command tells you which mode to use. Never switch modes mid-run. If
 - Confidence: High / Medium / Low — justify
 
 ### Recommendations
+
 | Priority | Action | Files Affected |
 ```
 
@@ -128,19 +134,22 @@ The invoking command tells you which mode to use. Never switch modes mid-run. If
 ## Config Repair: .claude/
 
 ### Fixes Applied
-| # | File | Action | Change |
-| - | ---- | ------ | ------ |
+
+| #   | File | Action | Change |
+| --- | ---- | ------ | ------ |
 
 ### Remaining Issues
+
 | Issue | Reason Not Fixed |
 | ----- | ---------------- |
 
 ### Verification
-| Check | Before | After |
-| ----- | ------ | ----- |
-| Dead documents       | N | N |
-| Missing integrations | N | N |
-| Broken pipelines     | N | N |
+
+| Check                | Before | After |
+| -------------------- | ------ | ----- |
+| Dead documents       | N      | N     |
+| Missing integrations | N      | N     |
+| Broken pipelines     | N      | N     |
 ```
 
 ---
@@ -185,6 +194,7 @@ Project type detection: see `.claude/rules/project-detection.md`. If `.claude/sk
 > **Specialist docs were NOT generated** because required tracks must exist first.
 >
 > **Next steps**:
+>
 > 1. Run `/docs onboarding` to bootstrap the onboarding track.
 > 2. Run `/docs user-guide` to bootstrap the user-guide track.
 > 3. Re-run the original command to generate the specialist docs.
@@ -211,17 +221,21 @@ When reviewing existing docs: check accuracy, identify stale sections, verify ex
 ## Documentation Generated: <scope>
 
 ### Files Created/Updated
+
 | File | Type | Status |
 | ---- | ---- | ------ |
 
 ### Required-tracks check
+
 - `docs/onboarding/` — present / **missing — bootstrap recommended**
 - `docs/user-guide/` — present / **missing — bootstrap recommended**
 
 ### Remaining Gaps
+
 - <what documentation is still needed>
 
 ### Suggested Next Steps
+
 - <related docs to create>
 ```
 
