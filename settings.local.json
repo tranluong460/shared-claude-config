@@ -13,7 +13,8 @@
       "Grep",
       "Glob",
       "WebSearch",
-      "WebFetch"
+      "WebFetch",
+      "PowerShell"
     ],
     "deny": [
       "Read(.env*)",
