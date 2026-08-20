@@ -14,7 +14,8 @@
       "Glob",
       "WebSearch",
       "WebFetch",
-      "PowerShell"
+      "PowerShell",
+      "Artifact"
     ],
     "deny": [
       "Read(.env*)",
